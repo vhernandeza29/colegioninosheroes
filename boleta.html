@@ -12,52 +12,81 @@
             --verde-id: #317F77;
         }
 
-        /* --- DISEÑO DE BÚSQUEDA ORIGINAL --- */
-        .navbar-brand { display: flex; align-items: center; font-weight: 800; color: var(--azul-id) !important; font-size: 1.5rem; }
-        .btn-volver { border: 2px solid var(--azul-id); color: var(--azul-id); font-weight: 700; border-radius: 10px; padding: 5px 20px; transition: 0.3s; text-decoration: none !important; }
+        /* --- NAVEGACIÓN ESTILO IMAGEN --- */
+        .navbar { padding: 15px 40px; background: #fff; border-bottom: 1px solid #eee; }
+        .navbar-brand { display: flex; align-items: center; font-weight: 800; color: var(--azul-id) !important; font-size: 1.6rem; }
+        .logo-nav { height: 40px; margin-right: 15px; }
+        .btn-volver { 
+            border: 1.5px solid var(--azul-id); 
+            color: var(--azul-id); 
+            font-weight: 600; 
+            border-radius: 12px; 
+            padding: 6px 25px; 
+            text-decoration: none !important;
+            font-size: 0.95rem;
+            transition: 0.3s;
+        }
         .btn-volver:hover { background: var(--azul-id); color: white !important; }
-        .nav-gradient-line { height: 8px; background: linear-gradient(135deg, #193E9A 0%, #317F77 100%); width: 100%; margin-top: 12px; }
-        .hero { background: linear-gradient(135deg, #193E9A 0%, #317F77 100%); padding: 40px 0; text-align: center; color: white; }
-        .hero h1 { font-weight: 800; font-size: 2.5rem; }
-        .instruccion { color: #555; font-weight: 500; margin-bottom: 15px; }
-        .input-group { box-shadow: 0 4px 15px rgba(0,0,0,0.05); border-radius: 30px; overflow: hidden; }
-        #matriculaInput { border-radius: 30px 0 0 30px; border: 1px solid #ddd; padding-left: 25px; height: 55px; }
-        .btn-buscar { background-color: var(--verde-id) !important; color: white !important; border-radius: 0 30px 30px 0 !important; padding: 0 35px !important; font-weight: 800 !important; border: none !important; }
 
-        /* --- DISEÑO DE BOLETA ACTUALIZADO --- */
+        /* --- HERO BANNER ESTILO DEGRADADO --- */
+        .hero-banner { 
+            background: linear-gradient(90deg, #193E9A 0%, #317F77 100%); 
+            padding: 60px 20px; 
+            text-align: center; 
+            color: white;
+        }
+        .hero-banner h1 { font-weight: 800; font-size: 3rem; margin-bottom: 10px; }
+        .hero-banner p { font-size: 1.1rem; opacity: 0.9; }
+
+        /* --- BUSCADOR --- */
+        .search-container { max-width: 600px; margin: -30px auto 40px; }
+        .input-group { 
+            box-shadow: 0 10px 30px rgba(0,0,0,0.15); 
+            border-radius: 50px; 
+            overflow: hidden; 
+            background: white;
+        }
+        #matriculaInput { border: none; padding-left: 30px; height: 60px; font-size: 1.1rem; }
+        .btn-buscar { background: var(--verde-id) !important; color: white !important; border: none !important; padding: 0 40px; font-weight: 800; font-size: 1rem; }
+
+        /* --- BOLETA --- */
         .report-card-container {
             background: white;
-            padding: 30px;
-            border: 1px solid #333;
-            margin: 20px auto;
+            padding: 40px;
+            border: 1px solid #ccc;
+            margin: 0 auto 50px;
             max-width: 850px;
             display: none;
             color: #000;
         }
+        .header-boleta { border-bottom: 2px solid var(--azul-id); padding-bottom: 10px; margin-bottom: 20px; position: relative; }
+        .school-name { color: var(--azul-id); font-weight: 700; font-size: 1.8rem; margin: 0; text-transform: uppercase; }
+        .address-line { font-size: 0.7rem; font-weight: 700; text-transform: uppercase; margin: 0; }
+        
+        .final-box { 
+            border: 1.5px solid var(--azul-id); 
+            background: #f1f6ff; 
+            padding: 10px; 
+            text-align: center; 
+            min-width: 140px; 
+            float: right;
+        }
+        .final-label { font-size: 0.7rem; font-weight: 800; color: var(--azul-id); margin-bottom: 2px; }
+        .final-value { font-size: 2rem; font-weight: 900; line-height: 1; }
 
-        .header-boleta { border-bottom: 2px solid var(--azul-id); margin-bottom: 15px; }
-        .nombre-colegio { color: var(--azul-id); font-weight: 800; font-size: 1.6rem; margin: 0; text-transform: uppercase; }
-        .boleta-titulo { font-size: 1.1rem; font-weight: 700; color: #333; margin-top: 5px; }
+        .info-section { border-top: 1px solid #000; border-bottom: 1px solid #000; padding: 12px 0; margin-bottom: 20px; font-size: 0.9rem; }
+        .info-label { font-weight: 800; margin-right: 10px; }
 
-        .final-box { border: 2px solid var(--azul-id); background: #f0f4f8; padding: 5px 15px; text-align: center; min-width: 120px; }
-        .final-label { font-size: 0.7rem; font-weight: 800; }
-        .final-value { font-size: 1.8rem; font-weight: 900; }
+        .grade-table { width: 100%; border-collapse: collapse; margin-top: 15px; }
+        .grade-table th { background: #455a64; color: white; border: 1px solid #000; padding: 8px; font-size: 0.8rem; text-align: center; }
+        .grade-table td { border: 1px solid #000; padding: 8px; text-align: center; font-size: 0.9rem; }
+        .grade-table .subject-col { text-align: left; font-weight: 700; background: #fafafa; padding-left: 15px; }
 
-        .info-grid { display: grid; grid-template-columns: 2fr 1fr; gap: 5px; border-top: 1px solid #000; border-bottom: 1px solid #000; padding: 10px 0; margin-bottom: 15px; }
-        .info-item { font-size: 0.9rem; }
-        .info-label { font-weight: 800; text-transform: uppercase; margin-right: 5px; }
-
-        .grade-table { width: 100%; border-collapse: collapse; }
-        .grade-table th { background: #455a64; color: white; border: 1px solid #000; padding: 6px; font-size: 0.8rem; text-transform: uppercase; }
-        .grade-table td { border: 1px solid #000; padding: 6px; text-align: center; font-size: 0.9rem; }
-        .grade-table .materia-td { text-align: left; font-weight: 700; background: #f9f9f9; }
-
-        .firma-row { margin-top: 40px; display: flex; justify-content: space-around; }
-        .firma-box { border-top: 1px solid #000; width: 200px; text-align: center; font-size: 0.8rem; font-weight: 800; padding-top: 5px; }
+        .signature-section { margin-top: 60px; display: flex; justify-content: space-around; }
+        .sign-box { border-top: 1px solid #000; width: 220px; text-align: center; font-size: 0.8rem; font-weight: 800; padding-top: 5px; }
 
         @media print {
-            .no-print, .hero, .nav-gradient-line, .navbar, .instruccion, #statusMsg, #printBtnContainer { display: none !important; }
-            body { background: white; }
+            .no-print, .hero-banner, .search-container, .navbar { display: none !important; }
             .report-card-container { display: block !important; border: none; margin: 0; width: 100%; max-width: 100%; }
             .page-break { page-break-before: always; }
         }
@@ -65,33 +94,32 @@
 </head>
 <body>
 
-    <nav class="navbar navbar-expand-lg navbar-light bg-white no-print">
-        <div class="container d-flex justify-content-between align-items-center">
-            <a class="navbar-brand" href="#"><img src="Iconos/logo.png" style="height: 50px; margin-right: 10px;"> Colegio Niños Héroes</a>
-            <a href="index.html" class="btn-volver">← Volver</a>
-        </div>
+    <nav class="navbar no-print">
+        <a class="navbar-brand" href="#">
+            <img src="Iconos/logo.png" class="logo-nav"> Colegio Niños Héroes
+        </a>
+        <a href="index.html" class="btn-volver">← Volver</a>
     </nav>
-    <div class="nav-gradient-line no-print"></div>
 
-    <div class="hero no-print">
-        <div class="container"><h1>Boleta de Calificaciones</h1></div>
+    <div class="hero-banner no-print">
+        <div class="container">
+            <h1>Boleta de Calificaciones</h1>
+            <p>Consulta y descarga los documentos oficiales del ciclo escolar.</p>
+        </div>
     </div>
 
-    <div class="container mt-5 no-print">
-        <div class="row justify-content-center mb-5">
-            <div class="col-md-6 text-center">
-                <p class="instruccion">Ingrese la matrícula del alumno:</p>
-                <div class="input-group">
-                    <input type="text" id="matriculaInput" class="form-control" placeholder="Matrícula...">
-                    <div class="input-group-append">
-                        <button class="btn btn-buscar" onclick="buscarBoletas()">Buscar</button>
-                    </div>
-                </div>
-                <div id="statusMsg" class="mt-3 font-weight-bold"></div>
-                <div class="mt-3" id="printBtnContainer" style="display:none;">
-                    <button class="btn btn-danger btn-lg" onclick="window.print()"><i class="fas fa-file-pdf mr-2"></i> Descargar PDF</button>
-                </div>
+    <div class="container search-container no-print">
+        <div class="input-group">
+            <input type="text" id="matriculaInput" class="form-control" placeholder="Escriba la matrícula aquí...">
+            <div class="input-group-append">
+                <button class="btn btn-buscar" onclick="buscarBoletas()">BUSCAR</button>
             </div>
+        </div>
+        <div id="statusMsg" class="text-center mt-3 font-weight-bold"></div>
+        <div class="text-center mt-3" id="printBtnContainer" style="display:none;">
+            <button class="btn btn-danger btn-lg shadow" onclick="window.print()">
+                <i class="fas fa-file-pdf mr-2"></i> DESCARGAR PDF
+            </button>
         </div>
     </div>
 
@@ -123,36 +151,38 @@
         }
     };
 
-    // Función para truncar a 1 decimal sin redondear
+    // TRUNCAR A 1 DECIMAL (7.59 -> 7.5)
     const fmt = (v) => {
-        if (!v || isNaN(v)) return '-';
+        if (!v || isNaN(v) || v === "") return '-';
         return (Math.floor(parseFloat(v) * 10) / 10).toFixed(1);
     };
 
     async function buscarBoletas() {
         const mat = document.getElementById('matriculaInput').value.trim().toUpperCase();
         const status = document.getElementById('statusMsg');
-        if (!mat) { status.innerText = "Ingrese matrícula"; return; }
+        if (!mat) { status.innerText = "Por favor, ingrese una matrícula."; return; }
 
-        status.innerHTML = "Buscando...";
-        const dataEx = await obtenerDatos(idExtra, mat, 'extra');
-        const dataIn = await obtenerDatos(idIngles, mat, 'ingles');
+        status.innerHTML = "<i class='fas fa-circle-notch fa-spin'></i> Buscando datos...";
+        
+        const [dEx, dIn] = await Promise.all([
+            obtenerDatos(idExtra, mat, 'extra'),
+            obtenerDatos(idIngles, mat, 'ingles')
+        ]);
 
-        if (dataEx || dataIn) {
-            status.innerHTML = "<span class='text-success'>Datos encontrados</span>";
+        if (dEx || dIn) {
+            status.innerHTML = "<span class='text-success'>Información cargada con éxito.</span>";
             document.getElementById('printBtnContainer').style.display = 'block';
-            if (dataEx) renderBoleta(dataEx, 'Extra', 'EXTRACURRICULARES');
-            if (dataIn) renderBoleta(dataIn, 'Ingles', 'INGLÉS (ENGLISH DEPARTMENT)');
+            if (dEx) renderBoleta(dEx, 'Extra', 'BOLETA DE CALIFICACIONES - EXTRACURRICULARES');
+            if (dIn) renderBoleta(dIn, 'Ingles', 'BOLETA DE CALIFICACIONES - INGLÉS');
         } else {
-            status.innerHTML = "<span class='text-danger'>No encontrado</span>";
-            document.getElementById('reportCardExtra').style.display = 'none';
-            document.getElementById('reportCardIngles').style.display = 'none';
+            status.innerHTML = "<span class='text-danger'>No se encontró la matrícula ingresada.</span>";
+            ocultar();
         }
     }
 
     async function obtenerDatos(sheetId, mat, tipo) {
         for (let nivel of niveles) {
-            const url = `https://docs.google.com/spreadsheets/d/${sheetId}/gviz/tq?tqx=out:csv&sheet=${encodeURIComponent(nivel)}`;
+            const url = `https://docs.google.com/spreadsheets/d/${sheetId}/gviz/tq?tqx=out:csv&sheet=${encodeURIComponent(nivel)}&tqx=cb:${Date.now()}`;
             try {
                 const res = await fetch(url);
                 const csv = await res.text();
@@ -169,14 +199,14 @@
                     const filtro = MATERIAS_MAP[tipo](nivel);
                     let materias = [];
                     
-                    for (let i = 5; i < row.length - 1; i += jump) {
-                        let nombre = "";
-                        for (let j = i; j >= 5; j--) { if (headers[j]) { nombre = headers[j].trim(); break; } }
-                        if (nombre.toUpperCase().includes("PROMEDIO") || !nombre) break;
+                    for (let i = 5; i < row.length; i += jump) {
+                        let nombreM = "";
+                        for (let j = i; j >= 5; j--) { if (headers[j]) { nombreM = headers[j].trim(); break; } }
+                        if (!nombreM || nombreM.toUpperCase().includes("PROMEDIO")) continue;
                         
-                        if (filtro.includes(nombre.toUpperCase())) {
+                        if (filtro.includes(nombreM.toUpperCase())) {
                             materias.push({
-                                n: nombre,
+                                n: nombreM,
                                 v1: fmt(row[i]),
                                 v2: fmt(row[i+1]),
                                 v3: esPrepa ? null : fmt(row[i+2]),
@@ -184,66 +214,69 @@
                             });
                         }
                     }
-                    
-                    let promFinal = "-";
-                    for (let k = row.length - 1; k >= 5; k--) { if (row[k] && !isNaN(row[k])) { promFinal = fmt(row[k]); break; } }
+                    let pf = "-";
+                    for (let k = row.length - 1; k >= 5; k--) { if (row[k] && !isNaN(row[k])) { pf = fmt(row[k]); break; } }
 
-                    return { nombre: row[1], mat: row[0], ciclo: row[2], grado: row[3], grupo: row[4], nivel, materias, promFinal, esPrepa };
+                    return { nombre: row[1], mat: row[0], ciclo: row[2], grado: row[3], grupo: row[4], nivel, materias, pf, esPrepa };
                 }
             } catch (e) { console.error(e); }
         }
         return null;
     }
 
-    function renderBoleta(d, idSuffix, labelTipo) {
-        const container = document.getElementById(`reportCard${idSuffix}`);
-        container.style.display = 'block';
-        
-        container.innerHTML = `
-            <div class="header-boleta d-flex justify-content-between align-items-center">
-                <div>
-                    <img src="Iconos/logo.png" style="height: 60px; margin-bottom: 5px;">
-                    <h2 class="nombre-colegio">COLEGIO NIÑOS HÉROES</h2>
-                    <div class="boleta-titulo">${labelTipo}</div>
-                </div>
+    function renderBoleta(d, idS, tit) {
+        const div = document.getElementById(`reportCard${idS}`);
+        div.style.display = 'block';
+        div.innerHTML = `
+            <div class="header-boleta">
                 <div class="final-box">
-                    <div class="final-label">PROMEDIO FINAL</div>
-                    <div class="final-value">${d.promFinal}</div>
+                    <div class="final-label">CALIFICACIÓN FINAL</div>
+                    <div class="final-value">${d.pf}</div>
                 </div>
+                <img src="Iconos/logo.png" style="height: 60px; margin-bottom: 5px;">
+                <h2 class="school-name">COLEGIO NIÑOS HÉROES</h2>
+                <p class="address-line">Durango S/N Amp. Adolfo Lopez Mateos, Atizapan de Zaragoza</p>
+                <div style="text-align:center; font-weight:800; margin-top:15px; border-top:2px solid #000; padding-top:5px;">${tit}</div>
             </div>
-            <div class="info-grid">
-                <div class="info-item"><span class="info-label">ALUMNO:</span> ${d.nombre}</div>
-                <div class="info-item"><span class="info-label">GRADO:</span> ${d.grado}</div>
-                <div class="info-item"><span class="info-label">MATRÍCULA:</span> ${d.mat}</div>
-                <div class="info-item"><span class="info-label">GRUPO:</span> ${d.grupo}</div>
-                <div class="info-item"><span class="info-label">CICLO:</span> ${d.ciclo}</div>
-                <div class="info-item"><span class="info-label">NIVEL:</span> ${d.nivel}</div>
+            <div class="info-section">
+                <div class="row">
+                    <div class="col-7"><span class="info-label">ALUMNO:</span> ${d.nombre}</div>
+                    <div class="col-5"><span class="info-label">GRADO:</span> ${d.grado}</div>
+                    <div class="col-7"><span class="info-label">CICLO ESCOLAR:</span> ${d.ciclo}</div>
+                    <div class="col-5"><span class="info-label">GRUPO:</span> ${d.grupo}</div>
+                </div>
             </div>
             <table class="grade-table">
                 <thead>
                     <tr>
-                        <th style="text-align:left;">ASIGNATURA</th>
-                        ${d.esPrepa ? '<th>SEM 1</th><th>SEM 2</th>' : '<th>TRIM 1</th><th>TRIM 2</th><th>TRIM 3</th>'}
-                        <th>FINAL</th>
+                        <th style="text-align:left; padding-left:15px;">MATERIAS</th>
+                        ${d.esPrepa ? '<th>SEM 1</th><th>SEM 2</th>' : '<th>1er TRIM</th><th>2do TRIM</th><th>3er TRIM</th>'}
+                        <th>PROMEDIO</th>
                     </tr>
                 </thead>
                 <tbody>
                     ${d.materias.map(m => `
                         <tr>
-                            <td class="materia-td">${m.n}</td>
+                            <td class="subject-col">${m.n}</td>
                             <td>${m.v1}</td>
                             <td>${m.v2}</td>
                             ${!d.esPrepa ? `<td>${m.v3}</td>` : ''}
-                            <td style="font-weight:900;">${m.vf}</td>
+                            <td style="font-weight:900; background:#eee;">${m.vf}</td>
                         </tr>
                     `).join('')}
                 </tbody>
             </table>
-            <div class="firma-row">
-                <div class="firma-box">DIRECTOR(A)</div>
-                <div class="firma-box">TITULAR</div>
+            <div class="signature-section">
+                <div class="sign-box">DIRECTOR</div>
+                <div class="sign-box">DIRECTORA</div>
             </div>
         `;
+    }
+
+    function ocultar() {
+        document.getElementById('reportCardExtra').style.display = 'none';
+        document.getElementById('reportCardIngles').style.display = 'none';
+        document.getElementById('printBtnContainer').style.display = 'none';
     }
 </script>
 </body>
