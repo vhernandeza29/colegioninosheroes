@@ -2,325 +2,337 @@
 <html lang="es">
 <head>
     <meta charset="UTF-8">
-    <title>Consulta de calificaciones - Colegio Niños Héroes</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Boleta de Calificaciones - Colegio Niños Héroes</title>
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
     <script src="https://cdnjs.cloudflare.com/ajax/libs/PapaParse/5.3.2/papaparse.min.js"></script>
     <style>
-        /* --- ESTILOS DE NAV EXTRAÍDOS DE RECURSOS.HTML --- */
         :root {
             --azul-id: #193E9A;
             --verde-id: #317F77;
+            --gris-claro: #f8f9fa;
         }
         
-        .navbar-brand {
-            padding: 0;
-            margin: 0;
-            display: flex;
-            align-items: center;
-            font-weight: 800;
-            color: var(--azul-id) !important;
-            font-size: 1.5rem;
-        }
+        body { background-color: #e9ecef; font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif; color: #333; }
 
-        .logo-navbar {
-            height: 55px;
-            width: auto;
-            margin-right: 10px;
-        }
+        /* --- Estilos de la Interfaz de Búsqueda --- */
+        .search-section { background: white; padding: 30px; border-bottom: 5px solid var(--azul-id); margin-bottom: 30px; }
+        .btn-buscar { background: var(--azul-id); color: white; font-weight: bold; border-radius: 25px; padding: 10px 30px; border: none; transition: 0.3s; }
+        .btn-buscar:hover { background: var(--verde-id); transform: translateY(-2px); }
 
-        .btn-volver {
-            border: 2px solid var(--azul-id);
-            color: var(--azul-id);
-            font-weight: 700;
-            border-radius: 10px;
-            padding: 5px 20px;
-            transition: 0.3s;
-            text-decoration: none !important;
-            display: inline-block;
-        }
-        .btn-volver:hover { background: var(--azul-id); color: white !important; }
-
-        .nav-gradient-line {
-            height: 8px;
-            background: linear-gradient(135deg, #193E9A 0%, #317F77 100%);
-            width: 100%;
-            margin-top: 12px;
-        }
-
-        /* --- RESTO DE ESTILOS DE LA BOLETA --- */
-        .hero {
-            background: linear-gradient(135deg, #193E9A 0%, #317F77 100%);
-            padding: 60px 0;
-            text-align: center;
-            color: white;
-        }
-        .hero h1 { font-weight: 800; font-size: 3rem; text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.2); }
-
-        .instruccion { color: #555; font-weight: 500; margin-bottom: 15px; }
-        .input-group { box-shadow: 0 4px 15px rgba(0,0,0,0.05); border-radius: 30px; }
-        #matriculaInput { border-radius: 30px 0 0 30px; border: 1px solid #ddd; padding-left: 25px; }
-
-        .btn-buscar {
-            background-color: var(--verde-id) !important;
-            color: white !important;
-            border-radius: 0 30px 30px 0 !important;
-            padding: 0 35px !important;
-            font-weight: 800 !important;
-            border: none !important;
-        }
-
+        /* --- Estilo de la Boleta (Inspirado en la Imagen) --- */
         .report-card-container {
             background: white;
-            padding: 35px;
-            border: 1px solid #eee;
-            border-radius: 15px;
-            display: none; 
-            margin-bottom: 30px;
-            box-shadow: 0 10px 30px rgba(0,0,0,0.08);
+            width: 210mm; /* Tamaño A4 aproximado */
+            min-height: 297mm;
+            margin: 0 auto 50px auto;
+            padding: 20mm;
+            box-shadow: 0 0 20px rgba(0,0,0,0.1);
+            position: relative;
         }
 
-        .page-break { page-break-before: always; }
-        .report-header { border-bottom: 3px double var(--azul-id); margin-bottom: 20px; padding-bottom: 10px; }
-        .info-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 10px; margin-bottom: 20px; background: #f8fafc; padding: 15px; border-radius: 10px; }
-        .grade-table { width: 100%; border: 2px solid #333; }
-        .grade-table th, .grade-table td { border: 1px solid #333; padding: 8px; text-align: center; font-size: 0.9rem; }
-        .grade-table th { background: #f4f4f4; font-weight: 700; }
+        .header-boleta { border-bottom: 2px solid var(--azul-id); margin-bottom: 20px; padding-bottom: 10px; }
+        .school-name { color: var(--azul-id); font-weight: 900; font-size: 2.2rem; text-transform: uppercase; margin: 0; }
+        .school-address { font-size: 0.7rem; font-weight: bold; text-transform: uppercase; margin-top: -5px; }
+        
+        .boleta-title { background: #f0f4f8; text-align: center; padding: 10px; margin: 20px 0; border-radius: 5px; }
+        .boleta-title h2 { color: var(--azul-id); font-weight: 800; margin: 0; letter-spacing: 2px; }
 
+        /* Cuadro de Promedio Final */
+        .final-score-box {
+            border: 2px solid var(--azul-id);
+            background: #e3f2fd;
+            padding: 10px 20px;
+            text-align: center;
+            min-width: 150px;
+        }
+        .final-label { font-size: 0.75rem; font-weight: 900; color: var(--azul-id); }
+        .final-value { font-size: 2rem; font-weight: 900; color: #000; }
+
+        /* Información del Alumno */
+        .info-row { border-bottom: 1px solid #000; margin-bottom: 15px; padding-bottom: 5px; }
+        .info-label { font-weight: 800; font-size: 0.85rem; text-transform: uppercase; }
+        .info-content { font-size: 1rem; padding-left: 10px; }
+
+        /* Tabla de Calificaciones */
+        .grade-table { width: 100%; border-collapse: collapse; margin-top: 25px; }
+        .grade-table th { background-color: #455a64; color: white; padding: 10px; border: 1px solid #333; text-transform: uppercase; font-size: 0.75rem; text-align: center; }
+        .grade-table td { border: 1px solid #333; padding: 8px; text-align: center; font-size: 0.9rem; }
+        .grade-table td.subject-name { text-align: left; font-weight: bold; background: #f8f9fa; }
+
+        .quote-section { font-style: italic; font-size: 0.8rem; text-align: center; color: #555; margin: 30px 0; padding: 0 40px; }
+
+        .signature-row { margin-top: 60px; }
+        .signature-line { border-top: 1px solid #000; text-align: center; padding-top: 5px; font-weight: bold; font-size: 0.8rem; width: 80%; margin: 0 auto; }
+
+        .feedback-section { margin-top: 30px; border: 1px solid #ccc; padding: 15px; border-radius: 5px; }
+
+        /* --- Configuración para Impresión --- */
         @media print {
-            .navbar, .nav-gradient-line, .hero, .instruccion, .input-group, .btn-print-box, footer, #statusMsg { display: none !important; }
-            .report-card-container { display: block !important; border: none; box-shadow: none; margin: 0; padding: 0; }
-        }
-        .footer-colegio {
-            background-color: #193E9A;
-            padding: 30px 0;
-            margin-top: 50px;
-            color: white;
-        }
-
-        .link-unete {
-            color: white !important;
-            font-weight: 600;
-            text-decoration: none;
-            font-size: 0.9rem;
-            padding: 8px 18px;
-            border: 1px solid rgba(255, 255, 255, 0.6);
-            border-radius: 25px;
-            display: inline-block;
-            transition: 0.3s;
-        }
-
-        .link-unete:hover {
-            background-color: white;
-            color: #193E9A !important;
+            .no-print { display: none !important; }
+            body { background: white; padding: 0; }
+            .report-card-container { box-shadow: none; margin: 0; padding: 10mm; width: 100%; border: none; }
+            .page-break { page-break-before: always; }
         }
     </style>
 </head>
 <body>
 
-       <nav class="navbar navbar-expand-lg sticky-top navbar-light bg-white shadow-sm">
-        <div class="container d-flex justify-content-between align-items-center">
-            <a class="navbar-brand" href="index.html">
-                <img src="Iconos/logo.png" style="height: 50px;"> Colegio Niños Héroes
-            </a>
-            <a href="index.html" class="btn-volver">← Volver</a>
-        </div>
-    </nav>
-    <div class="nav-gradient-line"></div>
-
-    <div class="hero">
+    <div class="search-section no-print">
         <div class="container">
-            <h1>Boleta de Calificaciones</h1>
-        </div>
-    </div>
-
-    <div class="container mt-5">
-        <div class="row justify-content-center mb-5">
-            <div class="col-md-6 text-center">
-                <p class="instruccion">Ingrese la matrícula del alumno para obtener ambas boletas:</p>
-                <div class="input-group input-group-lg">
-                    <input type="text" id="matriculaInput" class="form-control" placeholder="Matrícula...">
-                    <div class="input-group-append">
-                        <button class="btn btn-buscar" onclick="buscarBoletas()">Buscar</button>
-                    </div>
+            <div class="row align-items-center">
+                <div class="col-md-3 text-center">
+                    <img src="Iconos/logo.png" style="max-height: 80px;">
                 </div>
-                <div id="statusMsg" class="mt-3"></div>
-                <div class="text-center mt-3" id="printBtnContainer" style="display:none;">
-                    <button class="btn btn-danger btn-lg" onclick="window.print()">
-                        <i class="fas fa-file-pdf mr-2"></i> Descargar PDF
+                <div class="col-md-6">
+                    <h3 class="text-center mb-3">Consulta de Calificaciones</h3>
+                    <div class="input-group mb-2">
+                        <input type="text" id="matriculaInput" class="form-control form-control-lg" placeholder="Ingrese Matrícula...">
+                        <div class="input-group-append">
+                            <button class="btn btn-buscar" onclick="buscarBoletas()">BUSCAR</button>
+                        </div>
+                    </div>
+                    <div id="statusMsg" class="text-center small font-weight-bold"></div>
+                </div>
+                <div class="col-md-3 text-center">
+                    <button class="btn btn-danger btn-lg" id="btnPrint" style="display:none;" onclick="window.print()">
+                        <i class="fas fa-file-pdf"></i> DESCARGAR
                     </button>
                 </div>
             </div>
         </div>
+    </div>
 
-        <div id="reportCardExtra" class="report-card-container">
-            <div class="report-header">
-                <div class="row align-items-center">
-                    <div class="col-8">
-                        <img src="Iconos/logo.png" style="max-height: 60px; margin-bottom: 5px;">
-                        <h2 style="color: var(--azul-id); font-weight: 900; margin: 0;">Colegio Niños Héroes</h2>
-                        <p class="text-muted m-0"><strong id="displayNivelExtra">---</strong> | Extracurriculares</p>
-                    </div>
-                    <div class="col-4 text-right">
-                        <p class="m-0"><strong>Ciclo:</strong> <span id="displayCicloExtra">---</span></p>
-                    </div>
+    <div id="boletaExtra" class="report-card-container" style="display:none;">
+        <div class="header-boleta row align-items-center">
+            <div class="col-8">
+                <h1 class="school-name">COLEGIO NIÑOS HÉROES</h1>
+                <p class="school-address">DURANGO S/N AMP. ADOLFO LOPEZ MATEOS, ATIZAPAN DE ZARAGOZA</p>
+            </div>
+            <div class="col-4 d-flex justify-content-end">
+                <div class="final-score-box">
+                    <div class="final-label">CALIFICACIÓN FINAL</div>
+                    <div id="resExtraFinal" class="final-value">-</div>
                 </div>
             </div>
-            <div class="info-grid">
-                <div><strong>Alumno:</strong> <span id="displayNameExtra">---</span></div>
-                <div><strong>Matrícula:</strong> <span id="displayMatriculaExtra">---</span></div>
-                <div><strong>Grado y Grupo:</strong> <span id="displayGradoGrupoExtra">---</span></div>
-                <div><strong>Estatus:</strong> Alumno Regular</div>
-            </div>
-            <table class="grade-table">
-                <thead id="tableHeaderExtra"></thead>
-                <tbody id="gradeRowsExtra"></tbody>
-                <tfoot>
-                    <tr style="background: #f4f4f4; font-weight: 800;">
-                        <td id="labelPromedioExtra" style="text-align: right;">PROMEDIO FINAL:</td>
-                        <td id="displayPromedioExtra" style="color: var(--azul-id);">---</td>
-                    </tr>
-                </tfoot>
-            </table>
         </div>
 
-        <div id="reportCardIngles" class="report-card-container page-break">
-            <div class="report-header">
-                <div class="row align-items-center">
-                    <div class="col-8">
-                        <img src="Iconos/logo.png" style="max-height: 60px; margin-bottom: 5px;">
-                        <h2 style="color: var(--azul-id); font-weight: 900; margin: 0;">Colegio Niños Héroes</h2>
-                        <p class="text-muted m-0"><strong id="displayNivelIngles">---</strong> | English Department</p>
-                    </div>
-                    <div class="col-4 text-right">
-                        <p class="m-0"><strong>Ciclo:</strong> <span id="displayCicloIngles">---</span></p>
-                    </div>
-                </div>
-            </div>
-            <div class="info-grid">
-                <div><strong>Student:</strong> <span id="displayNameIngles">---</span></div>
-                <div><strong>ID:</strong> <span id="displayMatriculaIngles">---</span></div>
-                <div><strong>Grade:</strong> <span id="displayGradoGrupoIngles">---</span></div>
-                <div><strong>Status:</strong> Regular Student</div>
-            </div>
-            <table class="grade-table">
-                <thead id="tableHeaderIngles"></thead>
-                <tbody id="gradeRowsIngles"></tbody>
-                <tfoot>
-                    <tr style="background: #f4f4f4; font-weight: 800;">
-                        <td id="labelPromedioIngles" style="text-align: right;">FINAL AVERAGE:</td>
-                        <td id="displayPromedioIngles" style="color: var(--azul-id);">---</td>
-                    </tr>
-                </tfoot>
-            </table>
+        <div class="boleta-title">
+            <h2>BOLETA DE CALIFICACIONES</h2>
+        </div>
+
+        <div class="row">
+            <div class="col-8 info-row"><span class="info-label">CICLO ESCOLAR:</span> <span id="resExtraCiclo" class="info-content">-</span></div>
+            <div class="col-4 info-row"><span class="info-label">GRADO:</span> <span id="resExtraGrado" class="info-content">-</span></div>
+            <div class="col-8 info-row"><span class="info-label">ALUMNO:</span> <span id="resExtraNombre" class="info-content">-</span></div>
+            <div class="col-4 info-row"><span class="info-label">GRUPO:</span> <span id="resExtraGrupo" class="info-content">-</span></div>
+        </div>
+
+        <p class="quote-section">“La educación no solo forma estudiantes, forma seres humanos capaces de soñar en grande, de levantarse ante las dificultades y de construir con esfuerzo y valores el futuro que desean alcanzar.”</p>
+
+        <table class="grade-table">
+            <thead>
+                <tr>
+                    <th style="width: 40%;">MATERIAS</th>
+                    <th>1er TRIMESTRE</th>
+                    <th>2do TRIMESTRE</th>
+                    <th>3er TRIMESTRE</th>
+                    <th>PROMEDIO FINAL</th>
+                </tr>
+            </thead>
+            <tbody id="resExtraRows"></tbody>
+        </table>
+
+        <div class="feedback-section">
+            <div class="info-label">Rendimiento general:</div>
+            <p id="resExtraObs" class="m-0">---</p>
+        </div>
+
+        <div class="row signature-row">
+            <div class="col-6"><div class="signature-line">DIRECTOR</div></div>
+            <div class="col-6"><div class="signature-line">DIRECTORA</div></div>
         </div>
     </div>
 
-    <footer class="footer-colegio">
-        <div class="container">
-            <div class="row align-items-center">
-                <div class="col-md-8 text-center text-md-left mb-3 mb-md-0">
-                    <p class="mb-0 text-white">© 2026 <strong>Colegio Niños Héroes Atizapán</strong>. Todos los derechos
-                        reservados.</p>
-                </div>
-                <div class="col-md-4 text-center text-md-right">
-                    <a href="bolsa-trabajo.html" class="link-unete"><i class="fas fa-briefcase mr-2"></i>Únete a nuestro
-                        equipo</a>
+    <div id="boletaIngles" class="report-card-container page-break" style="display:none;">
+        <div class="header-boleta row align-items-center">
+            <div class="col-8">
+                <h1 class="school-name">COLEGIO NIÑOS HÉROES</h1>
+                <p class="school-address">ENGLISH DEPARTMENT REPORT CARD</p>
+            </div>
+            <div class="col-4 d-flex justify-content-end">
+                <div class="final-score-box">
+                    <div class="final-label">FINAL AVERAGE</div>
+                    <div id="resInglesFinal" class="final-value">-</div>
                 </div>
             </div>
         </div>
-    </footer>
+
+        <div class="boleta-title">
+            <h2>ACADEMIC REPORT</h2>
+        </div>
+
+        <div class="row">
+            <div class="col-12 info-row"><span class="info-label">STUDENT:</span> <span id="resInglesNombre" class="info-content">-</span></div>
+            <div class="col-6 info-row"><span class="info-label">SCHOOL YEAR:</span> <span id="resInglesCiclo" class="info-content">-</span></div>
+            <div class="col-6 info-row"><span class="info-label">GRADE / GROUP:</span> <span id="resInglesGradoGrupo" class="info-content">-</span></div>
+        </div>
+
+        <table class="grade-table">
+            <thead>
+                <tr>
+                    <th style="width: 40%;">SUBJECTS</th>
+                    <th>1st TERM</th>
+                    <th>2nd TERM</th>
+                    <th>3rd TERM</th>
+                    <th>FINAL GRADE</th>
+                </tr>
+            </thead>
+            <tbody id="resInglesRows"></tbody>
+        </table>
+
+        <div class="row signature-row" style="margin-top: 100px;">
+            <div class="col-6"><div class="signature-line">COORDINATOR</div></div>
+            <div class="col-6"><div class="signature-line">TEACHER</div></div>
+        </div>
+    </div>
 
 <script>
-    const idExtra = '12m7RYtCBAF-P6t8_hoS3TkJwVX0tHEf7uaHAs6m0pTs';
-    const idIngles = '1EY955TiJLZtpffxAtNQW3bjVuw8vHfYm_JYhX_6hXd4';
-    
-    const niveles = [
-        'Maternal', 'Kinder 1', 'Kinder 2', 'Kinder 3', 
-        'Primaria 1', 'Primaria 2', 'Primaria 3', 'Primaria 4', 'Primaria 5', 'Primaria 6',
-        'Secundaria 1', 'Secundaria 2', 'Secundaria 3',
-        'Preparatoria 1', 'Preparatoria 2', 'Preparatoria 3'
-    ];
+    const CONFIG = {
+        idExtra: '12m7RYtCBAF-P6t8_hoS3TkJwVX0tHEf7uaHAs6m0pTs',
+        idIngles: '1EY955TiJLZtpffxAtNQW3bjVuw8vHfYm_JYhX_6hXd4',
+        niveles: [
+            'Maternal', 'Kinder 1', 'Kinder 2', 'Kinder 3', 
+            'Primaria 1', 'Primaria 2', 'Primaria 3', 'Primaria 4', 'Primaria 5', 'Primaria 6',
+            'Secundaria 1', 'Secundaria 2', 'Secundaria 3',
+            'Preparatoria 1', 'Preparatoria 2', 'Preparatoria 3'
+        ]
+    };
+
+    // Mapeo de materias por nivel académico según requerimiento
+    const MATERIAS_MAP = {
+        ingles: (nivel) => {
+            const n = nivel.toLowerCase();
+            if (n.includes('maternal') || n.includes('kinder')) return ['LISTENING', 'READING'];
+            return ['LISTENING', 'READING', 'WRITING', 'SPEAKING', 'COMPOSITION'];
+        },
+        extra: (nivel) => {
+            const n = nivel.toLowerCase();
+            if (n.includes('maternal') || n.includes('kinder')) 
+                return ['EDUCACIÓN FISÍCA', 'DANZA', 'MÚSICA', 'TOCHO BANDERA', 'TAEKWONDO', 'INFORMÁTICA', 'EMOCIONES'];
+            if (n.includes('primaria 1') || n.includes('primaria 2'))
+                return ['EDUCACIÓN FISÍCA', 'DANZA', 'MÚSICA', 'TOCHO BANDERA', 'TAEKWONDO', 'INFORMÁTICA', 'JUEGOS Y DESTREZAS', 'ROBÓTICA', 'EDUCACIÓN FINANCIERA', 'SISTÉMICA', 'LECTURA', 'SPELLING BEE'];
+            if (n.includes('primaria 3') || n.includes('primaria 4') || n.includes('primaria 5') || n.includes('primaria 6'))
+                return ['EDUCACIÓN FISÍCA', 'DANZA', 'MÚSICA', 'TOCHO BANDERA', 'TAEKWONDO', 'INFORMÁTICA', 'JUEGOS Y DESTREZAS', 'ROBÓTICA', 'EDUCACIÓN FINANCIERA', 'SISTÉMICA'];
+            if (n.includes('secundaria 1') || n.includes('secundaria 3'))
+                return ['EDUCACIÓN FISÍCA', 'DANZA', 'ARTES', 'MÚSICA', 'TOCHO BANDERA', 'TAEKWONDO', 'INFORMÁTICA', 'HERRAMIENTAS DIGITALES', 'AJEDREZ', 'ROBÓTICA', 'SISTÉMICA'];
+            if (n.includes('secundaria 2'))
+                return ['EDUCACIÓN FISÍCA', 'DANZA', 'ARTES', 'MÚSICA', 'TOCHO BANDERA', 'TAEKWONDO', 'INFORMÁTICA', 'HERRAMIENTAS DIGITALES', 'AJEDREZ', 'ROBÓTICA', 'ORTOGRAFÍA', 'SISTÉMICA'];
+            if (n.includes('preparatoria'))
+                return ['EDUCACIÓN FISÍCA', 'DANZA', 'ARTES', 'TOCHO BANDERA', 'TAEKWONDO', 'INFORMÁTICA', 'HERRAMIENTAS DIGITALES', 'AJEDREZ', 'ROBÓTICA'];
+            return [];
+        }
+    };
 
     async function buscarBoletas() {
         const matricula = document.getElementById('matriculaInput').value.trim().toUpperCase();
         const status = document.getElementById('statusMsg');
-        if (!matricula) {
-            status.innerHTML = "<span class='text-warning'>Ingrese una matrícula válida.</span>";
-            return;
-        }
-        status.innerHTML = "<i class='fas fa-spinner fa-spin'></i> Buscando información...";
-        const [dataExtra, dataIngles] = await Promise.all([
-            obtenerDatos(idExtra, matricula),
-            obtenerDatos(idIngles, matricula)
-        ]);
-        if (dataExtra || dataIngles) {
-            status.innerHTML = "<span class='text-success'>¡Datos encontrados!</span>";
-            document.getElementById('printBtnContainer').style.display = 'block';
-            if (dataExtra) renderBoleta(dataExtra, 'Extra');
-            else document.getElementById('reportCardExtra').style.display = 'none';
-            if (dataIngles) renderBoleta(dataIngles, 'Ingles');
-            else document.getElementById('reportCardIngles').style.display = 'none';
+        if (!matricula) { status.innerHTML = "Ingrese matrícula"; return; }
+
+        status.innerHTML = "<i class='fas fa-spinner fa-spin'></i> Buscando en base de datos...";
+
+        const dataEx = await obtenerFila(CONFIG.idExtra, matricula);
+        const dataIn = await obtenerFila(CONFIG.idIngles, matricula);
+
+        if (dataEx || dataIn) {
+            status.innerHTML = "<span class='text-success'>Datos cargados correctamente</span>";
+            document.getElementById('btnPrint').style.display = 'inline-block';
+            if (dataEx) renderBoleta(dataEx, 'Extra');
+            if (dataIn) renderBoleta(dataIn, 'Ingles');
         } else {
-            status.innerHTML = "<span class='text-danger'>Matrícula no encontrada.</span>";
-            document.getElementById('reportCardExtra').style.display = 'none';
-            document.getElementById('reportCardIngles').style.display = 'none';
-            document.getElementById('printBtnContainer').style.display = 'none';
+            status.innerHTML = "<span class='text-danger'>Matrícula no encontrada</span>";
+            ocultarBoletas();
         }
     }
 
-    async function obtenerDatos(sheetId, matricula) {
-        for (let nivel of niveles) {
-            const url = `https://docs.google.com/spreadsheets/d/${sheetId}/gviz/tq?tqx=out:csv&sheet=${encodeURIComponent(nivel)}&tqx=cb:${Date.now()}`;
+    async function obtenerFila(sheetId, matricula) {
+        for (let nivel of CONFIG.niveles) {
+            const url = `https://docs.google.com/spreadsheets/d/${sheetId}/gviz/tq?tqx=out:csv&sheet=${encodeURIComponent(nivel)}`;
             try {
                 const res = await fetch(url);
                 const csvText = await res.text();
-                const data = Papa.parse(csvText, { header: false, skipEmptyLines: true }).data;
-                let headerIdx = data.findIndex(row => row[0] && row[0].toString().toLowerCase().includes('matricula'));
-                if (headerIdx === -1) continue;
-                const headerNames = data[headerIdx - 1] || [];
-                const alumnos = data.slice(headerIdx + 1);
-                const fila = alumnos.find(row => row[0] && row[0].toString().trim().toUpperCase() === matricula);
-                if (fila) {
-                    const esPrepa = nivel.toLowerCase().includes('preparatoria');
-                    const jump = esPrepa ? 3 : 4;
-                    const fmt = (v) => (v && !isNaN(v)) ? (Math.floor(parseFloat(v) * 10) / 10).toFixed(1) : '-';
-                    let alumno = { Nombre: fila[1], Matricula: fila[0], Ciclo: fila[2], Grado: fila[3], Grupo: fila[4], Nivel: nivel, Materias: [] };
-                    for (let i = 5; i < fila.length - 1; i += jump) {
-                        let nombre = "";
-                        for (let j = i; j >= 5; j--) { if (headerNames[j]) { nombre = headerNames[j].trim(); break; } }
-                        if (nombre.toUpperCase().includes("PROMEDIO") || i >= fila.length - 1) break;
-                        alumno.Materias.push({ n: nombre, v1: fmt(fila[i]), v2: fmt(fila[i+1]), v3: esPrepa ? null : fmt(fila[i+2]), vf: esPrepa ? fmt(fila[i+2]) : fmt(fila[i+3]) });
-                    }
-                    for (let k = fila.length - 1; k >= 5; k--) { if (fila[k] && !isNaN(fila[k])) { alumno.Promedio = fmt(fila[k]); break; } }
-                    return alumno;
-                }
+                const rows = Papa.parse(csvText, {header: false}).data;
+                
+                const hIdx = rows.findIndex(r => r[0] && r[0].toString().toLowerCase().includes('matricula'));
+                if (hIdx === -1) continue;
+
+                const headers = rows[hIdx - 1] || [];
+                const studentRow = rows.find(r => r[0] && r[0].toString().trim().toUpperCase() === matricula);
+
+                if (studentRow) return { nivel, headers, studentRow };
             } catch (e) { console.error(e); }
         }
         return null;
     }
 
-    function renderBoleta(alumno, sufijo) {
-        document.getElementById(`reportCard${sufijo}`).style.display = 'block';
-        document.getElementById(`displayName${sufijo}`).innerText = alumno.Nombre;
-        document.getElementById(`displayMatricula${sufijo}`).innerText = alumno.Matricula;
-        document.getElementById(`displayGradoGrupo${sufijo}`).innerText = `${alumno.Grado} ${alumno.Grupo}`;
-        document.getElementById(`displayCiclo${sufijo}`).innerText = alumno.Ciclo;
-        document.getElementById(`displayNivel${sufijo}`).innerText = alumno.Nivel;
-        document.getElementById(`displayPromedio${sufijo}`).innerText = alumno.Promedio;
-        const esPrepa = alumno.Nivel.toLowerCase().includes('preparatoria');
-        let hHead = `<tr><th style="text-align:left;">Asignatura</th>`;
-        hHead += esPrepa ? `<th>Sem 1</th><th>Sem 2</th>` : `<th>Trim 1</th><th>Trim 2</th><th>Trim 3</th>`;
-        hHead += `<th>Final</th></tr>`;
-        document.getElementById(`tableHeader${sufijo}`).innerHTML = hHead;
-        let hBody = "";
-        alumno.Materias.forEach(m => {
-            hBody += `<tr><td style="text-align:left; font-weight:600;">${m.n}</td><td>${m.v1}</td><td>${m.v2}</td>`;
-            if (!esPrepa) hBody += `<td>${m.v3}</td>`;
-            hBody += `<td style="font-weight:bold; background:#f9f9f9; color:var(--azul-id);">${m.vf}</td></tr>`;
-        });
-        document.getElementById(`gradeRows${sufijo}`).innerHTML = hBody;
-        document.getElementById(`labelPromedio${sufijo}`).colSpan = esPrepa ? 3 : 4;
+    function renderBoleta(data, tipo) {
+        const { nivel, headers, studentRow } = data;
+        const pfx = tipo === 'Extra' ? 'resExtra' : 'resIngles';
+        document.getElementById(`boleta${tipo}`).style.display = 'block';
+
+        // Llenar datos encabezado
+        document.getElementById(`${pfx}Nombre`).innerText = studentRow[1];
+        document.getElementById(`${pfx}Ciclo`).innerText = studentRow[2];
+        if (tipo === 'Extra') {
+            document.getElementById(`${pfx}Grado`).innerText = studentRow[3];
+            document.getElementById(`${pfx}Grupo`).innerText = studentRow[4];
+            document.getElementById(`${pfx}Obs`).innerText = studentRow[studentRow.length - 1] || "Sin observaciones.";
+        } else {
+            document.getElementById(`${pfx}GradoGrupo`).innerText = `${studentRow[3]} ${studentRow[4]}`;
+        }
+
+        // Llenar Materias
+        const listaPermitida = tipo === 'Extra' ? MATERIAS_MAP.extra(nivel) : MATERIAS_MAP.ingles(nivel);
+        const esPrepa = nivel.toLowerCase().includes('preparatoria');
+        const jump = esPrepa ? 3 : 4;
+        let htmlRows = "";
+        
+        for (let i = 5; i < studentRow.length - 1; i += jump) {
+            let mName = "";
+            for (let j = i; j >= 5; j--) { if (headers[j]) { mName = headers[j].trim(); break; } }
+            
+            if (listaPermitida.includes(mName.toUpperCase())) {
+                const v1 = studentRow[i] || '-';
+                const v2 = studentRow[i+1] || '-';
+                const v3 = esPrepa ? null : (studentRow[i+2] || '-');
+                const vf = esPrepa ? (studentRow[i+2] || '-') : (studentRow[i+3] || '-');
+
+                htmlRows += `<tr>
+                    <td class="subject-name">${mName}</td>
+                    <td>${v1}</td><td>${v2}</td>
+                    ${!esPrepa ? `<td>${v3}</td>` : ''}
+                    <td style="font-weight:900; background:#f0f4f8;">${vf}</td>
+                </tr>`;
+            }
+        }
+        document.getElementById(`${pfx}Rows`).innerHTML = htmlRows;
+        
+        // Promedio Final (buscamos la última celda numérica de la fila)
+        let promFinal = "-";
+        for (let k = studentRow.length - 1; k >= 5; k--) {
+            if (studentRow[k] && !isNaN(studentRow[k])) {
+                promFinal = studentRow[k];
+                break;
+            }
+        }
+        document.getElementById(`${pfx}Final`).innerText = promFinal;
+    }
+
+    function ocultarBoletas() {
+        document.getElementById('boletaExtra').style.display = 'none';
+        document.getElementById('boletaIngles').style.display = 'none';
+        document.getElementById('btnPrint').style.display = 'none';
     }
 </script>
 </body>
