@@ -137,8 +137,13 @@
         'Preparatoria 1', 'Preparatoria 2', 'Preparatoria 3'
     ];
 
+    // Diccionario de materias por nivel (Exactamente como se pidió)
     const MATERIAS_MAP = {
-        ingles: (n) => n.includes('Maternal') || n.includes('Kinder') ? ['LISTENING', 'READING'] : ['LISTENING', 'READING', 'WRITING', 'SPEAKING', 'COMPOSITION'],
+        ingles: (n) => {
+            const nl = n.toLowerCase();
+            if (nl.includes('maternal') || nl.includes('kinder')) return ['LISTENING', 'READING'];
+            return ['LISTENING', 'READING', 'WRITING', 'SPEAKING', 'COMPOSITION'];
+        },
         extra: (n) => {
             const nl = n.toLowerCase();
             if (nl.includes('maternal') || nl.includes('kinder')) return ['EDUCACIÓN FISÍCA', 'DANZA', 'MÚSICA', 'TOCHO BANDERA', 'TAEKWONDO', 'INFORMÁTICA', 'EMOCIONES'];
@@ -151,9 +156,9 @@
         }
     };
 
-    // TRUNCAR A 1 DECIMAL (7.59 -> 7.5)
+    // Función de truncado a 1 decimal (Ejemplo: 7.59 -> 7.5)
     const fmt = (v) => {
-        if (!v || isNaN(v) || v === "") return '-';
+        if (v === undefined || v === null || v === "" || isNaN(v)) return '-';
         return (Math.floor(parseFloat(v) * 10) / 10).toFixed(1);
     };
 
@@ -173,9 +178,11 @@
             status.innerHTML = "<span class='text-success'>Información cargada con éxito.</span>";
             document.getElementById('printBtnContainer').style.display = 'block';
             if (dEx) renderBoleta(dEx, 'Extra', 'BOLETA DE CALIFICACIONES - EXTRACURRICULARES');
+            else document.getElementById('reportCardExtra').style.display = 'none';
             if (dIn) renderBoleta(dIn, 'Ingles', 'BOLETA DE CALIFICACIONES - INGLÉS');
+            else document.getElementById('reportCardIngles').style.display = 'none';
         } else {
-            status.innerHTML = "<span class='text-danger'>No se encontró la matrícula ingresada.</span>";
+            status.innerHTML = "<span class='text-danger'>No se encontró la matrícula. Verifique sus datos e intente de nuevo.</span>";
             ocultar();
         }
     }
@@ -186,12 +193,14 @@
             try {
                 const res = await fetch(url);
                 const csv = await res.text();
-                const data = Papa.parse(csv, {header: false}).data;
-                const hIdx = data.findIndex(r => r[0] && r[0].toString().toLowerCase().includes('matricula'));
+                const data = Papa.parse(csv, {header: false, skipEmptyLines: true}).data;
+                
+                // Encontrar la fila de encabezados que contiene 'Matricula'
+                const hIdx = data.findIndex(r => r.some(cell => cell && cell.toString().toLowerCase().includes('matricula')));
                 if (hIdx === -1) continue;
 
-                const headers = data[hIdx - 1] || [];
-                const row = data.find(r => r[0] && r[0].toString().trim().toUpperCase() === mat);
+                const headers = data[hIdx - 1] || []; // Los nombres de materias suelen estar una fila arriba
+                const row = data.find(r => r.some(cell => cell && cell.toString().trim().toUpperCase() === mat));
 
                 if (row) {
                     const esPrepa = nivel.toLowerCase().includes('preparatoria');
@@ -199,12 +208,18 @@
                     const filtro = MATERIAS_MAP[tipo](nivel);
                     let materias = [];
                     
-                    for (let i = 5; i < row.length; i += jump) {
+                    // Empezamos desde la columna 5 (F) donde suelen iniciar las materias
+                    for (let i = 5; i < row.length; i++) {
                         let nombreM = "";
-                        for (let j = i; j >= 5; j--) { if (headers[j]) { nombreM = headers[j].trim(); break; } }
-                        if (!nombreM || nombreM.toUpperCase().includes("PROMEDIO")) continue;
-                        
-                        if (filtro.includes(nombreM.toUpperCase())) {
+                        // Buscar el nombre de la materia en los encabezados (hacia atrás por si hay celdas combinadas)
+                        for (let j = i; j >= 5; j--) {
+                            if (headers[j] && headers[j].trim() !== "") {
+                                nombreM = headers[j].trim();
+                                break;
+                            }
+                        }
+
+                        if (nombreM && filtro.includes(nombreM.toUpperCase())) {
                             materias.push({
                                 n: nombreM,
                                 v1: fmt(row[i]),
@@ -212,14 +227,32 @@
                                 v3: esPrepa ? null : fmt(row[i+2]),
                                 vf: esPrepa ? fmt(row[i+2]) : fmt(row[i+3])
                             });
+                            i += (jump - 1); // Saltar columnas de trimestres
                         }
                     }
+                    
+                    // Buscar el Promedio Final (último valor numérico de la fila)
                     let pf = "-";
-                    for (let k = row.length - 1; k >= 5; k--) { if (row[k] && !isNaN(row[k])) { pf = fmt(row[k]); break; } }
+                    for (let k = row.length - 1; k >= 5; k--) {
+                        if (row[k] && !isNaN(row[k]) && row[k].toString().trim() !== "") {
+                            pf = fmt(row[k]);
+                            break;
+                        }
+                    }
 
-                    return { nombre: row[1], mat: row[0], ciclo: row[2], grado: row[3], grupo: row[4], nivel, materias, pf, esPrepa };
+                    return { 
+                        nombre: row[1], 
+                        mat: row[0], 
+                        ciclo: row[2], 
+                        grado: row[3], 
+                        grupo: row[4], 
+                        nivel, 
+                        materias, 
+                        pf, 
+                        esPrepa 
+                    };
                 }
-            } catch (e) { console.error(e); }
+            } catch (e) { console.error("Error cargando nivel: " + nivel, e); }
         }
         return null;
     }
@@ -236,7 +269,7 @@
                 <img src="Iconos/logo.png" style="height: 60px; margin-bottom: 5px;">
                 <h2 class="school-name">COLEGIO NIÑOS HÉROES</h2>
                 <p class="address-line">Durango S/N Amp. Adolfo Lopez Mateos, Atizapan de Zaragoza</p>
-                <div style="text-align:center; font-weight:800; margin-top:15px; border-top:2px solid #000; padding-top:5px;">${tit}</div>
+                <div style="text-align:center; font-weight:800; margin-top:15px; border-top:2px solid #000; padding-top:5px; font-size: 1.1rem;">${tit}</div>
             </div>
             <div class="info-section">
                 <div class="row">
@@ -255,15 +288,15 @@
                     </tr>
                 </thead>
                 <tbody>
-                    ${d.materias.map(m => `
+                    ${d.materias.length > 0 ? d.materias.map(m => `
                         <tr>
                             <td class="subject-col">${m.n}</td>
                             <td>${m.v1}</td>
                             <td>${m.v2}</td>
                             ${!d.esPrepa ? `<td>${m.v3}</td>` : ''}
-                            <td style="font-weight:900; background:#eee;">${m.vf}</td>
+                            <td style="font-weight:900; background:#f0f0f0;">${m.vf}</td>
                         </tr>
-                    `).join('')}
+                    `).join('') : '<tr><td colspan="5">No se encontraron materias para este nivel.</td></tr>'}
                 </tbody>
             </table>
             <div class="signature-section">
