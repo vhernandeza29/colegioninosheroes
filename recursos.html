@@ -6,6 +6,7 @@
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
     <link rel="stylesheet" href="style.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/PapaParse/5.3.2/papaparse.min.js"></script>
     <style>
          /* --- ESTILO HERO CON DEGRADADO (IGUAL A OFERTA EDUCATIVA) --- */
         .hero {
@@ -39,16 +40,6 @@
         }
         .btn-volver:hover { background: var(--azul-id); color: white !important; }
 
-        .hero-calendar {
-            background: linear-gradient(rgba(25, 62, 154, 0.8), rgba(25, 62, 154, 0.8)), 
-                        url('Iconos/patron-educativo.png');
-            background-size: cover;
-            color: white;
-            padding: 60px 0;
-            text-align: center;
-            border-radius: 0 0 50px 50px;
-        }
-
         .card-download {
             border: none;
             border-radius: 20px;
@@ -56,6 +47,7 @@
             transition: 0.3s;
             margin-bottom: 30px;
             border-left: 5px solid var(--verde-id);
+            height: calc(100% - 30px); /* Mantiene tarjetas alineadas */
         }
 
         .card-download:hover {
@@ -78,19 +70,13 @@
             text-decoration: none !important;
             display: inline-block;
             transition: 0.3s;
+            border: none;
+            cursor: pointer;
         }
 
         .btn-descargar:hover {
             background-color: var(--verde-id);
             transform: scale(1.05);
-        }
-
-        .section-title {
-            color: var(--azul-id);
-            font-weight: 800;
-            margin-bottom: 40px;
-            position: relative;
-            padding-bottom: 10px;
         }
         
         .footer-colegio {
@@ -116,6 +102,18 @@
             background-color: white;
             color: #193E9A !important;
         }
+
+        /* Ajustes estéticos para las ventanas de validación */
+        .modal-content {
+            border-radius: 15px;
+            border: none;
+        }
+        .modal-header {
+            background-color: var(--azul-id);
+            color: white;
+            border-top-left-radius: 15px;
+            border-top-right-radius: 15px;
+        }
     </style>
 </head>
 <body>
@@ -139,7 +137,7 @@
     <section class="container py-5 mt-4">
         <div class="row">
             
-            <div class="col-md-6 col-lg-4">
+            <div class="col-md-6 col-lg-4 mb-4">
                 <div class="card card-download p-4 text-center">
                     <i class="fas fa-file-pdf icon-pdf"></i>
                     <h5 class="font-weight-bold">Calendario Escolar 2026</h5>
@@ -150,18 +148,18 @@
                 </div>
             </div>
 
-            <div class="col-md-6 col-lg-4">
+            <div class="col-md-6 col-lg-4 mb-4">
                 <div class="card card-download p-4 text-center">
                     <i class="fas fa-file-pdf icon-pdf"></i>
-                    <h5 class="font-weight-bold">Calendario de Evaluaciones</h5>
+                    <h5 class="font-weight-bold">Cronograma</h5>
                     <p class="text-muted small">Fechas correspondientes al segundo periodo trimestral.</p>
-                    <a href="Adjuntos/examenes.pdf" download class="btn-descargar">
-                        <i class="fas fa-download mr-2"></i> Descargar PDF
-                    </a>
+                    <button type="button" class="btn-descargar w-100" data-toggle="modal" data-target="#modalMatricula">
+                        <i class="fas fa-lock mr-2"></i> Descargar Cronograma
+                    </button>
                 </div>
             </div>
 
-            <div class="col-md-6 col-lg-4">
+            <div class="col-md-6 col-lg-4 mb-4">
                 <div class="card card-download p-4 text-center">
                     <i class="fas fa-file-pdf icon-pdf"></i>
                     <h5 class="font-weight-bold">Menú Mensual</h5>
@@ -172,12 +170,45 @@
                 </div>
             </div>
 
-            <div class="col-md-6 col-lg-4">
+            <div class="col-md-6 col-lg-4 mb-4">
                 <div class="card card-download p-4 text-center">
                     <i class="fas fa-file-pdf icon-pdf"></i>
-                    <h5 class="font-weight-bold">Reglamento Interno</h5>
-                    <p class="text-muted small">Normas y convivencia para la comunidad escolar.</p>
-                    <a href="Adjuntos/reglamento.pdf" download class="btn-descargar">
+                    <h5 class="font-weight-bold">Acuerdos de Convivencia Preescolar</h5>
+                    <p class="text-muted small">Normas y armonía escolar interna para nivel Preescolar.</p>
+                    <a href="Adjuntos/acuerdos-preescolar.pdf" download class="btn-descargar">
+                        <i class="fas fa-download mr-2"></i> Descargar PDF
+                    </a>
+                </div>
+            </div>
+
+            <div class="col-md-6 col-lg-4 mb-4">
+                <div class="card card-download p-4 text-center">
+                    <i class="fas fa-file-pdf icon-pdf"></i>
+                    <h5 class="font-weight-bold">Acuerdos de Convivencia Primaria</h5>
+                    <p class="text-muted small">Normas y armonía escolar interna para nivel Primaria.</p>
+                    <a href="Adjuntos/acuerdos-primaria.pdf" download class="btn-descargar">
+                        <i class="fas fa-download mr-2"></i> Descargar PDF
+                    </a>
+                </div>
+            </div>
+
+            <div class="col-md-6 col-lg-4 mb-4">
+                <div class="card card-download p-4 text-center">
+                    <i class="fas fa-file-pdf icon-pdf"></i>
+                    <h5 class="font-weight-bold">Acuerdos de Convivencia Secundaria</h5>
+                    <p class="text-muted small">Normas y armonía escolar interna para nivel Secundaria.</p>
+                    <a href="Adjuntos/acuerdos-secundaria.pdf" download class="btn-descargar">
+                        <i class="fas fa-download mr-2"></i> Descargar PDF
+                    </a>
+                </div>
+            </div>
+
+            <div class="col-md-6 col-lg-4 mb-4">
+                <div class="card card-download p-4 text-center">
+                    <i class="fas fa-file-pdf icon-pdf"></i>
+                    <h5 class="font-weight-bold">Acuerdos de Convivencia Preparatoria</h5>
+                    <p class="text-muted small">Normas y armonía escolar interna para nivel Preparatoria.</p>
+                    <a href="Adjuntos/acuerdos-preparatoria.pdf" download class="btn-descargar">
                         <i class="fas fa-download mr-2"></i> Descargar PDF
                     </a>
                 </div>
@@ -186,20 +217,105 @@
         </div>
     </section>
 
+    <div class="modal fade" id="modalMatricula" tabindex="-1" role="dialog" aria-labelledby="modalMatriculaLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="modalMatriculaLabel"><i class="fas fa-key mr-2"></i> Verificación Requerida</h5>
+                    <button type="button" class="close text-white" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body p-4">
+                    <p class="text-muted">Por seguridad de la comunidad escolar, ingresa la <strong>matrícula del alumno</strong> para proceder con la descarga del Cronograma.</p>
+                    <div class="form-group">
+                        <input type="text" id="inputMatricula" class="form-control form-control-lg text-center" placeholder="Ej. CNH202689" style="letter-spacing: 2px; font-weight: bold;">
+                    </div>
+                    <div id="errorMatricula" class="text-danger small font-weight-bold text-center mb-2" style="display:none;">Matrícula no encontrada o incorrecta. Inténtalo de nuevo.</div>
+                </div>
+                <div class="modal-footer justify-content-center">
+                    <button type="button" class="btn btn-secondary px-4" data-dismiss="modal" style="border-radius:20px;">Cancelar</button>
+                    <button type="button" onclick="validarYDescargar()" class="btn btn-primary px-4" style="background-color:var(--azul-id); border-radius:20px;">Verificar y Descargar</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
     <footer class="footer-colegio">
         <div class="container">
             <div class="row align-items-center">
                 <div class="col-md-8 text-center text-md-left mb-3 mb-md-0">
-                    <p class="mb-0 text-white">© 2026 <strong>Colegio Niños Héroes Atizapán</strong>. Todos los derechos
-                        reservados.</p>
+                    <p class="mb-0 text-white">© 2026 <strong>Colegio Niños Héroes Atizapán</strong>. Todos los derechos reservados.</p>
                 </div>
                 <div class="col-md-4 text-center text-md-right">
-                    <a href="bolsa-trabajo.html" class="link-unete"><i class="fas fa-briefcase mr-2"></i>Únete a nuestro
-                        equipo</a>
+                    <a href="bolsa-trabajo.html" class="link-unete"><i class="fas fa-briefcase mr-2"></i>Únete a nuestro equipo</a>
                 </div>
             </div>
         </div>
     </footer>
 
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
+
+    <script>
+        // CONFIGURACIÓN PRINCIPAL: ID del archivo de Google Sheets y pestaña donde están las boletas/matrículas
+        const idExcelMatriculas = '18JCUK-SGSQCXMvWng3O3hZYxD4GU_BVILkvO_tawDZo'; 
+        const nombrePestana = 'Matriculas'; // Cambiar por el nombre de la pestaña donde estén las matrículas (ej. 'General', 'Alumnos', etc.)
+
+        function validarYDescargar() {
+            const matriculaIngresada = document.getElementById('inputMatricula').value.trim().toUpperCase();
+            const errorElemento = document.getElementById('errorMatricula');
+            
+            if (matriculaIngresada === "") {
+                errorElemento.innerText = "Por favor, escribe una matrícula.";
+                errorElemento.style.display = "block";
+                return;
+            }
+
+            // Construimos la URL segura de exportación para PapaParse
+            const url = `https://docs.google.com/spreadsheets/d/${idExcelMatriculas}/pub?output=csv&sheet=${encodeURIComponent(nombrePestana)}`;
+
+            Papa.parse(url, {
+                download: true,
+                complete: function (results) {
+                    const datos = results.data;
+                    let matriculaValida = false;
+
+                    // Recorremos todas las filas y columnas buscando coincidencias
+                    for (let i = 0; i < datos.length; i++) {
+                        for (let j = 0; j < datos[i].length; j++) {
+                            if (datos[i][j] && datos[i][j].toString().trim().toUpperCase() === matriculaIngresada) {
+                                matriculaValida = true;
+                                break;
+                            }
+                        }
+                        if (matriculaValida) break;
+                    }
+
+                    if (matriculaValida) {
+                        errorElemento.style.display = "none";
+                        $('#modalMatricula').modal('hide'); // Ocultar cuadro
+                        document.getElementById('inputMatricula').value = ""; // Limpiar input
+                        
+                        // Forzamos la descarga automática del archivo real
+                        const linkDescarga = document.createElement('a');
+                        linkDescarga.href = 'Adjuntos/examenes.pdf'; // Tu archivo
+                        linkDescarga.download = 'Cronograma_Evaluaciones.pdf';
+                        document.body.appendChild(linkDescarga);
+                        linkDescarga.click();
+                        document.body.removeChild(linkDescarga);
+                    } else {
+                        errorElemento.innerText = "Matrícula no encontrada o incorrecta. Inténtalo de nuevo.";
+                        errorElemento.style.display = "block";
+                    }
+                },
+                error: function() {
+                    errorElemento.innerText = "Error de conexión con la base de datos. Intente más tarde.";
+                    errorElemento.style.display = "block";
+                }
+            });
+        }
+    </script>
 </body>
 </html>
