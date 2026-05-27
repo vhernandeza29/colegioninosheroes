@@ -311,7 +311,8 @@
 
             if (!mat) { status.innerText = "Por favor, ingrese una matrícula válida."; return; }
 
-            status.innerHTML = "<i class='fas fa-spinner fa-spin mr-2'></i>Sincronizando y buscando en la base de datos completa...";
+            // MODIFICACIÓN REQUERIDA: Mensaje plano, estático y limpio.
+            status.innerHTML = "<i class='fas fa-spinner fa-spin mr-2'></i>Buscando...";
 
             document.getElementById('reportCardExtra').style.display = 'none';
             document.getElementById('reportCardIngles').style.display = 'none';
@@ -320,15 +321,13 @@
             let dEx = null;
             let dIn = null;
 
-            // BÚSQUEDA SECUENCIAL ROBUSTA PASO A PASO
+            // Bucle robusto con el recuperador CSV tradicional de Google que respeta las cabeceras intactas
             for (const pestañaActual of PESTANAS_SISTEMA) {
                 let textoNivelCompleto = pestañaActual.replace(/Kinder/i, 'Preescolar');
                 
-                // Intenta obtener los datos de la pestaña actual
                 let resEx = await obtenerDatosPorPestaña(idExtra, mat, pestañaActual, textoNivelCompleto, 'extra');
                 if (resEx) {
                     dEx = resEx;
-                    // Si el alumno existe aquí, descarga inmediatamente inglés desde la misma pestaña identificada
                     dIn = await obtenerDatosPorPestaña(idIngles, mat, pestañaActual, textoNivelCompleto, 'ingles');
                     break; 
                 }
@@ -340,26 +339,26 @@
                 if (dEx) renderBoleta(dEx, 'Extra', 'ASIGNATURAS EXTRACURRICULARES');
                 if (dIn) renderBoleta(dIn, 'Ingles', 'BOLETA DE INGLÉS');
             } else {
-                status.innerHTML = `<span class='text-danger'>Matrícula "${mat}" no encontrada en la Columna A de ningún nivel. Verifique que esté bien escrita.</span>`;
+                status.innerHTML = `<span class='text-danger'>Matrícula "${mat}" no encontrada en la Columna A de ningún nivel.</span>`;
             }
         }
 
         async function obtenerDatosPorPestaña(sheetId, mat, nombrePestaña, textoNivelCompleto, tipo) {
-            // Se fuerza el refresco de caché mediante timestamp para evitar datos congelados de Google Drive
-            const url = `https://docs.google.com/spreadsheets/d/${sheetId}/gviz/tq?tqx=out:csv&sheet=${encodeURIComponent(nombrePestaña)}&t=${Date.now()}`;
+            // Volvemos al formato de exportación CSV directo que garantiza la integridad de la primera fila de materias
+            const url = `https://docs.google.com/spreadsheets/d/${sheetId}/export?format=csv&sheet=${encodeURIComponent(nombrePestaña)}&tqx=cb:${Date.now()}`;
             try {
                 const res = await fetch(url);
                 if (!res.ok) return null; 
                 
                 const csv = await res.text();
-                const data = Papa.parse(csv, {header: false, skipEmptyLines: true}).data;
+                const data = Papa.parse(csv, {header: false, skipEmptyLines: false}).data;
                 
                 if (!data || data.length < 3) return null;
 
                 const materiasRow = data[0] || []; 
                 let studentRow = null;
 
-                // ESCANEO TOTAL: Revisa desde la fila 3 (índice 2) hasta el final de la hoja en la Columna A
+                // BÚSQUEDA EXACTA EN COLUMNA A A PARTIR DE FILA 3
                 for (let r = 2; r < data.length; r++) {
                     if (data[r] && data[r][0] !== undefined && data[r][0] !== null) {
                         const celdaMatricula = data[r][0].toString().trim().toUpperCase();
@@ -409,7 +408,7 @@
                     };
                 }
             } catch (e) { 
-                console.error("Error en escaneo de pestaña: ", e);
+                // Captura errores y permite continuar el bucle limpiamente
             }
             return null;
         }
