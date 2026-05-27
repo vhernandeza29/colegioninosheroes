@@ -2,18 +2,13 @@
 <html lang="es">
 
 <head>
-       
     <meta charset="UTF-8">
-       
     <link rel="icon" href="data:,">
-        <title>Consulta de Calificaciones - Colegio Niños Héroes</title>
-       
+    <title>Consulta de Calificaciones - Colegio Niños Héroes</title>
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
-       
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
-       
     <script src="https://cdnjs.cloudflare.com/ajax/libs/PapaParse/5.3.2/papaparse.min.js"></script>
-        <style>
+    <style>
         :root {
             --azul-id: #193E9A;
             --verde-id: #317F77;
@@ -26,141 +21,133 @@
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
         }
 
-        /* NAV ESTILO IMAGEN */
-        .navbar {
-            padding: 15px 40px;
-            background: var(--blanco);
-            border-bottom: 1px solid #eee;
+        /* NAVBAR */
+        .navbar { 
+            padding: 15px 40px; 
+            background: var(--blanco); 
+            border-bottom: 1px solid #eee; 
+        }
+        .navbar-brand { 
+            display: flex; 
+            align-items: center; 
+            font-weight: 800; 
+            color: var(--azul-id) !important; 
+            font-size: 1.6rem; 
+        }
+        .logo-nav { 
+            height: 40px; 
+            margin-right: 15px; 
+        }
+        .btn-volver { 
+            border: 1.5px solid var(--azul-id); 
+            color: var(--azul-id); 
+            font-weight: 600; 
+            border-radius: 12px; 
+            padding: 6px 25px; 
+            text-decoration: none !important; 
+            transition: 0.3s; 
+        }
+        .btn-volver:hover { 
+            background: var(--azul-id); 
+            color: white !important; 
         }
 
-        .navbar-brand {
-            display: flex;
-            align-items: center;
-            font-weight: 800;
-            color: var(--azul-id) !important;
-            font-size: 1.6rem;
+        /* HERO BANNER */
+        .hero-banner { 
+            background: linear-gradient(90deg, #193E9A 0%, #317F77 100%); 
+            padding: 60px 20px; 
+            text-align: center; 
+            color: white; 
+            margin-bottom: 30px; 
         }
-
-        .logo-nav {
-            height: 40px;
-            margin-right: 15px;
+        .hero-banner h1 { 
+            font-weight: 800; 
+            font-size: 3rem; 
+            margin-bottom: 10px; 
         }
-
-        .btn-volver {
-            border: 1.5px solid var(--azul-id);
-            color: var(--azul-id);
-            font-weight: 600;
-            border-radius: 12px;
-            padding: 6px 25px;
-            text-decoration: none !important;
-            transition: 0.3s;
-        }
-
-        .btn-volver:hover {
-            background: var(--azul-id);
-            color: white !important;
-        }
-
-        /* HERO BANNER DEGRADADO */
-        .hero-banner {
-            background: linear-gradient(90deg, #193E9A 0%, #317F77 100%);
-            padding: 60px 20px;
-            text-align: center;
-            color: white;
-            margin-bottom: 30px;
-        }
-
-        .hero-banner h1 {
-            font-weight: 800;
-            font-size: 3rem;
-            margin-bottom: 10px;
-        }
-
+        
         /* BUSCADOR */
-        .search-container {
-            max-width: 600px;
-            margin: 0 auto 40px;
+        .search-container { 
+            max-width: 600px; 
+            margin: 0 auto 40px; 
+        }
+        .input-group { 
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1); 
+            border-radius: 50px; 
+            overflow: hidden; 
+            background: white; 
+            border: 1px solid #ddd; 
+        }
+        #matriculaInput { 
+            border: none; 
+            padding-left: 30px; 
+            height: 60px; 
+            font-size: 1.1rem; 
+        }
+        .btn-buscar { 
+            background: var(--verde-id) !important; 
+            color: white !important; 
+            border: none !important; 
+            padding: 0 40px; 
+            font-weight: 800; 
         }
 
-        .input-group {
-            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
-            border-radius: 50px;
-            overflow: hidden;
-            background: white;
-            border: 1px solid #ddd;
-        }
-
-        #matriculaInput {
-            border: none;
-            padding-left: 30px;
-            height: 60px;
-            font-size: 1.1rem;
-        }
-
-        .btn-buscar {
-            background: var(--verde-id) !important;
-            color: white !important;
-            border: none !important;
-            padding: 0 40px;
-            font-weight: 800;
-            cursor: pointer;
-        }
-
-        /* BOLETA DISEÑO INSPIRADO CON BORDES REDONDEADOS Y SOMBRA */
+        /* DISEÑO DE BOLETA INSPIRADO (ESTILO LIMPIO CON BORDES REDONDEADOS) */
         .report-card-container {
             background: var(--blanco);
             padding: 40px;
             border-radius: 25px;
-            box-shadow: 0 15px 50px rgba(0, 0, 0, 0.1);
+            box-shadow: 0 15px 50px rgba(0,0,0,0.1);
             margin: 0 auto 50px;
             max-width: 850px;
             display: none;
             overflow: hidden;
         }
 
-        /* CABECERA GRIS OSCURO INSPIRADA CON LOGO Y NOMBRE FIJOS */
+        /* CABECERA CON COLORES ORIGINALES FIJOS */
         .header-boleta {
-            background-color: #4A5568;
             margin: -40px -40px 30px -40px;
-            padding: 20px 40px;
+            padding: 30px 40px;
             display: flex;
             align-items: center;
             justify-content: space-between;
-            color: white;
-            position: relative;
+            background-color: #fff;
+            border-bottom: 2px solid #edf2f7;
         }
-
-        .logo-boleta {
-            height: 70px;
+        .logo-boleta { 
+            height: 85px; 
         }
-
-        .school-info {
-            text-align: right;
+        .school-info { 
+            text-align: right; 
         }
-
-        .school-name {
-            font-weight: 800;
-            font-size: 1.5rem;
-            text-transform: uppercase;
-            margin: 0;
+        .school-name { 
+            font-weight: 800; 
+            font-size: 1.7rem; 
+            color: var(--azul-id); 
+            margin: 0; 
         }
-
-        .school-address {
-            font-size: 0.75rem;
+        .school-subtitle {
+            font-weight: 700;
+            font-size: 1.1rem;
+            color: var(--verde-id);
             margin: 2px 0 0;
-            opacity: 0.8;
+        }
+        .school-address { 
+            font-size: 0.75rem; 
+            margin: 4px 0 0; 
+            color: #718096;
+            line-height: 1.3;
         }
 
         .boleta-title-box {
             text-align: center;
             margin-bottom: 25px;
         }
-
         .boleta-title-text {
             background-color: #E2E8F0;
             color: #2D3748;
             font-weight: 700;
-            font-size: 1rem;
+            font-size: 0.95rem;
             text-transform: uppercase;
             padding: 8px 25px;
             border-radius: 20px;
@@ -168,41 +155,37 @@
             letter-spacing: 1px;
         }
 
-        /* SECCIÓN INFO ALUMNO INSPIRADA */
+        /* BLOQUE DE INFORMACIÓN DEL ALUMNO */
         .student-info-grid {
             display: grid;
             grid-template-columns: repeat(2, 1fr);
-            gap: 15px;
-            background-color: var(--gris-fondo);
+            gap: 12px;
+            background-color: #F7FAFC;
             padding: 20px;
             border-radius: 15px;
             margin-bottom: 25px;
             font-size: 0.9rem;
         }
-
-        .info-item {
-            display: flex;
-            align-items: center;
+        .info-item { 
+            display: flex; 
+            align-items: center; 
         }
-
-        .info-label {
-            font-weight: 700;
-            color: #718096;
-            min-width: 120px;
-            text-transform: uppercase;
-            font-size: 0.8rem;
+        .info-label { 
+            font-weight: 700; 
+            color: #4A5568; 
+            min-width: 120px; 
+            text-transform: uppercase; 
+            font-size: 0.75rem;
         }
-
         .info-value {
             flex-grow: 1;
             background-color: var(--blanco);
-            padding: 8px 15px;
-            border-radius: 10px;
+            padding: 6px 12px;
+            border-radius: 8px;
             font-weight: 600;
-            color: #2D3748;
-            min-height: 38px;
+            color: #2d3748;
+            border: 1px solid #E2E8F0;
         }
-
         .final-grade-box {
             grid-column: span 2;
             background-color: #EBF8FF;
@@ -212,183 +195,119 @@
             display: flex;
             justify-content: flex-end;
             align-items: center;
-            margin-top: 10px;
+            margin-top: 5px;
         }
-
-        .final-grade-label {
-            font-weight: 800;
-            text-transform: uppercase;
-            color: #2C5282;
-            margin-right: 15px;
-            font-size: 0.9rem;
+        .final-grade-label { 
+            font-weight: 800; 
+            text-transform: uppercase; 
+            color: #2C5282; 
+            margin-right: 15px; 
+            font-size: 0.85rem;
         }
-
-        .final-grade-value {
-            font-size: 1.8rem;
-            font-weight: 900;
-            color: #2B6CB0;
+        .final-grade-value { 
+            font-size: 1.7rem; 
+            font-weight: 900; 
+            color: #2B6CB0; 
             line-height: 1;
         }
 
-        /* TABLA CALIFICACIONES INSPIRADA Y COLOREADA */
+        /* ESTRUCTURA DE LA TABLA */
         .grade-table-container {
-            background-color: var(--gris-fondo);
-            padding: 15px;
             border-radius: 15px;
+            overflow: hidden;
+            border: 1px solid #E2E8F0;
         }
-
         .grade-table {
             width: 100%;
-            border-collapse: separate;
-            border-spacing: 0 8px;
-            /* Espacio entre filas */
+            border-collapse: collapse;
+            margin: 0;
         }
-
         .grade-table thead th {
-            background-color: #718096;
+            background-color: #4A5568;
             color: white;
             font-weight: 700;
             text-transform: uppercase;
-            font-size: 0.75rem;
-            padding: 12px 10px;
+            font-size: 0.8rem;
+            padding: 14px 10px;
             text-align: center;
             border: none;
         }
-
-        .grade-table thead th:first-child {
-            border-radius: 10px 0 0 10px;
-            text-align: left;
+        .grade-table thead th.subject-col { 
+            text-align: left; 
             padding-left: 20px;
         }
-
-        .grade-table thead th:last-child {
-            border-radius: 0 10px 10px 0;
-        }
-
-        .grade-table tbody tr {
-            background-color: var(--blanco);
-            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.05);
-        }
-
         .grade-table tbody td {
             padding: 12px 10px;
             text-align: center;
-            font-weight: 600;
-            color: #2D3748;
-            border: none;
+            font-weight: 700;
+            font-size: 0.9rem;
+            border-bottom: 1px solid rgba(0,0,0,0.06);
         }
-
         .grade-table tbody td.subject-col {
             text-align: left;
-            font-weight: 700;
             padding-left: 20px;
-            color: #1A202C;
             text-transform: uppercase;
-            font-size: 0.85rem;
         }
 
-        .grade-table tbody tr td:first-child {
-            border-radius: 10px 0 0 10px;
+        /* CONFIGURACIÓN DE TONALIDADES PASTEL POR NIVEL PARA TODA LA TABLA */
+        .level-yellow tbody tr { background-color: #FFFDE7 !important; color: #5D4037; } 
+        .level-pink tbody tr { background-color: #FFF5F7 !important; color: #4A148C; }    
+        .level-green tbody tr { background-color: #E8F5E9 !important; color: #1B5E20; }   
+        .level-blue tbody tr { background-color: #E3F2FD !important; color: #0D47A1; }    
+        .level-purple tbody tr { background-color: #F3E5F5 !important; color: #4A148C; }  
+
+        /* DESTACAR PROMEDIOS FINALES INTERNOS */
+        .grade-table tbody tr td:last-child { 
+            font-weight: 900; 
+            background-color: rgba(0, 0, 0, 0.04) !important;
         }
 
-        .grade-table tbody tr td:last-child {
-            border-radius: 0 10px 10px 0;
-            font-weight: 800;
-            color: #2B6CB0;
-            background-color: #F7FAFC;
+        /* SECCIÓN DE FIRMAS */
+        .signature-section { 
+            margin-top: 60px; 
+            display: flex; 
+            justify-content: space-around; 
+            padding: 0 30px; 
+        }
+        .sign-box { 
+            border-top: 1.5px solid #718096; 
+            width: 240px; 
+            text-align: center; 
+            font-size: 0.75rem; 
+            font-weight: 700; 
+            padding-top: 8px; 
+            color: #4A5568; 
+            letter-spacing: 0.5px;
         }
 
-        /* DEFINICIÓN COLORES PASTEL POR NIVEL (FIJOS PARA IMPRESIÓN PDF) */
-        .level-yellow tbody tr {
-            background-color: #FEFCBF !important;
-        }
-
-        /* Maternal */
-        .level-pink tbody tr {
-            background-color: #FED7E2 !important;
-        }
-
-        /* Preescolar */
-        .level-green tbody tr {
-            background-color: #C6F6D5 !important;
-        }
-
-        /* Primaria */
-        .level-blue tbody tr {
-            background-color: #BEE3F8 !important;
-        }
-
-        /* Secundaria */
-        .level-purple tbody tr {
-            background-color: #E9D8FD !important;
-        }
-
-        /* Preparatoria */
-
-        .signature-section {
-            margin-top: 50px;
-            display: flex;
-            justify-content: space-around;
-            padding: 0 30px;
-        }
-
-        .sign-box {
-            border-top: 1px solid #718096;
-            width: 220px;
-            text-align: center;
-            font-size: 0.8rem;
-            font-weight: 700;
-            padding-top: 8px;
-            color: #4A5568;
-            text-transform: uppercase;
-            letter-spacing: 1px;
-        }
-
+        /* CONFIGURACIÓN REGLAS DE IMPRESIÓN */
         @media print {
-            body {
-                background-color: white !important;
-                -webkit-print-color-adjust: exact;
-                print-color-adjust: exact;
+            body { 
+                background-color: white !important; 
             }
-
-            .no-print,
-            .hero-banner,
-            .search-container,
-            .navbar {
-                display: none !important;
+            * {
+                -webkit-print-color-adjust: exact !important;
+                print-color-adjust: exact !important;
             }
-
-            .report-card-container {
-                display: block !important;
-                border: none;
-                box-shadow: none;
-                padding: 0;
-                margin: 0;
-                width: 100%;
-                max-width: 100%;
-                border-radius: 0;
+            .no-print, .hero-banner, .search-container, .navbar { 
+                display: none !important; 
             }
-
-            .header-boleta {
-                margin: 0 0 30px 0;
-                border-radius: 0;
-                padding: 20px 30px;
+            .report-card-container { 
+                display: block !important; 
+                border: none; 
+                box-shadow: none; 
+                padding: 0; 
+                margin: 0; 
+                width: 100%; 
+                max-width: 100%; 
+                border-radius: 0; 
             }
-
-            .student-info-grid,
-            .grade-table-container {
-                background-color: #F7FAFC !important;
-                border-radius: 10px;
-                padding: 15px;
+            .header-boleta { 
+                margin: 0 0 30px 0; 
+                padding: 20px 0;
             }
-
-            .grade-table tbody tr {
-                box-shadow: none;
-                border-bottom: 1px solid #EDF2F7;
-            }
-
-            .page-break {
-                page-break-before: always;
+            .page-break { 
+                page-break-before: always; 
             }
         }
     </style>
@@ -396,41 +315,40 @@
 
 <body>
 
-        <nav class="navbar no-print">
-                <div class="navbar-brand"><img src="Iconos/logo.png" class="logo-nav"> Colegio Niños Héroes</div>
-                <a href="index.html" class="btn-volver">← Volver</a>
-            </nav>
+    <nav class="navbar no-print">
+        <div class="navbar-brand"><img src="Iconos/logo.png" class="logo-nav"> Colegio Niños Héroes</div>
+        <a href="index.html" class="btn-volver">← Volver</a>
+    </nav>
 
-        <div class="hero-banner no-print">
-                <div class="container">
-                        <h1>Portal de Boletas</h1>
-                        <p>Consulta oficial de calificaciones extracurriculares e inglés.</p>
-                    </div>
-            </div>
+    <div class="hero-banner no-print">
+        <div class="container">
+            <h1>Portal de Boletas</h1>
+            <p>Consulta oficial de calificaciones correspondientes al periodo en curso.</p>
+        </div>
+    </div>
 
-        <div class="container search-container no-print">
-                <div class="input-group">
-                        <input type="text" id="matriculaInput" class="form-control"
-                placeholder="Escriba la matrícula del alumno...">
-                        <div class="input-group-append"><button class="btn btn-buscar"
-                    onclick="buscarBoletas()">BUSCAR</button></div>
-                    </div>
-                <div id="statusMsg" class="text-center mt-3 font-weight-bold"></div>
-                <div class="text-center mt-3" id="printBtnContainer" style="display:none;">
-                        <button class="btn btn-danger btn-lg shadow" onclick="window.print()"><i
-                    class="fas fa-file-pdf mr-2"></i> DESCARGAR BOLETAS (PDF)</button>
-                    </div>
-            </div>
+    <div class="container search-container no-print">
+        <div class="input-group">
+            <input type="text" id="matriculaInput" class="form-control" placeholder="Escriba la matrícula del alumno...">
+            <div class="input-group-append">
+                <button class="btn btn-buscar" onclick="buscarBoletas()">BUSCAR</button>
+            </div>
+        </div>
+        <div id="statusMsg" class="text-center mt-3 font-weight-bold"></div>
+        <div class="text-center mt-3" id="printBtnContainer" style="display:none;">
+            <button class="btn btn-danger btn-lg shadow" onclick="window.print()">
+                <i class="fas fa-file-pdf mr-2"></i> IMPRIMIR / DESCARGAR PDF
+            </button>
+        </div>
+    </div>
 
-            <div id="reportCardExtra" class="report-card-container"></div>
-        <div id="reportCardIngles" class="report-card-container page-break"></div>
+    <div id="reportCardExtra" class="report-card-container"></div>
+    <div id="reportCardIngles" class="report-card-container page-break"></div>
 
     <script>
-        // IDs de los Google Sheets públicos
-        const idExtra = '12m7RYtCBAF-P6t8_hoS3TkJwVX0tHEf7uaHAs6m0pTs'; // Boleta Extracurricular
-        const idIngles = '1EY955TiJLZtpffxAtNQW3bjVuw8vHfYm_JYhX_6hXd4'; // Boleta Inglés
+        const idExtra = '12m7RYtCBAF-P6t8_hoS3TkJwVX0tHEf7uaHAs6m0pTs';
+        const idIngles = '1EY955TiJLZtpffxAtNQW3bjVuw8vHfYm_JYhX_6hXd4';
 
-        // Lista exacta de nombres de pestañas a buscar en los Sheets
         const niveles = [
             'Maternal', 'Kinder 1', 'Kinder 2', 'Kinder 3',
             'Primaria 1', 'Primaria 2', 'Primaria 3', 'Primaria 4', 'Primaria 5', 'Primaria 6',
@@ -438,7 +356,6 @@
             'Preparatoria 1', 'Preparatoria 2', 'Preparatoria 3'
         ];
 
-        // Mapeo de filtros de materias por nivel (para no mostrar columnas vacías)
         const MATERIAS_MAP = {
             ingles: (n) => {
                 const nl = n.toUpperCase();
@@ -453,19 +370,11 @@
                 if (nl.includes('SECUNDARIA 2')) return ['EDUCACIÓN FISÍCA', 'DANZA', 'ARTES', 'MÚSICA', 'TOCHO BANDERA', 'TAEKWONDO', 'INFORMÁTICA', 'HERRAMIENTAS DIGITALES', 'AJEDREZ', 'ROBÓTICA', 'ORTOGRAFÍA', 'SISTÉMICA'];
                 if (nl.includes('SECUNDARIA')) return ['EDUCACIÓN FISÍCA', 'DANZA', 'ARTES', 'MÚSICA', 'TOCHO BANDERA', 'TAEKWONDO', 'INFORMÁTICA', 'HERRAMIENTAS DIGITALES', 'AJEDREZ', 'ROBÓTICA', 'SISTÉMICA'];
                 if (nl.includes('PREPARATORIA')) return ['EDUCACIÓN FISÍCA', 'DANZA', 'ARTES', 'TOCHO BANDERA', 'TAEKWONDO', 'INFORMÁTICA', 'HERRAMIENTAS DIGITALES', 'AJEDREZ', 'ROBÓTICA'];
-                return []; // Por si acaso
+                return [];
             }
         };
 
-        // Función auxiliar para formatear números (promedios)
-        const fmt = (v) => {
-            if (v === undefined || v === null || v === "" || isNaN(v)) return '-';
-            // Redondear a un decimal
-            return (Math.floor(parseFloat(v) * 10) / 10).toFixed(1);
-        };
-
-        // Función auxiliar para determinar el color de fondo de la tabla según el nivel
-        const getLevelColorClass = (nivel) => {
+        function obtenerClaseColor(nivel) {
             const n = nivel.toUpperCase();
             if (n.includes('MATERNAL')) return 'level-yellow';
             if (n.includes('KINDER')) return 'level-pink';
@@ -473,6 +382,11 @@
             if (n.includes('SECUNDARIA')) return 'level-blue';
             if (n.includes('PREPARATORIA')) return 'level-purple';
             return '';
+        }
+
+        const fmt = (v) => {
+            if (v === undefined || v === null || v === "" || isNaN(v)) return '-';
+            return (Math.floor(parseFloat(v) * 10) / 10).toFixed(1);
         };
 
         async function buscarBoletas() {
@@ -482,84 +396,90 @@
 
             status.innerHTML = "<i class='fas fa-spinner fa-spin mr-2'></i>Buscando información en los registros...";
 
-            // Ocultar boletas anteriores
             document.getElementById('reportCardExtra').style.display = 'none';
             document.getElementById('reportCardIngles').style.display = 'none';
             document.getElementById('printBtnContainer').style.display = 'none';
 
-            // Buscar en ambos archivos en paralelo
             const [dEx, dIn] = await Promise.all([
                 obtenerDatos(idExtra, mat, 'extra'),
                 obtenerDatos(idIngles, mat, 'ingles')
             ]);
 
             if (dEx || dIn) {
-                status.innerHTML = "<span class='text-success'><i class='fas fa-check-circle mr-2'></i>¡Información cargada correctamente!</span>";
+                status.innerHTML = "<span class='text-success'><i class='fas fa-check-circle mr-2'></i>¡Información cargada con éxito!</span>";
                 document.getElementById('printBtnContainer').style.display = 'block';
                 if (dEx) renderBoleta(dEx, 'Extra', 'Asignaturas Extracurriculares');
                 if (dIn) renderBoleta(dIn, 'Ingles', 'Boleta de Calificaciones de Inglés');
             } else {
-                status.innerHTML = "<span class='text-danger'><i class='fas fa-exclamation-triangle mr-2'></i>Matrícula no encontrada. Verifique los datos o contacte a control escolar.</span>";
+                status.innerHTML = "<span class='text-danger'><i class='fas fa-exclamation-triangle mr-2'></i>Matrícula no encontrada. Verifique los datos asignados en su Excel.</span>";
             }
         }
 
-        // Función principal para obtener y procesar datos del Google Sheet CSV
         async function obtenerDatos(sheetId, mat, tipo) {
             for (let nivel of niveles) {
-                // URL para exportar pestaña específica como CSV
-                const url = `https://docs.google.com/spreadsheets/d/${sheetId}/gviz/tq?tqx=out:csv&sheet=${encodeURIComponent(nivel)}&tqx=cb:${Date.now()}`;
+                const url = `https://docs.google.com/spreadsheets/d/${sheetId}/gviz/tq?tqx=out:csv&sheet=${encodeURIComponent(nivel.trim())}&tqx=cb:${Date.now()}`;
                 try {
                     const res = await fetch(url);
-                    const csv = await res.text();
-                    // Parsear CSV usando PapaParse
+                    if (!res.ok) continue;
+
+                    const blob = await res.blob();
+                    const csv = await new Promise((resolve) => {
+                        const reader = new FileReader();
+                        reader.onload = () => resolve(reader.result);
+                        reader.readAsText(blob, 'UTF-8');
+                    });
+
                     const data = Papa.parse(csv, { header: false, skipEmptyLines: true }).data;
 
-                    // 1. Encontrar la fila de cabecera real (donde está "Matricula")
-                    const headerIdx = data.findIndex(row => row.some(cell => cell && cell.toString().trim().toUpperCase() === 'MATRICULA'));
-                    if (headerIdx === -1) continue; // Pestaña mal estructurada
+                    // Localizar fila de la cabecera dinámica ("Matricula")
+                    const hIdx = data.findIndex(r => r.some(c => c && c.toString().trim().toUpperCase() === 'MATRICULA'));
+                    if (hIdx === -1) continue;
 
-                    // 2. Leer nombres de materias de la Fila 1 (arriba de la cabecera real)
-                    // Google Sheets combina celdas, así que el nombre real está en el primer índice del bloque combinada
-                    const materiasRow = data[headerIdx - 1] || [];
-
-                    // 3. Buscar al alumno por matrícula (a partir de la fila siguiente a la cabecera)
-                    const colMatriculaIdx = data[headerIdx].findIndex(cell => cell && cell.toString().trim().toUpperCase() === 'MATRICULA');
-                    const studentRow = data.find((row, idx) => idx > headerIdx && row[colMatriculaIdx] && row[colMatriculaIdx].toString().trim().toUpperCase() === mat);
+                    // Fila de las materias (asumiendo que está inmediatamente arriba)
+                    const materiasRow = data[hIdx - 1] || [];
+                    const colMatIdx = data[hIdx].findIndex(c => c && c.toString().trim().toUpperCase() === 'MATRICULA');
+                    
+                    // Alumno correspondiente
+                    const studentRow = data.find((r, idx) => idx > hIdx && r[colMatIdx] && r[colMatIdx].toString().trim().toUpperCase() === mat);
 
                     if (studentRow) {
-                        // Determinar estructura (Prepa es semestral, resto trimestral)
                         const esPrepa = nivel.toUpperCase().includes('PREPARATORIA');
-                        const jump = esPrepa ? 3 : 4; // T1, T2, PF  O  T1, T2, T3, PF
-                        const filtroMaterias = MATERIAS_MAP[tipo](nivel);
+                        const jump = esPrepa ? 3 : 4;
+                        const filtro = MATERIAS_MAP[tipo](nivel);
                         let listaMaterias = [];
 
-                        // Iterar sobre bloques de materias (empezando en col F = índice 5)
+                        // Iterar bloques de materias comenzando en columna F (Índice 5)
                         for (let i = 5; i < studentRow.length; i += jump) {
-                            // Buscar nombre real de la materia hacia atrás en materiasRow si está vacía la celda actual
-                            let nombreMateria = "";
+                            
+                            // Búsqueda en reversa para resolver celdas unificadas/combinadas en la fila de materias
+                            let nombreM = "";
                             for (let j = i; j >= 5; j--) {
-                                if (materiasRow[j] && materiasRow[j].trim() !== "") {
-                                    nombreMateria = materiasRow[j].trim().toUpperCase();
+                                if (materiasRow[j] && materiasRow[j].toString().trim() !== "") {
+                                    nombreM = materiasRow[j].toString().trim().toUpperCase();
                                     break;
                                 }
                             }
 
-                            if (nombreMateria && filtroMaterias.includes(nombreMateria)) {
+                            if (nombreM && (nombreM.includes("CICLO") || nombreM.includes("PROMEDIO"))) {
+                                break;
+                            }
+
+                            if (nombreM && filtro.includes(nombreM)) {
                                 listaMaterias.push({
-                                    n: nombreMateria,
+                                    n: nombreM,
                                     v1: fmt(studentRow[i]),
                                     v2: fmt(studentRow[i + 1]),
-                                    v3: esPrepa ? null : fmt(studentRow[i + 2]), // Nulo para prepa
-                                    vf: esPrepa ? fmt(studentRow[i + 2]) : fmt(studentRow[i + 3]) // El promedio final es la col+2 o col+3
+                                    v3: esPrepa ? null : fmt(studentRow[i + 2]),
+                                    vf: esPrepa ? fmt(studentRow[i + 2]) : fmt(studentRow[i + 3])
                                 });
                             }
                         }
 
-                        // Promedio Final General (última columna con datos numéricos)
-                        let pfGeneral = "-";
+                        // Cálculo/Búsqueda de Promedio General
+                        let pf = "-";
                         for (let k = studentRow.length - 1; k >= 5; k--) {
                             if (studentRow[k] && !isNaN(studentRow[k]) && studentRow[k].toString().trim() !== "") {
-                                pfGeneral = fmt(studentRow[k]);
+                                pf = fmt(studentRow[k]);
                                 break;
                             }
                         }
@@ -567,77 +487,79 @@
                         return {
                             nombre: studentRow[1], mat: studentRow[0], ciclo: studentRow[2],
                             grado: studentRow[3], grupo: studentRow[4], nivel,
-                            materias: listaMaterias, pfGeneral, esPrepa
+                            materias: listaMaterias, pf, esPrepa, tipo
                         };
                     }
-                } catch (e) { console.error("Error procesando nivel " + nivel, e); }
+                } catch (e) { console.error("Error procesando " + nivel, e); }
             }
-            return null; // No encontrado en ninguna pestaña
+            return null;
         }
 
-        // Función para renderizar el HTML de una boleta específica
-        function renderBoleta(d, idContainerSuffix, titEsp) {
-            const div = document.getElementById(`reportCard${idContainerSuffix}`);
+        function renderBoleta(d, idS, tit) {
+            const div = document.getElementById(`reportCard${idS}`);
             div.style.display = 'block';
 
-            // Renderizar la boleta con el nuevo diseño
+            const firmaCoordinacion = d.tipo === 'ingles' ? 'COORDINACIÓN DE INGLÉS' : 'COORDINACIÓN DE MATERIAS EXTRACURRICULARES';
+            const clasePastel = obtenerClaseColor(d.nivel);
+
             div.innerHTML = `
-                        <div class="header-boleta">
-                <img src="Iconos/logo.png" alt="Logo CNH" class="logo-boleta">
-                <div class="school-info">
-                    <h1 class="school-name">COLEGIO NIÑOS HÉROES</h1>
-                    <p class="school-address">Durango S/N Amp. Adolfo López Mateos, Atizapán de Zaragoza.<br>58204881 y 5590557078</p>
-                </div>
-            </div>
+                <div class="header-boleta">
+                    <img src="Iconos/logo.png" alt="Logo Colegio" class="logo-boleta">
+                    <div class="school-info">
+                        <h1 class="school-name">COLEGIO NIÑOS HÉROES</h1>
+                        <h2 class="school-subtitle">Sección Académica</h2>
+                        <p class="school-address">Durango S/N Amp. Adolfo López Mateos, Atizapán de Zaragoza.<br>Tels: 58204881 y 5590557078</p>
+                    </div>
+                </div>
 
-            <div class="boleta-title-box">
-                <div class="boleta-title-text">${titEsp}</div>
-            </div>
+                <div class="boleta-title-box">
+                    <div class="boleta-title-text">${tit}</div>
+                </div>
 
-                        <div class="student-info-grid">
-                <div class="info-item"><span class="info-label">Ciclo Escolar:</span> <span class="info-value">${d.ciclo}</span></div>
-                <div class="info-item"><span class="info-label">Grado:</span> <span class="info-value">${d.grado}</span></div>
-                <div class="info-item"><span class="info-label">Alumno/a:</span> <span class="info-value">${d.nombre}</span></div>
-                <div class="info-item"><span class="info-label">Grupo:</span> <span class="info-value">${d.grupo}</span></div>
-                
-                                <div class="final-grade-box">
-                    <span class="final-grade-label">Calificación Final:</span>
-                    <span class="final-grade-value">${d.pfGeneral}</span>
-                </div>
-            </div>
+                <div class="student-info-grid">
+                    <div class="info-item"><span class="info-label">Ciclo Escolar:</span> <span class="info-value">${d.ciclo}</span></div>
+                    <div class="info-item"><span class="info-label">Grado:</span> <span class="info-value">${d.grado}</span></div>
+                    <div class="info-item"><span class="info-label">Alumno/a:</span> <span class="info-value">${d.nombre}</span></div>
+                    <div class="info-item"><span class="info-label">Grupo:</span> <span class="info-value">${d.grupo}</span></div>
+                    
+                    <div class="final-grade-box">
+                        <span class="final-grade-label">Promedio General Periodo:</span>
+                        <span class="final-grade-value">${d.pf}</span>
+                    </div>
+                </div>
 
-                        <p style="font-style: italic; font-size: 0.8rem; text-align: center; margin: 25px 0; color: #718096; padding: 0 40px;">
-                "La educación no solo forma estudiantes, forma seres humanos capaces de soñar en grande, de levantarse ante las dificultades y de construir con esfuerzo y valores el futuro que desean alcanzar."
-            </p>
+                <p style="font-style: italic; font-size: 0.82rem; text-align: center; margin: 25px 0; color: #718096; padding: 0 30px; line-height: 1.4;">
+                    "La educación no solo forma estudiantes, forma seres humanos capaces de soñar en grande, de levantarse ante las dificultades y de construir con esfuerzo y valores el futuro que desean alcanzar."
+                </p>
 
-                        <div class="grade-table-container">
-                <table class="grade-table ${getLevelColorClass(d.nivel)}">
-                    <thead>
-                        <tr>
-                            <th class="subject-col">MATERIAS</th>
-                            ${d.esPrepa ? '<th>1er SEMESTRE</th><th>2do SEMESTRE</th>' : '<th>1er TRIM</th><th>2do TRIM</th><th>3er TRIM</th>'}
-                            <th>PROMEDIO FINAL</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        ${d.materias.map(m => `
-                            <tr>
-                                <td class="subject-col">${m.n}</td>
-                                <td>${m.v1}</td>
-                                <td>${m.v2}</td>
-                                ${!d.esPrepa ? `<td>${m.v3}</td>` : ''}
-                                <td>${m.vf}</td>
-                            </tr>
-                        `).join('')}
-                    </tbody>
-                </table>
-            </div>
+                <div class="grade-table-container">
+                    <table class="grade-table ${clasePastel}">
+                        <thead>
+                            <tr>
+                                <th class="subject-col">Materias</th>
+                                ${d.esPrepa ? '<th>1er Semestre</th><th>2do Semestre</th>' : '<th>1er Trimestre</th><th>2do Trimestre</th><th>3er Trimestre</th>'}
+                                <th>Promedio Final</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            ${d.materias.map(m => `
+                                <tr>
+                                    <td class="subject-col">${m.n}</td>
+                                    <td>${m.v1}</td>
+                                    <td>${m.v2}</td>
+                                    ${!d.esPrepa ? `<td>${m.v3}</td>` : ''}
+                                    <td>${m.vf}</td>
+                                </tr>
+                            `).join('')}
+                        </tbody>
+                    </table>
+                </div>
 
-                        <div class="signature-section">
-                <div class="sign-box">Dirección General</div>
-                <div class="sign-box">Coordinación Extracurricular / Inglés</div>
-            </div>
-        `;
+                <div class="signature-section">
+                    <div class="sign-box">DIRECCIÓN GENERAL</div>
+                    <div class="sign-box">${firmaCoordinacion}</div>
+                </div>
+            `;
         }
     </script>
 </body>
