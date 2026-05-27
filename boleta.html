@@ -66,7 +66,7 @@
             margin-bottom: 10px; 
         }
         
-        /* BUSCADOR PERFECCIONADO */
+        /* BUSCADOR CON FILTRO ACTUALIZADO */
         .search-container { 
             max-width: 750px; 
             margin: 0 auto 40px; 
@@ -81,7 +81,7 @@
             border: 1px solid #ddd;
         }
         .select-nivel {
-            max-width: 220px;
+            max-width: 250px;
             border: 1px solid #ced4da !important;
             border-radius: 10px !important;
             height: 50px;
@@ -136,9 +136,9 @@
 
         .boleta-title-box { text-align: center; margin-bottom: 25px; }
         
-        /* PALETAS DE COLOR TEMÁTICAS SEGÚN NIVEL (TÍTULOS DE CÁPSULAS) */
+        /* PALETAS DE COLOR TEMÁTICAS SEGÚN NIVEL */
         .bg-titulo-maternal { background-color: #FFF5B7 !important; color: #5d4037 !important; }
-        .bg-titulo-kinder { background-color: #FFB7CE !important; color: #4a148c !important; }
+        .bg-titulo-preescolar { background-color: #FFB7CE !important; color: #4a148c !important; }
         .bg-titulo-primaria { background-color: #C1E7C4 !important; color: #1b5e20 !important; }
         .bg-titulo-secundaria { background-color: #B3E5FC !important; color: #0d47a1 !important; }
         .bg-titulo-prepa { background-color: #E1BEE7 !important; color: #4a148c !important; }
@@ -198,10 +198,10 @@
         .pastel-amarillo tbody tr td { background-color: #FFF9C4 !important; color: #5d4037 !important; }
         .pastel-amarillo tbody tr td.promedio-col { background-color: #FBC02D !important; font-weight: 900 !important; }
 
-        /* Kinder (Rosas) */
-        .pastel-rosa thead th { background-color: #F48FB1 !important; color: #4a148c !important; }
-        .pastel-rosa tbody tr td { background-color: #FCE4EC !important; color: #4a148c !important; }
-        .pastel-rosa tbody tr td.promedio-col { background-color: #F48FB1 !important; font-weight: 900 !important; }
+        /* Preescolar / Kinder (Rosas) */
+        .pastel-preescolar thead th { background-color: #F48FB1 !important; color: #4a148c !important; }
+        .pastel-preescolar tbody tr td { background-color: #FCE4EC !important; color: #4a148c !important; }
+        .pastel-preescolar tbody tr td.promedio-col { background-color: #F48FB1 !important; font-weight: 900 !important; }
 
         /* Primaria (Verdes) */
         .pastel-verde thead th { background-color: #81C784 !important; color: #1b5e20 !important; }
@@ -217,7 +217,6 @@
         .pastel-lila thead th { background-color: #BA68C8 !important; color: #4a148c !important; }
         .pastel-lila tbody tr td { background-color: #F3E5F5 !important; color: #4a148c !important; }
         .pastel-lila tbody tr td.promedio-col { background-color: #BA68C8 !important; font-weight: 900 !important; }
-
 
         /* SECCIÓN DE FIRMAS */
         .signature-section { margin-top: 70px; display: flex; justify-content: space-around; padding: 0 30px; }
@@ -254,9 +253,9 @@
             <select id="nivelSelect" class="form-control select-nivel">
                 <option value="" disabled selected>Seleccione Nivel</option>
                 <option value="Maternal">Maternal</option>
-                <option value="Kinder 1">Kinder 1</option>
-                <option value="Kinder 2">Kinder 2</option>
-                <option value="Kinder 3">Kinder 3</option>
+                <option value="Kinder 1">Preescolar 1</option>
+                <option value="Kinder 2">Preescolar 2</option>
+                <option value="Kinder 3">Preescolar 3</option>
                 <option value="Primaria 1">Primaria 1</option>
                 <option value="Primaria 2">Primaria 2</option>
                 <option value="Primaria 3">Primaria 3</option>
@@ -270,7 +269,7 @@
                 <option value="Preparatoria 2">Preparatoria 2</option>
                 <option value="Preparatoria 3">Preparatoria 3</option>
             </select>
-            <input type="text" id="matriculaInput" class="form-control" placeholder="Escriba la matrícula (Ej: CNHK001)...">
+            <input type="text" id="matriculaInput" class="form-control" placeholder="Escriba la matrícula...">
             <button class="btn btn-buscar" onclick="buscarBoletas()">BUSCAR</button>
         </div>
         
@@ -292,12 +291,12 @@
         const MATERIAS_MAP = {
             ingles: (n) => {
                 const nl = n.toUpperCase();
-                if (nl.includes('MATERNAL') || nl.includes('KINDER')) return ['LISTENING', 'READING'];
+                if (nl.includes('MATERNAL') || nl.includes('KINDER') || nl.includes('PREESCOLAR')) return ['LISTENING', 'READING'];
                 return ['LISTENING', 'READING', 'WRITING', 'SPEAKING', 'COMPOSITION'];
             },
             extra: (n) => {
                 const nl = n.toUpperCase();
-                if (nl.includes('MATERNAL') || nl.includes('KINDER')) return ['EDUCACIÓN FISÍCA', 'DANZA', 'MÚSICA', 'TOCHO BANDERA', 'TAEKWONDO', 'INFORMÁTICA', 'EMOCIONES'];
+                if (nl.includes('MATERNAL') || nl.includes('KINDER') || nl.includes('PREESCOLAR')) return ['EDUCACIÓN FISÍCA', 'DANZA', 'MÚSICA', 'TOCHO BANDERA', 'TAEKWONDO', 'INFORMÁTICA', 'EMOCIONES'];
                 if (nl.includes('PRIMARIA 1') || nl.includes('PRIMARIA 2')) return ['EDUCACIÓN FISÍCA', 'DANZA', 'MÚSICA', 'TOCHO BANDERA', 'TAEKWONDO', 'INFORMÁTICA', 'JUEGOS Y DESTREZAS', 'ROBÓTICA', 'EDUCACIÓN FINANCIERA', 'SISTÉMICA', 'LECTURA', 'SPELLING BEE'];
                 if (nl.includes('PRIMARIA')) return ['EDUCACIÓN FISÍCA', 'DANZA', 'MÚSICA', 'TOCHO BANDERA', 'TAEKWONDO', 'INFORMÁTICA', 'JUEGOS Y DESTREZAS', 'ROBÓTICA', 'EDUCACIÓN FINANCIERA', 'SISTÉMICA'];
                 if (nl.includes('SECUNDARIA 2')) return ['EDUCACIÓN FISÍCA', 'DANZA', 'ARTES', 'MÚSICA', 'TOCHO BANDERA', 'TAEKWONDO', 'INFORMÁTICA', 'HERRAMIENTAS DIGITALES', 'AJEDREZ', 'ROBÓTICA', 'ORTOGRAFÍA', 'SISTÉMICA'];
@@ -310,7 +309,7 @@
         function obtenerClaseColor(nivel) {
             const n = nivel.toUpperCase();
             if (n.includes('MATERNAL')) return 'pastel-amarillo';
-            if (n.includes('KINDER')) return 'pastel-rosa';
+            if (n.includes('KINDER') || n.includes('PREESCOLAR')) return 'pastel-preescolar';
             if (n.includes('PRIMARIA')) return 'pastel-verde';
             if (n.includes('SECUNDARIA')) return 'pastel-azul';
             if (n.includes('PREPARATORIA')) return 'pastel-lila';
@@ -320,7 +319,7 @@
         function obtenerClaseClaseTitulo(nivel) {
             const n = nivel.toUpperCase();
             if (n.includes('MATERNAL')) return 'bg-titulo-maternal';
-            if (n.includes('KINDER')) return 'bg-titulo-kinder';
+            if (n.includes('KINDER') || n.includes('PREESCOLAR')) return 'bg-titulo-preescolar';
             if (n.includes('PRIMARIA')) return 'bg-titulo-primaria';
             if (n.includes('SECUNDARIA')) return 'bg-titulo-secundaria';
             if (n.includes('PREPARATORIA')) return 'bg-titulo-prepa';
@@ -333,11 +332,12 @@
         };
 
         async function buscarBoletas() {
-            const nivelSeleccionado = document.getElementById('nivelSelect').value;
+            const valorPestaña = document.getElementById('nivelSelect').value;
+            const textoVisible = document.getElementById('nivelSelect').options[document.getElementById('nivelSelect').selectedIndex].text;
             const mat = document.getElementById('matriculaInput').value.trim().toUpperCase();
             const status = document.getElementById('statusMsg');
 
-            if (!nivelSeleccionado) { status.innerText = "Por favor, seleccione el Nivel Educativo primero."; return; }
+            if (!valorPestaña) { status.innerText = "Por favor, seleccione el Nivel Educativo primero."; return; }
             if (!mat) { status.innerText = "Por favor, ingrese una matrícula válida."; return; }
 
             status.innerHTML = "<i class='fas fa-spinner fa-spin mr-2'></i>Buscando información en la base de datos...";
@@ -345,10 +345,9 @@
             document.getElementById('reportCardExtra').style.display = 'none';
             document.getElementById('reportCardIngles').style.display = 'none';
 
-            // Petición directa al nivel y pestaña seleccionados sin saturación de red
             const [dEx, dIn] = await Promise.all([
-                obtenerDatosPorPestaña(idExtra, mat, 'extra', nivelSeleccionado),
-                obtenerDatosPorPestaña(idIngles, mat, 'ingles', nivelSeleccionado)
+                obtenerDatosPorPestaña(idExtra, mat, 'extra', valorPestaña, textoVisible),
+                obtenerDatosPorPestaña(idIngles, mat, 'ingles', valorPestaña, textoVisible)
             ]);
 
             if (dEx || dIn) {
@@ -357,13 +356,13 @@
                 if (dEx) renderBoleta(dEx, 'Extra', 'ASIGNATURAS EXTRACURRICULARES');
                 if (dIn) renderBoleta(dIn, 'Ingles', 'BOLETA DE INGLÉS');
             } else {
-                status.innerHTML = `<span class='text-danger'>Matrícula "${mat}" no encontrada en la pestaña "${nivelSeleccionado}". Verifique el nivel o el código.</span>`;
+                status.innerHTML = `<span class='text-danger'>Matrícula "${mat}" no encontrada en la sección "${textoVisible}". Verifique el código o nivel.</span>`;
                 document.getElementById('printBtnContainer').style.display = 'none';
             }
         }
 
-        async function obtenerDatosPorPestaña(sheetId, mat, tipo, nivel) {
-            const url = `https://docs.google.com/spreadsheets/d/${sheetId}/export?format=csv&sheet=${encodeURIComponent(nivel)}&tqx=cb:${Date.now()}`;
+        async function obtenerDatosPorPestaña(sheetId, mat, tipo, nombrePestaña, textoNivelCompleto) {
+            const url = `https://docs.google.com/spreadsheets/d/${sheetId}/export?format=csv&sheet=${encodeURIComponent(nombrePestaña)}&tqx=cb:${Date.now()}`;
             try {
                 const res = await fetch(url);
                 if (!res.ok) return null;
@@ -371,18 +370,32 @@
                 const csv = await res.text();
                 const data = Papa.parse(csv, {header: false, skipEmptyLines: true}).data;
                 
-                const hIdx = data.findIndex(r => r.some(c => c && c.toString().trim().toUpperCase().includes('MATRICULA')));
-                if (hIdx === -1) return null;
+                // ESCANEO TOTAL: Busca dinámicamente la fila donde esté declarada la palabra "MATRICULA"
+                let hIdx = -1;
+                let colMatIdx = -1;
+                
+                for(let r=0; r<data.length; r++){
+                    for(let c=0; c<data[r].length; c++){
+                        if(data[r][c] && data[r][c].toString().trim().toUpperCase().normalize("NFD").replace(/[\u0300-\u036f]/g, "").includes("MATRICULA")){
+                            hIdx = r;
+                            colMatIdx = c;
+                            break;
+                        }
+                    }
+                    if(hIdx !== -1) break;
+                }
+                
+                if (hIdx === -1 || colMatIdx === -1) return null;
 
                 const materiasRow = data[0] || []; 
-                const colMatIdx = data[hIdx].findIndex(c => c && c.toString().trim().toUpperCase().includes('MATRICULA'));
                 
-                const studentRow = data.find((r, idx) => idx >= hIdx && r[colMatIdx] && r[colMatIdx].toString().trim().toUpperCase() === mat);
+                // Filtro ultra-flexible e independiente del formato exacto de matrícula
+                const studentRow = data.find((r, idx) => idx > hIdx && r[colMatIdx] && r[colMatIdx].toString().trim().toUpperCase() === mat);
 
                 if (studentRow) {
-                    const esPrepa = nivel.toUpperCase().includes('PREPARATORIA');
+                    const esPrepa = nombrePestaña.toUpperCase().includes('PREPARATORIA');
                     const jump = esPrepa ? 3 : 4; 
-                    const filtro = MATERIAS_MAP[tipo](nivel);
+                    const filtro = MATERIAS_MAP[tipo](textoNivelCompleto);
                     let listaMaterias = [];
                     
                     for (let i = 5; i < studentRow.length; i += jump) {
@@ -413,12 +426,12 @@
 
                     return { 
                         nombre: studentRow[1], mat: studentRow[0], ciclo: studentRow[2], 
-                        grado: studentRow[3], grupo: studentRow[4], nivel, 
+                        grado: studentRow[3], grupo: studentRow[4], nivel: textoNivelCompleto, 
                         materias: listaMaterias, pf, esPrepa, tipo
                     };
                 }
             } catch (e) { 
-                console.error("Error leyendo nivel " + nivel + ": ", e); 
+                console.error("Error leyendo nivel " + nombrePestaña + ": ", e); 
             }
             return null;
         }
