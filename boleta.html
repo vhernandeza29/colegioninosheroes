@@ -255,7 +255,6 @@
         const idExtra = '12m7RYtCBAF-P6t8_hoS3TkJwVX0tHEf7uaHAs6m0pTs';
         const idIngles = '1EY955TiJLZtpffxAtNQW3bjVuw8vHfYm_JYhX_6hXd4';
 
-        // Lista de pestañas oficiales en tus archivos de Excel
         const PESTANAS_SISTEMA = [
             "Maternal", "Kinder 1", "Kinder 2", "Kinder 3",
             "Primaria 1", "Primaria 2", "Primaria 3", "Primaria 4", "Primaria 5", "Primaria 6",
@@ -312,7 +311,7 @@
 
             if (!mat) { status.innerText = "Por favor, ingrese una matrícula válida."; return; }
 
-            status.innerHTML = "<i class='fas fa-spinner fa-spin mr-2'></i>Buscando en todas las pestañas académicas...";
+            status.innerHTML = "<i class='fas fa-spinner fa-spin mr-2'></i>Sincronizando y buscando en la base de datos completa...";
 
             document.getElementById('reportCardExtra').style.display = 'none';
             document.getElementById('reportCardIngles').style.display = 'none';
@@ -321,19 +320,17 @@
             let dEx = null;
             let dIn = null;
 
-            // BÚSQUEDA SECUENCIAL INTELIGENTE COMPLETA
-            for (let i = 0; i < PESTANAS_SISTEMA.length; i++) {
-                const pestañaActual = PESTANAS_SISTEMA[i];
+            // BÚSQUEDA SECUENCIAL ROBUSTA PASO A PASO
+            for (const pestañaActual of PESTANAS_SISTEMA) {
                 let textoNivelCompleto = pestañaActual.replace(/Kinder/i, 'Preescolar');
                 
-                status.innerHTML = `<i class='fas fa-spinner fa-spin mr-2'></i>Buscando en pestaña: <b>${pestañaActual}</b>...`;
-                
-                // Forzamos la obtención e ignoramos rechazos de red para continuar con la siguiente pestaña pase lo que pase
+                // Intenta obtener los datos de la pestaña actual
                 let resEx = await obtenerDatosPorPestaña(idExtra, mat, pestañaActual, textoNivelCompleto, 'extra');
                 if (resEx) {
                     dEx = resEx;
+                    // Si el alumno existe aquí, descarga inmediatamente inglés desde la misma pestaña identificada
                     dIn = await obtenerDatosPorPestaña(idIngles, mat, pestañaActual, textoNivelCompleto, 'ingles');
-                    break; // Al encontrarlo en una pestaña, frena la búsqueda para mostrar el alumno
+                    break; 
                 }
             }
 
@@ -343,28 +340,28 @@
                 if (dEx) renderBoleta(dEx, 'Extra', 'ASIGNATURAS EXTRACURRICULARES');
                 if (dIn) renderBoleta(dIn, 'Ingles', 'BOLETA DE INGLÉS');
             } else {
-                status.innerHTML = `<span class='text-danger'>Matrícula "${mat}" no encontrada en la Columna A de ninguna pestaña de la base de datos.</span>`;
+                status.innerHTML = `<span class='text-danger'>Matrícula "${mat}" no encontrada en la Columna A de ningún nivel. Verifique que esté bien escrita.</span>`;
             }
         }
 
         async function obtenerDatosPorPestaña(sheetId, mat, nombrePestaña, textoNivelCompleto, tipo) {
-            const url = `https://docs.google.com/spreadsheets/d/${sheetId}/export?format=csv&sheet=${encodeURIComponent(nombrePestaña)}&tqx=cb:${Date.now()}`;
+            // Se fuerza el refresco de caché mediante timestamp para evitar datos congelados de Google Drive
+            const url = `https://docs.google.com/spreadsheets/d/${sheetId}/gviz/tq?tqx=out:csv&sheet=${encodeURIComponent(nombrePestaña)}&t=${Date.now()}`;
             try {
                 const res = await fetch(url);
-                if (!res.ok) return null; // Si una pestaña da error 400/500, retorna nulo y continúa
+                if (!res.ok) return null; 
                 
                 const csv = await res.text();
-                const data = Papa.parse(csv, {header: false, skipEmptyLines: false}).data;
+                const data = Papa.parse(csv, {header: false, skipEmptyLines: true}).data;
                 
-                // Validamos que existan datos suficientes (mínimo fila 3)
                 if (!data || data.length < 3) return null;
 
                 const materiasRow = data[0] || []; 
                 let studentRow = null;
 
-                // REGLA: Buscar desde la Fila 3 (Índice 2) hacia abajo estrictamente en la Columna A (Índice 0)
+                // ESCANEO TOTAL: Revisa desde la fila 3 (índice 2) hasta el final de la hoja en la Columna A
                 for (let r = 2; r < data.length; r++) {
-                    if (data[r] && data[r][0]) {
+                    if (data[r] && data[r][0] !== undefined && data[r][0] !== null) {
                         const celdaMatricula = data[r][0].toString().trim().toUpperCase();
                         if (celdaMatricula === mat) {
                             studentRow = data[r];
@@ -412,7 +409,7 @@
                     };
                 }
             } catch (e) { 
-                // Captura fallos de red silenciosamente para no congelar el bucle de búsqueda
+                console.error("Error en escaneo de pestaña: ", e);
             }
             return null;
         }
