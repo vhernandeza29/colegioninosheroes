@@ -55,41 +55,55 @@
         /* HERO BANNER */
         .hero-banner { 
             background: linear-gradient(90deg, #193E9A 0%, #317F77 100%); 
-            padding: 60px 20px; 
+            padding: 50px 20px; 
             text-align: center; 
             color: white; 
             margin-bottom: 30px; 
         }
         .hero-banner h1 { 
             font-weight: 800; 
-            font-size: 3rem; 
+            font-size: 2.8rem; 
             margin-bottom: 10px; 
         }
         
-        /* BUSCADOR */
+        /* BUSCADOR PERFECCIONADO */
         .search-container { 
-            max-width: 600px; 
+            max-width: 750px; 
             margin: 0 auto 40px; 
         }
-        .input-group { 
-            box-shadow: 0 10px 30px rgba(0,0,0,0.1); 
-            border-radius: 50px; 
-            overflow: hidden; 
-            background: white; 
-            border: 1px solid #ddd; 
+        .search-box-wrapper {
+            display: flex;
+            gap: 10px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.08);
+            background: white;
+            padding: 10px;
+            border-radius: 15px;
+            border: 1px solid #ddd;
+        }
+        .select-nivel {
+            max-width: 220px;
+            border: 1px solid #ced4da !important;
+            border-radius: 10px !important;
+            height: 50px;
+            font-weight: 600;
+            color: #495057;
         }
         #matriculaInput { 
-            border: none; 
-            padding-left: 30px; 
-            height: 60px; 
-            font-size: 1.1rem; 
+            border: 1px solid #ced4da; 
+            border-radius: 10px;
+            padding-left: 15px; 
+            height: 50px; 
+            font-size: 1.05rem; 
+            font-weight: 600;
         }
         .btn-buscar { 
             background: var(--verde-id) !important; 
             color: white !important; 
             border: none !important; 
-            padding: 0 40px; 
+            border-radius: 10px !important;
+            padding: 0 30px; 
             font-weight: 800; 
+            height: 50px;
         }
 
         /* DISEÑO DE LA BOLETA MODERNA */
@@ -114,37 +128,15 @@
             background-color: #fff;
             border-bottom: 2px solid #edf2f7;
         }
-        .logo-boleta { 
-            height: 85px; 
-        }
-        .school-info { 
-            text-align: right; 
-        }
-        .school-name { 
-            font-weight: 800; 
-            font-size: 1.7rem; 
-            color: var(--azul-id); 
-            margin: 0; 
-        }
-        .school-subtitle {
-            font-weight: 700;
-            font-size: 1.1rem;
-            color: var(--verde-id);
-            margin: 2px 0 0;
-        }
-        .school-address { 
-            font-size: 0.75rem; 
-            margin: 4px 0 0; 
-            color: #718096;
-            line-height: 1.3;
-        }
+        .logo-boleta { height: 85px; }
+        .school-info { text-align: right; }
+        .school-name { font-weight: 800; font-size: 1.7rem; color: var(--azul-id); margin: 0; }
+        .school-subtitle { font-weight: 700; font-size: 1.1rem; color: var(--verde-id); margin: 2px 0 0; }
+        .school-address { font-size: 0.75rem; margin: 4px 0 0; color: #718096; line-height: 1.3; }
 
-        .boleta-title-box {
-            text-align: center;
-            margin-bottom: 25px;
-        }
+        .boleta-title-box { text-align: center; margin-bottom: 25px; }
         
-        /* ESTILOS DINÁMICOS DE TÍTULOS DE LA BOLETA SEGÚN NIVEL */
+        /* PALETAS DE COLOR TEMÁTICAS SEGÚN NIVEL (TÍTULOS DE CÁPSULAS) */
         .bg-titulo-maternal { background-color: #FFF5B7 !important; color: #5d4037 !important; }
         .bg-titulo-kinder { background-color: #FFB7CE !important; color: #4a148c !important; }
         .bg-titulo-primaria { background-color: #C1E7C4 !important; color: #1b5e20 !important; }
@@ -173,26 +165,10 @@
             margin-bottom: 25px;
             font-size: 0.9rem;
         }
-        .info-item { 
-            display: flex; 
-            align-items: center; 
-        }
-        .info-label { 
-            font-weight: 700; 
-            color: #4A5568; 
-            min-width: 120px; 
-            text-transform: uppercase; 
-            font-size: 0.75rem;
-        }
-        .info-value {
-            flex-grow: 1;
-            background-color: var(--blanco);
-            padding: 6px 12px;
-            border-radius: 8px;
-            font-weight: 600;
-            color: #2d3748;
-            border: 1px solid #E2E8F0;
-        }
+        .info-item { display: flex; align-items: center; }
+        .info-label { font-weight: 700; color: #4A5568; min-width: 120px; text-transform: uppercase; font-size: 0.75rem; }
+        .info-value { flex-grow: 1; background-color: var(--blanco); padding: 6px 12px; border-radius: 8px; font-weight: 600; color: #2d3748; border: 1px solid #E2E8F0; }
+        
         .final-grade-box {
             grid-column: span 2;
             background-color: #EBF8FF;
@@ -204,90 +180,48 @@
             align-items: center;
             margin-top: 5px;
         }
-        .final-grade-label { 
-            font-weight: 800; 
-            text-transform: uppercase; 
-            color: #2C5282; 
-            margin-right: 15px; 
-            font-size: 0.85rem;
-        }
-        .final-grade-value { 
-            font-size: 1.7rem; 
-            font-weight: 900; 
-            color: #2B6CB0; 
-            line-height: 1;
-        }
+        .final-grade-label { font-weight: 800; text-transform: uppercase; color: #2C5282; margin-right: 15px; font-size: 0.85rem; }
+        .final-grade-value { font-size: 1.7rem; font-weight: 900; color: #2B6CB0; line-height: 1; }
 
-        /* ESTRUCTURA DE LA TABLA */
-        .grade-table-container {
-            border-radius: 15px;
-            overflow: hidden;
-            border: 1px solid #E2E8F0;
-        }
-        .grade-table {
-            width: 100%;
-            border-collapse: separate;
-            border-spacing: 0;
-            margin: 0;
-        }
-        .grade-table thead th {
-            background-color: #4A5568 !important;
-            color: white !important;
-            font-weight: 700;
-            text-transform: uppercase;
-            font-size: 0.8rem;
-            padding: 14px 10px;
-            text-align: center;
-            border: none;
-        }
-        .grade-table thead th.subject-col { 
-            text-align: left; 
-            padding-left: 25px;
-        }
-        .grade-table tbody td {
-            padding: 14px 10px;
-            text-align: center;
-            font-weight: 700;
-            font-size: 0.95rem;
-            border: none;
-            border-bottom: 1px solid rgba(0, 0, 0, 0.05) !important;
-        }
-        .grade-table tbody td.subject-col {
-            text-align: left;
-            padding-left: 25px;
-            font-weight: 800;
-        }
+        /* TABLA CONFIGURABLE CON COLORES ARMÓNICOS */
+        .grade-table-container { border-radius: 15px; overflow: hidden; border: 1px solid #E2E8F0; }
+        .grade-table { width: 100%; border-collapse: separate; border-spacing: 0; margin: 0; }
+        .grade-table thead th { font-weight: 800; text-transform: uppercase; font-size: 0.82rem; padding: 14px 10px; text-align: center; border: none; }
+        .grade-table thead th.subject-col { text-align: left; padding-left: 25px; }
+        .grade-table tbody tr td { padding: 14px 10px; text-align: center; font-weight: 700; font-size: 0.95rem; border: none; border-bottom: 1px solid rgba(0,0,0,0.04) !important; }
+        .grade-table tbody tr td.subject-col { text-align: left; padding-left: 25px; font-weight: 800; }
 
-        /* CONFIGURACIÓN DE COLORES INTEGRALES PARA TODA LA TABLA POR NIVEL */
-        .pastel-amarillo tbody tr td { background-color: #FFF5B7 !important; color: #5d4037 !important; }
-        .pastel-rosa tbody tr td     { background-color: #FFB7CE !important; color: #4a148c !important; }
-        .pastel-verde tbody tr td    { background-color: #C1E7C4 !important; color: #1b5e20 !important; }
-        .pastel-azul tbody tr td     { background-color: #B3E5FC !important; color: #0d47a1 !important; }
-        .pastel-lila tbody tr td     { background-color: #E1BEE7 !important; color: #4a148c !important; }
+        /* --- CONTROL DE TONOS DE TABLA SEGÚN NIVEL --- */
+        
+        /* Maternal (Amarillos) */
+        .pastel-amarillo thead th { background-color: #FBC02D !important; color: #5d4037 !important; }
+        .pastel-amarillo tbody tr td { background-color: #FFF9C4 !important; color: #5d4037 !important; }
+        .pastel-amarillo tbody tr td.promedio-col { background-color: #FBC02D !important; font-weight: 900 !important; }
 
-        /* Destacar columna de promedio final con un fondo ligeramente más oscuro */
-        .grade-table tbody tr td:last-child { 
-            font-weight: 900 !important; 
-            background-color: rgba(0, 0, 0, 0.07) !important;
-        }
+        /* Kinder (Rosas) */
+        .pastel-rosa thead th { background-color: #F48FB1 !important; color: #4a148c !important; }
+        .pastel-rosa tbody tr td { background-color: #FCE4EC !important; color: #4a148c !important; }
+        .pastel-rosa tbody tr td.promedio-col { background-color: #F48FB1 !important; font-weight: 900 !important; }
+
+        /* Primaria (Verdes) */
+        .pastel-verde thead th { background-color: #81C784 !important; color: #1b5e20 !important; }
+        .pastel-verde tbody tr td { background-color: #E8F5E9 !important; color: #1b5e20 !important; }
+        .pastel-verde tbody tr td.promedio-col { background-color: #81C784 !important; font-weight: 900 !important; }
+
+        /* Secundaria (Azules) */
+        .pastel-azul thead th { background-color: #4FC3F7 !important; color: #0d47a1 !important; }
+        .pastel-azul tbody tr td { background-color: #E1F5FE !important; color: #0d47a1 !important; }
+        .pastel-azul tbody tr td.promedio-col { background-color: #4FC3F7 !important; font-weight: 900 !important; }
+
+        /* Preparatoria (Lilas) */
+        .pastel-lila thead th { background-color: #BA68C8 !important; color: #4a148c !important; }
+        .pastel-lila tbody tr td { background-color: #F3E5F5 !important; color: #4a148c !important; }
+        .pastel-lila tbody tr td.promedio-col { background-color: #BA68C8 !important; font-weight: 900 !important; }
+
 
         /* SECCIÓN DE FIRMAS */
-        .signature-section { 
-            margin-top: 80px; 
-            display: flex; 
-            justify-content: space-around; 
-            padding: 0 30px; 
-        }
-        .sign-box { 
-            border-top: 1.5px solid #718096; 
-            width: 240px; 
-            text-align: center; 
-            font-size: 0.75rem; 
-            font-weight: 700; 
-            padding-top: 8px; 
-            color: #4A5568; 
-            letter-spacing: 0.5px;
-        }
+        .signature-section { margin-top: 70px; display: flex; justify-content: space-around; padding: 0 30px; }
+        .sign-box { border-top: 1.5px solid #718096; width: 240px; text-align: center; font-size: 0.75rem; font-weight: 700; padding-top: 8px; color: #4A5568; letter-spacing: 0.5px; }
 
         /* IMPRESIÓN */
         @media print {
@@ -310,22 +244,40 @@
 
     <div class="hero-banner no-print">
         <div class="container">
-            <h1>Portal de Boletas</h1>
-            <p>Consulta oficial de calificaciones del ciclo escolar actual.</p>
+            <h1>Portal de Boletas Oficiales</h1>
+            <p>Selecciona el nivel educativo e introduce la matrícula correspondiente.</p>
         </div>
     </div>
 
     <div class="container search-container no-print">
-        <div class="input-group">
-            <input type="text" id="matriculaInput" class="form-control" placeholder="Escriba la matrícula...">
-            <div class="input-group-append">
-                <button class="btn btn-buscar" onclick="buscarBoletas()">BUSCAR</button>
-            </div>
+        <div class="search-box-wrapper">
+            <select id="nivelSelect" class="form-control select-nivel">
+                <option value="" disabled selected>Seleccione Nivel</option>
+                <option value="Maternal">Maternal</option>
+                <option value="Kinder 1">Kinder 1</option>
+                <option value="Kinder 2">Kinder 2</option>
+                <option value="Kinder 3">Kinder 3</option>
+                <option value="Primaria 1">Primaria 1</option>
+                <option value="Primaria 2">Primaria 2</option>
+                <option value="Primaria 3">Primaria 3</option>
+                <option value="Primaria 4">Primaria 4</option>
+                <option value="Primaria 5">Primaria 5</option>
+                <option value="Primaria 6">Primaria 6</option>
+                <option value="Secundaria 1">Secundaria 1</option>
+                <option value="Secundaria 2">Secundaria 2</option>
+                <option value="Secundaria 3">Secundaria 3</option>
+                <option value="Preparatoria 1">Preparatoria 1</option>
+                <option value="Preparatoria 2">Preparatoria 2</option>
+                <option value="Preparatoria 3">Preparatoria 3</option>
+            </select>
+            <input type="text" id="matriculaInput" class="form-control" placeholder="Escriba la matrícula (Ej: CNHK001)...">
+            <button class="btn btn-buscar" onclick="buscarBoletas()">BUSCAR</button>
         </div>
+        
         <div id="statusMsg" class="text-center mt-3 font-weight-bold"></div>
         <div class="text-center mt-3" id="printBtnContainer" style="display:none;">
             <button class="btn btn-danger btn-lg shadow" onclick="window.print()">
-                <i class="fas fa-file-pdf mr-2"></i> DESCARGAR PDF / IMPRIMIR
+                <i class="fas fa-file-pdf mr-2"></i> DESCARGAR PDF / IMPRIMIR BOLETAS
             </button>
         </div>
     </div>
@@ -336,13 +288,6 @@
     <script>
         const idExtra = '12m7RYtCBAF-P6t8_hoS3TkJwVX0tHEf7uaHAs6m0pTs';
         const idIngles = '1EY955TiJLZtpffxAtNQW3bjVuw8vHfYm_JYhX_6hXd4';
-
-        const niveles = [
-            'Maternal', 'Kinder 1', 'Kinder 2', 'Kinder 3',
-            'Primaria 1', 'Primaria 2', 'Primaria 3', 'Primaria 4', 'Primaria 5', 'Primaria 6',
-            'Secundaria 1', 'Secundaria 2', 'Secundaria 3',
-            'Preparatoria 1', 'Preparatoria 2', 'Preparatoria 3'
-        ];
 
         const MATERIAS_MAP = {
             ingles: (n) => {
@@ -388,18 +333,22 @@
         };
 
         async function buscarBoletas() {
+            const nivelSeleccionado = document.getElementById('nivelSelect').value;
             const mat = document.getElementById('matriculaInput').value.trim().toUpperCase();
             const status = document.getElementById('statusMsg');
-            if (!mat) { status.innerText = "Ingrese una matrícula."; return; }
 
-            status.innerHTML = "<i class='fas fa-spinner fa-spin mr-2'></i>Buscando información en todos los niveles...";
+            if (!nivelSeleccionado) { status.innerText = "Por favor, seleccione el Nivel Educativo primero."; return; }
+            if (!mat) { status.innerText = "Por favor, ingrese una matrícula válida."; return; }
+
+            status.innerHTML = "<i class='fas fa-spinner fa-spin mr-2'></i>Buscando información en la base de datos...";
 
             document.getElementById('reportCardExtra').style.display = 'none';
             document.getElementById('reportCardIngles').style.display = 'none';
 
+            // Petición directa al nivel y pestaña seleccionados sin saturación de red
             const [dEx, dIn] = await Promise.all([
-                obtenerDatos(idExtra, mat, 'extra'),
-                obtenerDatos(idIngles, mat, 'ingles')
+                obtenerDatosPorPestaña(idExtra, mat, 'extra', nivelSeleccionado),
+                obtenerDatosPorPestaña(idIngles, mat, 'ingles', nivelSeleccionado)
             ]);
 
             if (dEx || dIn) {
@@ -408,71 +357,68 @@
                 if (dEx) renderBoleta(dEx, 'Extra', 'ASIGNATURAS EXTRACURRICULARES');
                 if (dIn) renderBoleta(dIn, 'Ingles', 'BOLETA DE INGLÉS');
             } else {
-                status.innerHTML = "<span class='text-danger'>Matrícula no encontrada. Verifique que esté correctamente dada de alta en las pestañas del Excel.</span>";
+                status.innerHTML = `<span class='text-danger'>Matrícula "${mat}" no encontrada en la pestaña "${nivelSeleccionado}". Verifique el nivel o el código.</span>`;
                 document.getElementById('printBtnContainer').style.display = 'none';
             }
         }
 
-        async function obtenerDatos(sheetId, mat, tipo) {
-            for (let nivel of niveles) {
-                const url = `https://docs.google.com/spreadsheets/d/${sheetId}/export?format=csv&sheet=${encodeURIComponent(nivel)}&tqx=cb:${Date.now()}`;
-                try {
-                    const res = await fetch(url);
-                    if(!res.ok) continue;
+        async function obtenerDatosPorPestaña(sheetId, mat, tipo, nivel) {
+            const url = `https://docs.google.com/spreadsheets/d/${sheetId}/export?format=csv&sheet=${encodeURIComponent(nivel)}&tqx=cb:${Date.now()}`;
+            try {
+                const res = await fetch(url);
+                if (!res.ok) return null;
+                
+                const csv = await res.text();
+                const data = Papa.parse(csv, {header: false, skipEmptyLines: true}).data;
+                
+                const hIdx = data.findIndex(r => r.some(c => c && c.toString().trim().toUpperCase().includes('MATRICULA')));
+                if (hIdx === -1) return null;
+
+                const materiasRow = data[0] || []; 
+                const colMatIdx = data[hIdx].findIndex(c => c && c.toString().trim().toUpperCase().includes('MATRICULA'));
+                
+                const studentRow = data.find((r, idx) => idx >= hIdx && r[colMatIdx] && r[colMatIdx].toString().trim().toUpperCase() === mat);
+
+                if (studentRow) {
+                    const esPrepa = nivel.toUpperCase().includes('PREPARATORIA');
+                    const jump = esPrepa ? 3 : 4; 
+                    const filtro = MATERIAS_MAP[tipo](nivel);
+                    let listaMaterias = [];
                     
-                    const csv = await res.text();
-                    const data = Papa.parse(csv, {header: false, skipEmptyLines: true}).data;
-                    
-                    const hIdx = data.findIndex(r => r.some(c => c && c.toString().trim().toUpperCase().includes('MATRICULA')));
-                    if (hIdx === -1) continue;
-
-                    const materiasRow = data[0] || []; 
-                    const colMatIdx = data[hIdx].findIndex(c => c && c.toString().trim().toUpperCase().includes('MATRICULA'));
-                    
-                    // Remoción de espacios en los extremos durante la búsqueda iterativa por niveles
-                    const studentRow = data.find((r, idx) => idx >= hIdx && r[colMatIdx] && r[colMatIdx].toString().trim().toUpperCase() === mat);
-
-                    if (studentRow) {
-                        const esPrepa = nivel.toUpperCase().includes('PREPARATORIA');
-                        const jump = esPrepa ? 3 : 4; 
-                        const filtro = MATERIAS_MAP[tipo](nivel);
-                        let listaMaterias = [];
-                        
-                        for (let i = 5; i < studentRow.length; i += jump) {
-                            if (materiasRow[i] && (materiasRow[i].toString().trim().toUpperCase().includes("CICLO") || materiasRow[i].toString().trim().toUpperCase().includes("PROMEDIO"))) {
-                                break;
-                            }
-
-                            let nombreM = materiasRow[i] ? materiasRow[i].toString().trim().toUpperCase() : "";
-
-                            if (nombreM && filtro.includes(nombreM)) {
-                                listaMaterias.push({
-                                    n: nombreM,
-                                    v1: fmt(studentRow[i]),             
-                                    v2: fmt(studentRow[i+1]),           
-                                    v3: esPrepa ? null : fmt(studentRow[i+2]), 
-                                    vf: esPrepa ? fmt(studentRow[i+2]) : fmt(studentRow[i+3]) 
-                                });
-                            }
+                    for (let i = 5; i < studentRow.length; i += jump) {
+                        if (materiasRow[i] && (materiasRow[i].toString().trim().toUpperCase().includes("CICLO") || materiasRow[i].toString().trim().toUpperCase().includes("PROMEDIO"))) {
+                            break;
                         }
 
-                        let pf = "-";
-                        for (let k = studentRow.length - 1; k >= 5; k--) {
-                            if (studentRow[k] && !isNaN(studentRow[k]) && studentRow[k].toString().trim() !== "") {
-                                pf = fmt(studentRow[k]);
-                                break;
-                            }
-                        }
+                        let nombreM = materiasRow[i] ? materiasRow[i].toString().trim().toUpperCase() : "";
 
-                        return { 
-                            nombre: studentRow[1], mat: studentRow[0], ciclo: studentRow[2], 
-                            grado: studentRow[3], grupo: studentRow[4], nivel, 
-                            materias: listaMaterias, pf, esPrepa, tipo
-                        };
+                        if (nombreM && filtro.includes(nombreM)) {
+                            listaMaterias.push({
+                                n: nombreM,
+                                v1: fmt(studentRow[i]),             
+                                v2: fmt(studentRow[i+1]),           
+                                v3: esPrepa ? null : fmt(studentRow[i+2]), 
+                                vf: esPrepa ? fmt(studentRow[i+2]) : fmt(studentRow[i+3]) 
+                            });
+                        }
                     }
-                } catch (e) { 
-                    console.error("Error leyendo nivel " + nivel + ": ", e); 
+
+                    let pf = "-";
+                    for (let k = studentRow.length - 1; k >= 5; k--) {
+                        if (studentRow[k] && !isNaN(studentRow[k]) && studentRow[k].toString().trim() !== "") {
+                            pf = fmt(studentRow[k]);
+                            break;
+                        }
+                    }
+
+                    return { 
+                        nombre: studentRow[1], mat: studentRow[0], ciclo: studentRow[2], 
+                        grado: studentRow[3], grupo: studentRow[4], nivel, 
+                        materias: listaMaterias, pf, esPrepa, tipo
+                    };
                 }
+            } catch (e) { 
+                console.error("Error leyendo nivel " + nivel + ": ", e); 
             }
             return null;
         }
@@ -531,7 +477,7 @@
                                     <td>${m.v1}</td>
                                     <td>${m.v2}</td>
                                     ${!d.esPrepa ? `<td>${m.v3}</td>` : ''}
-                                    <td>${m.vf}</td>
+                                    <td class="promedio-col">${m.vf}</td>
                                 </tr>
                             `).join('')}
                         </tbody>
