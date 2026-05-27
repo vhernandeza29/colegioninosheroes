@@ -224,8 +224,8 @@
             margin: 0;
         }
         .grade-table thead th {
-            background-color: #4A5568;
-            color: white;
+            background-color: #4A5568 !important;
+            color: white !important;
             font-weight: 700;
             text-transform: uppercase;
             font-size: 0.8rem;
@@ -240,10 +240,10 @@
         .grade-table tbody td {
             padding: 14px 10px;
             text-align: center;
-            font-weight: 600;
+            font-weight: 700;
             font-size: 0.95rem;
             border: none;
-            border-bottom: 1px solid rgba(0, 0, 0, 0.05);
+            border-bottom: 1px solid rgba(0, 0, 0, 0.05) !important;
         }
         .grade-table tbody td.subject-col {
             text-align: left;
@@ -251,16 +251,16 @@
             font-weight: 800;
         }
 
-        /* COLORES PASTEL ASIGNADOS EXPRESAMENTE POR NIVEL ACADÉMICO */
+        /* APLICACIÓN FORZOSA DE LOS COLORES PASTEL FIJOS EN LAS CELDAS (REEMPLAZA EL GRIS) */
         .pastel-amarillo tbody tr td { background-color: #FFF5B7 !important; color: #5d4037 !important; }
         .pastel-rosa tbody tr td     { background-color: #FFB7CE !important; color: #4a148c !important; }
         .pastel-verde tbody tr td    { background-color: #C1E7C4 !important; color: #1b5e20 !important; }
         .pastel-azul tbody tr td     { background-color: #B3E5FC !important; color: #0d47a1 !important; }
         .pastel-lila tbody tr td     { background-color: #E1BEE7 !important; color: #4a148c !important; }
 
-        /* Resaltado del promedio final de la materia */
+        /* Destacar columna de promedio final */
         .grade-table tbody tr td:last-child { 
-            font-weight: 900; 
+            font-weight: 900 !important; 
             background-color: rgba(0, 0, 0, 0.08) !important;
         }
 
@@ -282,35 +282,14 @@
             letter-spacing: 0.5px;
         }
 
-        /* AJUSTES PARA IMPRESIÓN Y GUARDADO PDF */
+        /* IMPRESIÓN */
         @media print {
-            body { 
-                background-color: white !important; 
-            }
-            * {
-                -webkit-print-color-adjust: exact !important;
-                print-color-adjust: exact !important;
-            }
-            .no-print, .hero-banner, .search-container, .navbar { 
-                display: none !important; 
-            }
-            .report-card-container { 
-                display: block !important; 
-                border: none; 
-                box-shadow: none; 
-                padding: 0; 
-                margin: 0; 
-                width: 100%; 
-                max-width: 100%; 
-                border-radius: 0; 
-            }
-            .header-boleta { 
-                margin: 0 0 30px 0; 
-                padding: 20px 0;
-            }
-            .page-break { 
-                page-break-before: always; 
-            }
+            body { background-color: white !important; }
+            * { -webkit-print-color-adjust: exact !important; print-color-adjust: exact !important; }
+            .no-print, .hero-banner, .search-container, .navbar { display: none !important; }
+            .report-card-container { display: block !important; border: none; box-shadow: none; padding: 0; margin: 0; width: 100%; max-width: 100%; border-radius: 0; }
+            .header-boleta { margin: 0 0 30px 0; padding: 20px 0; }
+            .page-break { page-break-before: always; }
         }
     </style>
 </head>
@@ -413,7 +392,7 @@
                 if (dEx) renderBoleta(dEx, 'Extra', 'ASIGNATURAS EXTRACURRICULARES');
                 if (dIn) renderBoleta(dIn, 'Ingles', 'BOLETA DE INGLÉS');
             } else {
-                status.innerHTML = "<span class='text-danger'><i class='fas fa-exclamation-triangle mr-2'></i>Matrícula no encontrada. Verifique que esté escrita igual que en su Excel.</span>";
+                status.innerHTML = "<span class='text-danger'><i class='fas fa-exclamation-triangle mr-2'></i>Matrícula no encontrada o estructura de hoja inválida.</span>";
             }
         }
 
@@ -433,15 +412,23 @@
 
                     const data = Papa.parse(csv, { header: false, skipEmptyLines: true }).data;
 
-                    // Encontrar la cabecera dinámica basándose exclusivamente en la palabra "MATRICULA"
+                    // Encontrar la cabecera buscando de forma flexible la celda que contenga "MATRICULA"
                     const hIdx = data.findIndex(r => r.some(c => c && c.toString().trim().toUpperCase().includes('MATRICULA')));
                     if (hIdx === -1) continue;
 
-                    // Fila de materias (Fila inmediatamente anterior a la cabecera de matrícula)
-                    const materiasRow = data[hIdx - 1] || [];
+                    // ESCANEO DINÁMICO DE MATERIAS HACIA ARRIBA: Busca la primera fila superior que tenga contenido válido
+                    let materiasRow = [];
+                    for (let rowUp = hIdx - 1; rowUp >= 0; rowUp--) {
+                        if (data[rowUp] && data[rowUp].slice(5).some(cell => cell && cell.toString().trim() !== "")) {
+                            materiasRow = data[rowUp];
+                            break;
+                        }
+                    }
+                    if (materiasRow.length === 0) materiasRow = data[0] || [];
+
                     const colMatIdx = data[hIdx].findIndex(c => c && c.toString().trim().toUpperCase().includes('MATRICULA'));
                     
-                    // Buscar fila del alumno por matrícula
+                    // Buscar fila del alumno
                     const studentRow = data.find((r, idx) => idx >= hIdx && r[colMatIdx] && r[colMatIdx].toString().trim().toUpperCase() === mat);
 
                     if (studentRow) {
@@ -450,10 +437,10 @@
                         const filtro = MATERIAS_MAP[tipo](nivel);
                         let listaMaterias = [];
 
-                        // Comenzar la lectura de bloques evaluativos desde la columna F (Índice 5)
+                        // Recorrer las columnas numéricas de las notas a partir de la columna F (Índice 5)
                         for (let i = 5; i < studentRow.length; i += jump) {
                             
-                            // LÓGICA DE HERENCIA: Escaneo hacia atrás en la fila de materias para resolver celdas unificadas/combinadas
+                            // HERENCIA COMPLETA HACIA ATRÁS: Por si las celdas de materias vienen combinadas horizontalmente
                             let nombreM = "";
                             for (let backtrack = i; backtrack >= 5; backtrack--) {
                                 if (materiasRow[backtrack] && materiasRow[backtrack].toString().trim() !== "") {
@@ -462,12 +449,10 @@
                                 }
                             }
 
-                            // Frenar el bucle si detectamos columnas ajenas a las materias (ej. promedio de ciclo)
                             if (nombreM && (nombreM.includes("CICLO") || nombreM.includes("PROMEDIO"))) {
                                 break;
                             }
 
-                            // Si se localiza la materia y pertenece al filtro del nivel, se procesa el bloque de notas
                             if (nombreM && filtro.includes(nombreM)) {
                                 listaMaterias.push({
                                     n: nombreM,
@@ -479,7 +464,7 @@
                             }
                         }
 
-                        // Localizar Promedio Final General en las últimas celdas numéricas de la fila
+                        // Promedio General Final del Alumno
                         let pf = "-";
                         for (let k = studentRow.length - 1; k >= 5; k--) {
                             if (studentRow[k] && !isNaN(studentRow[k]) && studentRow[k].toString().trim() !== "") {
@@ -539,15 +524,20 @@
                 <div class="grade-table-container">
                     <table class="grade-table ${clasePastel}">
                         <thead>
-                            <tr style="background-color: #4A5568 !important;">
-                                <th class="subject-col" style="color: white !important;">Materias</th>
-                                ${d.esPrepa ? '<th style="color: white !important;">1er Sem</th><th style="color: white !important;">2do Sem</th>'
-                                : '<th style="color: white !important;">1er Trim</th><th style="color: white !important;">2do Trim</th><th style="color: white !important;">3er Trim</th>'}
-                                <th style="color: white !important;">Promedio Final</th>
+                            <tr>
+                                <th class="subject-col">Materias</th>
+                                ${d.esPrepa ? '<th>1er Sem</th><th>2do Sem</th>' : '<th>1er Trim</th><th>2do Trim</th><th>3er Trim</th>'}
+                                <th>Promedio Final</th>
                             </tr>
                         </thead>
                         <tbody>
-                            ${d.materias.map(m => `
+                            ${d.materias.length === 0 ? `
+                                <tr>
+                                    <td colspan="${d.esPrepa ? 4 : 5}" style="text-align:center; padding:30px; background-color:#fff !important; color:#888;">
+                                        No se pudieron mapear las materias. Verifique que los nombres en el Excel coincidan exactamente con la lista de filtros del código.
+                                    </td>
+                                </tr>
+                            ` : d.materias.map(m => `
                                 <tr>
                                     <td class="subject-col">${m.n}</td>
                                     <td>${m.v1}</td>
