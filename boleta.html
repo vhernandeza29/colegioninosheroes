@@ -92,7 +92,7 @@
             font-weight: 800; 
         }
 
-        /* DISEÑO DE BOLETA INSPIRADO (ESTILO LIMPIO CON BORDES REDONDEADOS) */
+        /* DISEÑO DE LA BOLETA MODERNA */
         .report-card-container {
             background: var(--blanco);
             padding: 40px;
@@ -104,7 +104,7 @@
             overflow: hidden;
         }
 
-        /* CABECERA CON COLORES ORIGINALES FIJOS */
+        /* CABECERA INSTITUCIONAL */
         .header-boleta {
             margin: -40px -40px 30px -40px;
             padding: 30px 40px;
@@ -155,7 +155,7 @@
             letter-spacing: 1px;
         }
 
-        /* BLOQUE DE INFORMACIÓN DEL ALUMNO */
+        /* DETALLES DEL ALUMNO */
         .student-info-grid {
             display: grid;
             grid-template-columns: repeat(2, 1fr);
@@ -219,7 +219,8 @@
         }
         .grade-table {
             width: 100%;
-            border-collapse: collapse;
+            border-collapse: separate;
+            border-spacing: 0;
             margin: 0;
         }
         .grade-table thead th {
@@ -234,37 +235,38 @@
         }
         .grade-table thead th.subject-col { 
             text-align: left; 
-            padding-left: 20px;
+            padding-left: 25px;
         }
         .grade-table tbody td {
-            padding: 12px 10px;
+            padding: 14px 10px;
             text-align: center;
-            font-weight: 700;
-            font-size: 0.9rem;
-            border-bottom: 1px solid rgba(0,0,0,0.06);
+            font-weight: 600;
+            font-size: 0.95rem;
+            border: none;
+            border-bottom: 1px solid rgba(0, 0, 0, 0.05);
         }
         .grade-table tbody td.subject-col {
             text-align: left;
-            padding-left: 20px;
-            text-transform: uppercase;
+            padding-left: 25px;
+            font-weight: 800;
         }
 
-        /* CONFIGURACIÓN DE TONALIDADES PASTEL POR NIVEL PARA TODA LA TABLA */
-        .level-yellow tbody tr { background-color: #FFFDE7 !important; color: #5D4037; } 
-        .level-pink tbody tr { background-color: #FFF5F7 !important; color: #4A148C; }    
-        .level-green tbody tr { background-color: #E8F5E9 !important; color: #1B5E20; }   
-        .level-blue tbody tr { background-color: #E3F2FD !important; color: #0D47A1; }    
-        .level-purple tbody tr { background-color: #F3E5F5 !important; color: #4A148C; }  
+        /* COLORES PASTEL ASIGNADOS EXPRESAMENTE POR NIVEL ACADÉMICO */
+        .pastel-amarillo tbody tr td { background-color: #FFF5B7 !important; color: #5d4037 !important; }
+        .pastel-rosa tbody tr td     { background-color: #FFB7CE !important; color: #4a148c !important; }
+        .pastel-verde tbody tr td    { background-color: #C1E7C4 !important; color: #1b5e20 !important; }
+        .pastel-azul tbody tr td     { background-color: #B3E5FC !important; color: #0d47a1 !important; }
+        .pastel-lila tbody tr td     { background-color: #E1BEE7 !important; color: #4a148c !important; }
 
-        /* DESTACAR PROMEDIOS FINALES INTERNOS */
+        /* Resaltado del promedio final de la materia */
         .grade-table tbody tr td:last-child { 
             font-weight: 900; 
-            background-color: rgba(0, 0, 0, 0.04) !important;
+            background-color: rgba(0, 0, 0, 0.08) !important;
         }
 
         /* SECCIÓN DE FIRMAS */
         .signature-section { 
-            margin-top: 60px; 
+            margin-top: 80px; 
             display: flex; 
             justify-content: space-around; 
             padding: 0 30px; 
@@ -280,7 +282,7 @@
             letter-spacing: 0.5px;
         }
 
-        /* CONFIGURACIÓN REGLAS DE IMPRESIÓN */
+        /* AJUSTES PARA IMPRESIÓN Y GUARDADO PDF */
         @media print {
             body { 
                 background-color: white !important; 
@@ -323,13 +325,13 @@
     <div class="hero-banner no-print">
         <div class="container">
             <h1>Portal de Boletas</h1>
-            <p>Consulta oficial de calificaciones correspondientes al periodo en curso.</p>
+            <p>Consulta oficial de calificaciones del ciclo escolar actual.</p>
         </div>
     </div>
 
     <div class="container search-container no-print">
         <div class="input-group">
-            <input type="text" id="matriculaInput" class="form-control" placeholder="Escriba la matrícula del alumno...">
+            <input type="text" id="matriculaInput" class="form-control" placeholder="Escriba la matrícula...">
             <div class="input-group-append">
                 <button class="btn btn-buscar" onclick="buscarBoletas()">BUSCAR</button>
             </div>
@@ -337,7 +339,7 @@
         <div id="statusMsg" class="text-center mt-3 font-weight-bold"></div>
         <div class="text-center mt-3" id="printBtnContainer" style="display:none;">
             <button class="btn btn-danger btn-lg shadow" onclick="window.print()">
-                <i class="fas fa-file-pdf mr-2"></i> IMPRIMIR / DESCARGAR PDF
+                <i class="fas fa-file-pdf mr-2"></i> DESCARGAR PDF / IMPRIMIR
             </button>
         </div>
     </div>
@@ -376,11 +378,11 @@
 
         function obtenerClaseColor(nivel) {
             const n = nivel.toUpperCase();
-            if (n.includes('MATERNAL')) return 'level-yellow';
-            if (n.includes('KINDER')) return 'level-pink';
-            if (n.includes('PRIMARIA')) return 'level-green';
-            if (n.includes('SECUNDARIA')) return 'level-blue';
-            if (n.includes('PREPARATORIA')) return 'level-purple';
+            if (n.includes('MATERNAL')) return 'pastel-amarillo';
+            if (n.includes('KINDER')) return 'pastel-rosa';
+            if (n.includes('PRIMARIA')) return 'pastel-verde';
+            if (n.includes('SECUNDARIA')) return 'pastel-azul';
+            if (n.includes('PREPARATORIA')) return 'pastel-lila';
             return '';
         }
 
@@ -408,10 +410,10 @@
             if (dEx || dIn) {
                 status.innerHTML = "<span class='text-success'><i class='fas fa-check-circle mr-2'></i>¡Información cargada con éxito!</span>";
                 document.getElementById('printBtnContainer').style.display = 'block';
-                if (dEx) renderBoleta(dEx, 'Extra', 'Asignaturas Extracurriculares');
-                if (dIn) renderBoleta(dIn, 'Ingles', 'Boleta de Calificaciones de Inglés');
+                if (dEx) renderBoleta(dEx, 'Extra', 'ASIGNATURAS EXTRACURRICULARES');
+                if (dIn) renderBoleta(dIn, 'Ingles', 'BOLETA DE INGLÉS');
             } else {
-                status.innerHTML = "<span class='text-danger'><i class='fas fa-exclamation-triangle mr-2'></i>Matrícula no encontrada. Verifique los datos asignados en su Excel.</span>";
+                status.innerHTML = "<span class='text-danger'><i class='fas fa-exclamation-triangle mr-2'></i>Matrícula no encontrada. Verifique que esté escrita igual que en su Excel.</span>";
             }
         }
 
@@ -431,16 +433,16 @@
 
                     const data = Papa.parse(csv, { header: false, skipEmptyLines: true }).data;
 
-                    // Localizar fila de la cabecera dinámica ("Matricula")
-                    const hIdx = data.findIndex(r => r.some(c => c && c.toString().trim().toUpperCase() === 'MATRICULA'));
+                    // Encontrar la cabecera dinámica basándose exclusivamente en la palabra "MATRICULA"
+                    const hIdx = data.findIndex(r => r.some(c => c && c.toString().trim().toUpperCase().includes('MATRICULA')));
                     if (hIdx === -1) continue;
 
-                    // Fila de las materias (asumiendo que está inmediatamente arriba)
+                    // Fila de materias (Fila inmediatamente anterior a la cabecera de matrícula)
                     const materiasRow = data[hIdx - 1] || [];
-                    const colMatIdx = data[hIdx].findIndex(c => c && c.toString().trim().toUpperCase() === 'MATRICULA');
+                    const colMatIdx = data[hIdx].findIndex(c => c && c.toString().trim().toUpperCase().includes('MATRICULA'));
                     
-                    // Alumno correspondiente
-                    const studentRow = data.find((r, idx) => idx > hIdx && r[colMatIdx] && r[colMatIdx].toString().trim().toUpperCase() === mat);
+                    // Buscar fila del alumno por matrícula
+                    const studentRow = data.find((r, idx) => idx >= hIdx && r[colMatIdx] && r[colMatIdx].toString().trim().toUpperCase() === mat);
 
                     if (studentRow) {
                         const esPrepa = nivel.toUpperCase().includes('PREPARATORIA');
@@ -448,22 +450,24 @@
                         const filtro = MATERIAS_MAP[tipo](nivel);
                         let listaMaterias = [];
 
-                        // Iterar bloques de materias comenzando en columna F (Índice 5)
+                        // Comenzar la lectura de bloques evaluativos desde la columna F (Índice 5)
                         for (let i = 5; i < studentRow.length; i += jump) {
                             
-                            // Búsqueda en reversa para resolver celdas unificadas/combinadas en la fila de materias
+                            // LÓGICA DE HERENCIA: Escaneo hacia atrás en la fila de materias para resolver celdas unificadas/combinadas
                             let nombreM = "";
-                            for (let j = i; j >= 5; j--) {
-                                if (materiasRow[j] && materiasRow[j].toString().trim() !== "") {
-                                    nombreM = materiasRow[j].toString().trim().toUpperCase();
+                            for (let backtrack = i; backtrack >= 5; backtrack--) {
+                                if (materiasRow[backtrack] && materiasRow[backtrack].toString().trim() !== "") {
+                                    nombreM = materiasRow[backtrack].toString().trim().toUpperCase();
                                     break;
                                 }
                             }
 
+                            // Frenar el bucle si detectamos columnas ajenas a las materias (ej. promedio de ciclo)
                             if (nombreM && (nombreM.includes("CICLO") || nombreM.includes("PROMEDIO"))) {
                                 break;
                             }
 
+                            // Si se localiza la materia y pertenece al filtro del nivel, se procesa el bloque de notas
                             if (nombreM && filtro.includes(nombreM)) {
                                 listaMaterias.push({
                                     n: nombreM,
@@ -475,7 +479,7 @@
                             }
                         }
 
-                        // Cálculo/Búsqueda de Promedio General
+                        // Localizar Promedio Final General en las últimas celdas numéricas de la fila
                         let pf = "-";
                         for (let k = studentRow.length - 1; k >= 5; k--) {
                             if (studentRow[k] && !isNaN(studentRow[k]) && studentRow[k].toString().trim() !== "") {
@@ -504,11 +508,11 @@
 
             div.innerHTML = `
                 <div class="header-boleta">
-                    <img src="Iconos/logo.png" alt="Logo Colegio" class="logo-boleta">
+                    <img src="Iconos/logo.png" class="logo-boleta">
                     <div class="school-info">
                         <h1 class="school-name">COLEGIO NIÑOS HÉROES</h1>
                         <h2 class="school-subtitle">Sección Académica</h2>
-                        <p class="school-address">Durango S/N Amp. Adolfo López Mateos, Atizapán de Zaragoza.<br>Tels: 58204881 y 5590557078</p>
+                        <p class="school-address">DURANGO S/N AMP. ADOLFO LÓPEZ MATEOS, ATIZAPÁN DE ZARAGOZA.<br>TELS: 58204881 Y 5590557078</p>
                     </div>
                 </div>
 
@@ -519,11 +523,11 @@
                 <div class="student-info-grid">
                     <div class="info-item"><span class="info-label">Ciclo Escolar:</span> <span class="info-value">${d.ciclo}</span></div>
                     <div class="info-item"><span class="info-label">Grado:</span> <span class="info-value">${d.grado}</span></div>
-                    <div class="info-item"><span class="info-label">Alumno/a:</span> <span class="info-value">${d.nombre}</span></div>
+                    <div class="info-item"><span class="info-label">Alumno:</span> <span class="info-value">${d.nombre}</span></div>
                     <div class="info-item"><span class="info-label">Grupo:</span> <span class="info-value">${d.grupo}</span></div>
                     
                     <div class="final-grade-box">
-                        <span class="final-grade-label">Promedio General Periodo:</span>
+                        <span class="final-grade-label">Calificación Final General:</span>
                         <span class="final-grade-value">${d.pf}</span>
                     </div>
                 </div>
@@ -535,10 +539,11 @@
                 <div class="grade-table-container">
                     <table class="grade-table ${clasePastel}">
                         <thead>
-                            <tr>
-                                <th class="subject-col">Materias</th>
-                                ${d.esPrepa ? '<th>1er Semestre</th><th>2do Semestre</th>' : '<th>1er Trimestre</th><th>2do Trimestre</th><th>3er Trimestre</th>'}
-                                <th>Promedio Final</th>
+                            <tr style="background-color: #4A5568 !important;">
+                                <th class="subject-col" style="color: white !important;">Materias</th>
+                                ${d.esPrepa ? '<th style="color: white !important;">1er Sem</th><th style="color: white !important;">2do Sem</th>'
+                                : '<th style="color: white !important;">1er Trim</th><th style="color: white !important;">2do Trim</th><th style="color: white !important;">3er Trim</th>'}
+                                <th style="color: white !important;">Promedio Final</th>
                             </tr>
                         </thead>
                         <tbody>
