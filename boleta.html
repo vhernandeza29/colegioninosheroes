@@ -66,7 +66,7 @@
             margin-bottom: 10px; 
         }
         
-        /* BUSCADOR SIMPLIFICADO */
+        /* BUSCADOR */
         .search-container { 
             max-width: 600px; 
             margin: 0 auto 40px; 
@@ -255,6 +255,7 @@
         const idExtra = '12m7RYtCBAF-P6t8_hoS3TkJwVX0tHEf7uaHAs6m0pTs';
         const idIngles = '1EY955TiJLZtpffxAtNQW3bjVuw8vHfYm_JYhX_6hXd4';
 
+        // Lista de pestañas oficiales en tus archivos de Excel
         const PESTANAS_SISTEMA = [
             "Maternal", "Kinder 1", "Kinder 2", "Kinder 3",
             "Primaria 1", "Primaria 2", "Primaria 3", "Primaria 4", "Primaria 5", "Primaria 6",
@@ -311,24 +312,28 @@
 
             if (!mat) { status.innerText = "Por favor, ingrese una matrícula válida."; return; }
 
-            status.innerHTML = "<i class='fas fa-spinner fa-spin mr-2'></i>Buscando coincidencia exacta en la columna A de todos los niveles...";
+            status.innerHTML = "<i class='fas fa-spinner fa-spin mr-2'></i>Buscando en todas las pestañas académicas...";
 
             document.getElementById('reportCardExtra').style.display = 'none';
             document.getElementById('reportCardIngles').style.display = 'none';
+            document.getElementById('printBtnContainer').style.display = 'none';
 
             let dEx = null;
             let dIn = null;
 
-            // Escanea pestaña por pestaña secuencialmente
-            for (const pestaña of PESTANAS_SISTEMA) {
-                let textoNivelCompleto = pestaña.replace(/Kinder/i, 'Preescolar');
+            // BÚSQUEDA SECUENCIAL INTELIGENTE COMPLETA
+            for (let i = 0; i < PESTANAS_SISTEMA.length; i++) {
+                const pestañaActual = PESTANAS_SISTEMA[i];
+                let textoNivelCompleto = pestañaActual.replace(/Kinder/i, 'Preescolar');
                 
-                let resEx = await obtenerDatosPorPestaña(idExtra, mat, pestaña, textoNivelCompleto, 'extra');
+                status.innerHTML = `<i class='fas fa-spinner fa-spin mr-2'></i>Buscando en pestaña: <b>${pestañaActual}</b>...`;
+                
+                // Forzamos la obtención e ignoramos rechazos de red para continuar con la siguiente pestaña pase lo que pase
+                let resEx = await obtenerDatosPorPestaña(idExtra, mat, pestañaActual, textoNivelCompleto, 'extra');
                 if (resEx) {
                     dEx = resEx;
-                    // Si lo encuentra en Extra, extrae automáticamente sus datos de Inglés en esa misma pestaña
-                    dIn = await obtenerDatosPorPestaña(idIngles, mat, pestaña, textoNivelCompleto, 'ingles');
-                    break; 
+                    dIn = await obtenerDatosPorPestaña(idIngles, mat, pestañaActual, textoNivelCompleto, 'ingles');
+                    break; // Al encontrarlo en una pestaña, frena la búsqueda para mostrar el alumno
                 }
             }
 
@@ -339,7 +344,6 @@
                 if (dIn) renderBoleta(dIn, 'Ingles', 'BOLETA DE INGLÉS');
             } else {
                 status.innerHTML = `<span class='text-danger'>Matrícula "${mat}" no encontrada en la Columna A de ninguna pestaña de la base de datos.</span>`;
-                document.getElementById('printBtnContainer').style.display = 'none';
             }
         }
 
@@ -347,17 +351,18 @@
             const url = `https://docs.google.com/spreadsheets/d/${sheetId}/export?format=csv&sheet=${encodeURIComponent(nombrePestaña)}&tqx=cb:${Date.now()}`;
             try {
                 const res = await fetch(url);
-                if (!res.ok) return null;
+                if (!res.ok) return null; // Si una pestaña da error 400/500, retorna nulo y continúa
                 
                 const csv = await res.text();
                 const data = Papa.parse(csv, {header: false, skipEmptyLines: false}).data;
                 
+                // Validamos que existan datos suficientes (mínimo fila 3)
                 if (!data || data.length < 3) return null;
 
                 const materiasRow = data[0] || []; 
                 let studentRow = null;
 
-                // LÓGICA REQUERIDA: Buscar estrictamente en la COLUMNA A (Índice 0) desde la fila 3 (Índice 2) en adelante
+                // REGLA: Buscar desde la Fila 3 (Índice 2) hacia abajo estrictamente en la Columna A (Índice 0)
                 for (let r = 2; r < data.length; r++) {
                     if (data[r] && data[r][0]) {
                         const celdaMatricula = data[r][0].toString().trim().toUpperCase();
@@ -407,7 +412,7 @@
                     };
                 }
             } catch (e) { 
-                // Ignorar errores de red puntuales para permitir un escaneo fluido por las demás pestañas
+                // Captura fallos de red silenciosamente para no congelar el bucle de búsqueda
             }
             return null;
         }
