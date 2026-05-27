@@ -66,9 +66,9 @@
             margin-bottom: 10px; 
         }
         
-        /* BUSCADOR CON FILTRO ACTUALIZADO */
+        /* BUSCADOR SIMPLIFICADO */
         .search-container { 
-            max-width: 750px; 
+            max-width: 600px; 
             margin: 0 auto 40px; 
         }
         .search-box-wrapper {
@@ -80,20 +80,12 @@
             border-radius: 15px;
             border: 1px solid #ddd;
         }
-        .select-nivel {
-            max-width: 250px;
-            border: 1px solid #ced4da !important;
-            border-radius: 10px !important;
-            height: 50px;
-            font-weight: 600;
-            color: #495057;
-        }
         #matriculaInput { 
             border: 1px solid #ced4da; 
             border-radius: 10px;
             padding-left: 15px; 
             height: 50px; 
-            font-size: 1.05rem; 
+            font-size: 1.1rem; 
             font-weight: 600;
         }
         .btn-buscar { 
@@ -101,7 +93,7 @@
             color: white !important; 
             border: none !important; 
             border-radius: 10px !important;
-            padding: 0 30px; 
+            padding: 0 35px; 
             font-weight: 800; 
             height: 50px;
         }
@@ -192,28 +184,22 @@
         .grade-table tbody tr td.subject-col { text-align: left; padding-left: 25px; font-weight: 800; }
 
         /* --- CONTROL DE TONOS DE TABLA SEGÚN NIVEL --- */
-        
-        /* Maternal (Amarillos) */
         .pastel-amarillo thead th { background-color: #FBC02D !important; color: #5d4037 !important; }
         .pastel-amarillo tbody tr td { background-color: #FFF9C4 !important; color: #5d4037 !important; }
         .pastel-amarillo tbody tr td.promedio-col { background-color: #FBC02D !important; font-weight: 900 !important; }
 
-        /* Preescolar / Kinder (Rosas) */
         .pastel-preescolar thead th { background-color: #F48FB1 !important; color: #4a148c !important; }
         .pastel-preescolar tbody tr td { background-color: #FCE4EC !important; color: #4a148c !important; }
         .pastel-preescolar tbody tr td.promedio-col { background-color: #F48FB1 !important; font-weight: 900 !important; }
 
-        /* Primaria (Verdes) */
         .pastel-verde thead th { background-color: #81C784 !important; color: #1b5e20 !important; }
         .pastel-verde tbody tr td { background-color: #E8F5E9 !important; color: #1b5e20 !important; }
         .pastel-verde tbody tr td.promedio-col { background-color: #81C784 !important; font-weight: 900 !important; }
 
-        /* Secundaria (Azules) */
         .pastel-azul thead th { background-color: #4FC3F7 !important; color: #0d47a1 !important; }
         .pastel-azul tbody tr td { background-color: #E1F5FE !important; color: #0d47a1 !important; }
         .pastel-azul tbody tr td.promedio-col { background-color: #4FC3F7 !important; font-weight: 900 !important; }
 
-        /* Preparatoria (Lilas) */
         .pastel-lila thead th { background-color: #BA68C8 !important; color: #4a148c !important; }
         .pastel-lila tbody tr td { background-color: #F3E5F5 !important; color: #4a148c !important; }
         .pastel-lila tbody tr td.promedio-col { background-color: #BA68C8 !important; font-weight: 900 !important; }
@@ -244,32 +230,13 @@
     <div class="hero-banner no-print">
         <div class="container">
             <h1>Portal de Boletas Oficiales</h1>
-            <p>Selecciona el nivel educativo e introduce la matrícula correspondiente.</p>
+            <p>Introduce la matrícula del alumno para generar sus boletas institucionales.</p>
         </div>
     </div>
 
     <div class="container search-container no-print">
         <div class="search-box-wrapper">
-            <select id="nivelSelect" class="form-control select-nivel">
-                <option value="" disabled selected>Seleccione Nivel</option>
-                <option value="Maternal">Maternal</option>
-                <option value="Kinder 1">Preescolar 1</option>
-                <option value="Kinder 2">Preescolar 2</option>
-                <option value="Kinder 3">Preescolar 3</option>
-                <option value="Primaria 1">Primaria 1</option>
-                <option value="Primaria 2">Primaria 2</option>
-                <option value="Primaria 3">Primaria 3</option>
-                <option value="Primaria 4">Primaria 4</option>
-                <option value="Primaria 5">Primaria 5</option>
-                <option value="Primaria 6">Primaria 6</option>
-                <option value="Secundaria 1">Secundaria 1</option>
-                <option value="Secundaria 2">Secundaria 2</option>
-                <option value="Secundaria 3">Secundaria 3</option>
-                <option value="Preparatoria 1">Preparatoria 1</option>
-                <option value="Preparatoria 2">Preparatoria 2</option>
-                <option value="Preparatoria 3">Preparatoria 3</option>
-            </select>
-            <input type="text" id="matriculaInput" class="form-control" placeholder="Escriba la matrícula...">
+            <input type="text" id="matriculaInput" class="form-control" placeholder="Ingrese la matrícula del alumno...">
             <button class="btn btn-buscar" onclick="buscarBoletas()">BUSCAR</button>
         </div>
         
@@ -287,6 +254,14 @@
     <script>
         const idExtra = '12m7RYtCBAF-P6t8_hoS3TkJwVX0tHEf7uaHAs6m0pTs';
         const idIngles = '1EY955TiJLZtpffxAtNQW3bjVuw8vHfYm_JYhX_6hXd4';
+
+        // Lista ordenada de todas las pestañas posibles en tus Excel
+        const PESTANAS_SISTEMA = [
+            "Maternal", "Kinder 1", "Kinder 2", "Kinder 3",
+            "Primaria 1", "Primaria 2", "Primaria 3", "Primaria 4", "Primaria 5", "Primaria 6",
+            "Secundaria 1", "Secundaria 2", "Secundaria 3",
+            "Preparatoria 1", "Preparatoria 2", "Preparatoria 3"
+        ];
 
         const MATERIAS_MAP = {
             ingles: (n) => {
@@ -332,23 +307,30 @@
         };
 
         async function buscarBoletas() {
-            const valorPestaña = document.getElementById('nivelSelect').value;
-            const textoVisible = document.getElementById('nivelSelect').options[document.getElementById('nivelSelect').selectedIndex].text;
             const mat = document.getElementById('matriculaInput').value.trim().toUpperCase();
             const status = document.getElementById('statusMsg');
 
-            if (!valorPestaña) { status.innerText = "Por favor, seleccione el Nivel Educativo primero."; return; }
             if (!mat) { status.innerText = "Por favor, ingrese una matrícula válida."; return; }
 
-            status.innerHTML = "<i class='fas fa-spinner fa-spin mr-2'></i>Buscando información en la base de datos...";
+            status.innerHTML = "<i class='fas fa-spinner fa-spin mr-2'></i>Escaneando todos los niveles educativos en la base de datos...";
 
             document.getElementById('reportCardExtra').style.display = 'none';
             document.getElementById('reportCardIngles').style.display = 'none';
 
-            const [dEx, dIn] = await Promise.all([
-                obtenerDatosPorPestaña(idExtra, mat, 'extra', valorPestaña, textoVisible),
-                obtenerDatosPorPestaña(idIngles, mat, 'ingles', valorPestaña, textoVisible)
-            ]);
+            // Escaneo secuencial inteligente por todas las pestañas
+            let dEx = null;
+            let dIn = null;
+
+            for (const pestaña of PESTANAS_SISTEMA) {
+                let textoNivelCompleto = pestaña.replace(/Kinder/i, 'Preescolar');
+                
+                let resEx = await obtenerDatosPorPestaña(idExtra, mat, 'extra', pestaña, textoNivelCompleto);
+                if (resEx) {
+                    dEx = resEx;
+                    dIn = await obtenerDatosPorPestaña(idIngles, mat, 'ingles', pestaña, textoNivelCompleto);
+                    break; 
+                }
+            }
 
             if (dEx || dIn) {
                 status.innerHTML = "<span class='text-success'>¡Información cargada exitosamente!</span>";
@@ -356,7 +338,7 @@
                 if (dEx) renderBoleta(dEx, 'Extra', 'ASIGNATURAS EXTRACURRICULARES');
                 if (dIn) renderBoleta(dIn, 'Ingles', 'BOLETA DE INGLÉS');
             } else {
-                status.innerHTML = `<span class='text-danger'>Matrícula "${mat}" no encontrada en la sección "${textoVisible}". Verifique el código o nivel.</span>`;
+                status.innerHTML = `<span class='text-danger'>Matrícula "${mat}" no encontrada en ningún nivel registrado. Verifique el código.</span>`;
                 document.getElementById('printBtnContainer').style.display = 'none';
             }
         }
@@ -370,7 +352,6 @@
                 const csv = await res.text();
                 const data = Papa.parse(csv, {header: false, skipEmptyLines: true}).data;
                 
-                // ESCANEO TOTAL: Busca dinámicamente la columna Matricula
                 let hIdx = -1;
                 let colMatIdx = -1;
                 
@@ -388,18 +369,14 @@
                 if (hIdx === -1 || colMatIdx === -1) return null;
 
                 const materiasRow = data[0] || []; 
-                
-                // EXTRACCIÓN NUMÉRICA PURA: Compara solo los números finales de la matrícula para evitar fallos por las letras intermedias
                 const digitosBusqueda = mat.replace(/\D/g, ""); 
 
                 const studentRow = data.find((r, idx) => {
                     if (idx <= hIdx || !r[colMatIdx]) return false;
                     const valCelda = r[colMatIdx].toString().trim().toUpperCase();
                     
-                    // Intento 1: Coincidencia exacta
                     if (valCelda === mat) return true;
                     
-                    // Intento 2: Coincidencia de números finales (ej: 001 con 001)
                     const digitosCelda = valCelda.replace(/\D/g, "");
                     if (digitosBusqueda && digitosCelda && parseInt(digitosBusqueda, 10) === parseInt(digitosCelda, 10)) {
                         return true;
@@ -446,7 +423,7 @@
                     };
                 }
             } catch (e) { 
-                console.error("Error leyendo nivel " + nombrePestaña + ": ", e); 
+                // Silencioso para optimizar el escaneo rápido de pestañas
             }
             return null;
         }
