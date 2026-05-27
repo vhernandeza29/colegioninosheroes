@@ -122,6 +122,10 @@
 
         status.innerHTML = "Buscando información...";
         
+        // Limpiar vistas anteriores por si acaso
+        document.getElementById('reportCardExtra').style.display = 'none';
+        document.getElementById('reportCardIngles').style.display = 'none';
+
         const [dEx, dIn] = await Promise.all([
             obtenerDatos(idExtra, mat, 'extra'),
             obtenerDatos(idIngles, mat, 'ingles')
@@ -133,16 +137,19 @@
             if (dEx) renderBoleta(dEx, 'Extra', 'ASIGNATURAS EXTRACURRICULARES');
             if (dIn) renderBoleta(dIn, 'Ingles', 'BOLETA DE INGLÉS');
         } else {
-            status.innerHTML = "<span class='text-danger'>Matrícula no encontrada. Verifique los archivos de origen.</span>";
+            status.innerHTML = "<span class='text-danger'>Matrícula no encontrada. Verifique que esté dada de alta en las pestañas correspondientes.</span>";
             document.getElementById('printBtnContainer').style.display = 'none';
         }
     }
 
     async function obtenerDatos(sheetId, mat, tipo) {
         for (let nivel of niveles) {
-            const url = `https://docs.google.com/spreadsheets/d/${sheetId}/gviz/tq?tqx=out:csv&sheet=${encodeURIComponent(nivel)}&tqx=cb:${Date.now()}`;
+            // Cambiamos a la URL directa de exportación a CSV para evitar bloqueos por cookies en gviz/tq
+            const url = `https://docs.google.com/spreadsheets/d/${sheetId}/export?format=csv&sheet=${encodeURIComponent(nivel)}&tqx=cb:${Date.now()}`;
             try {
                 const res = await fetch(url);
+                if(!res.ok) continue; // Si la pestaña no existe o falla, salta a la siguiente
+                
                 const csv = await res.text();
                 const data = Papa.parse(csv, {header: false, skipEmptyLines: true}).data;
                 
@@ -150,7 +157,7 @@
                 const hIdx = data.findIndex(r => r.some(c => c && c.toString().trim().toUpperCase().includes('MATRICULA')));
                 if (hIdx === -1) continue;
 
-                // Fila 1 (índice 0) contiene de forma nativa los títulos de las materias
+                // Fila 1 (índice 0) contiene los títulos de las materias
                 const materiasRow = data[0] || []; 
                 const colMatIdx = data[hIdx].findIndex(c => c && c.toString().trim().toUpperCase().includes('MATRICULA'));
                 
@@ -159,13 +166,12 @@
 
                 if (studentRow) {
                     const esPrepa = nivel.toUpperCase().includes('PREPARATORIA');
-                    const jump = esPrepa ? 3 : 4; // Avanza de 3 en 3 para prepa o de 4 en 4 para los demás
+                    const jump = esPrepa ? 3 : 4; 
                     const filtro = MATERIAS_MAP[tipo](nivel);
                     let listaMaterias = [];
                     
                     // Empezar lectura estructural estricta desde la columna F (Índice 5)
                     for (let i = 5; i < studentRow.length; i += jump) {
-                        // Si la celda en la Fila 1 contiene "CICLO ESCOLAR" o variables de promedio, paramos el bucle de materias
                         if (materiasRow[i] && (materiasRow[i].toString().trim().toUpperCase().includes("CICLO") || materiasRow[i].toString().trim().toUpperCase().includes("PROMEDIO"))) {
                             break;
                         }
@@ -175,15 +181,15 @@
                         if (nombreM && filtro.includes(nombreM)) {
                             listaMaterias.push({
                                 n: nombreM,
-                                v1: fmt(studentRow[i]),             // T1 o 1er SEM
-                                v2: fmt(studentRow[i+1]),           // T2 o 2do SEM
-                                v3: esPrepa ? null : fmt(studentRow[i+2]), // T3 (Solo si no es prepa)
-                                vf: esPrepa ? fmt(studentRow[i+2]) : fmt(studentRow[i+3]) // PF (Columna 3 o Columna 4)
+                                v1: fmt(studentRow[i]),             
+                                v2: fmt(studentRow[i+1]),           
+                                v3: esPrepa ? null : fmt(studentRow[i+2]), 
+                                vf: esPrepa ? fmt(studentRow[i+2]) : fmt(studentRow[i+3]) 
                             });
                         }
                     }
 
-                    // Extraer promedio final general (Buscando la última columna numérica válida)
+                    // Extraer promedio final general
                     let pf = "-";
                     for (let k = studentRow.length - 1; k >= 5; k--) {
                         if (studentRow[k] && !isNaN(studentRow[k]) && studentRow[k].toString().trim() !== "") {
@@ -198,7 +204,9 @@
                         materias: listaMaterias, pf, esPrepa, tipo
                     };
                 }
-            } catch (e) { console.error(e); }
+            } catch (e) { 
+                console.error("Error leyendo nivel " + nivel + ": ", e); 
+            }
         }
         return null;
     }
