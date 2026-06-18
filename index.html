@@ -21,10 +21,6 @@
             padding: 80px 0;
         }
 
-        .bg-verde-pastel {
-            background-color: var(--verde-pastel) !important;
-        }
-
         /* --- TARJETAS DE MISIÓN Y VISIÓN --- */
         .mvo-card {
             border: none;
@@ -35,7 +31,7 @@
             border-radius: 15px;
             background: #fff;
             border: 1px solid rgba(49, 127, 119, 0.1);
-            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.02);
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.05);
         }
 
         .mvo-card:hover {
@@ -84,7 +80,7 @@
 
         .carousel-item img {
             width: 100%;
-            height: 680px; /* Altura incrementada para dar mayor presencia a las fotos */
+            height: 680px;
             object-fit: cover;
             border-radius: 0px;
         }
@@ -133,7 +129,7 @@
             border-radius: 20px;
             border-left: 6px solid var(--verde-id);
             margin: 0 !important;
-            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.04);
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.06);
             transition: transform 0.3s ease;
         }
         
@@ -196,7 +192,7 @@
     <div class="top-bar d-none d-md-block">
         <div class="container d-flex justify-content-between align-items-center">
             <div><i class="fas fa-envelope mr-1"></i> cnh.admi@hotmail.com | 55 5820 4881 - 55 9055 7078</div>
-            <div><a href="#" style="color:white;"><i class="fab fa-facebook-f"></i></a></div>
+            <div><a href="#" class="fb-top-link"><i class="fab fa-facebook-f"></i></a></div>
         </div>
     </div>
 
@@ -205,6 +201,9 @@
             <a class="navbar-brand" href="index.html">
                 <img src="Iconos/logo.png" style="height:40px;"> Colegio Niños Héroes
             </a>
+            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav">
+                <span class="navbar-toggler-icon"></span>
+            </button>
             <div class="collapse navbar-collapse" id="navbarNav">
                 <ul class="navbar-nav ml-auto align-items-center">
                     <li class="nav-item"><a class="nav-link active" href="index.html">Nosotros</a></li>
@@ -222,7 +221,7 @@
     </nav>
 
     <section class="carousel-container container-fluid">
-        <div id="carruselFotos" class="carousel slide" data-ride="carousel">
+        <div id="carruselFotos" class="carousel slide" data-ride="carousel" data-interval="4000">
             <ol class="carousel-indicators">
                 <li data-target="#carruselFotos" data-slide-to="0" class="active"></li>
                 <li data-target="#carruselFotos" data-slide-to="1"></li>
@@ -256,7 +255,7 @@
         </div>
     </section>
 
-    <section class="institucional-section bg-verde-pastel efecto-entrada">
+    <section class="institucional-section efecto-entrada">
         <div class="container">
             <div class="row justify-content-center">
                 <div class="col-md-5 mb-4">
@@ -314,7 +313,7 @@
         </div>
     </section>
 
-    <section class="psicologia-section bg-verde-pastel efecto-entrada">
+    <section class="psicologia-section efecto-entrada">
         <div class="container">
             <div class="psicologia-box shadow-sm">
                 <div class="row align-items-center">

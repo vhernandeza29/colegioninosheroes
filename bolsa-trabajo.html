@@ -7,7 +7,115 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
     <link rel="stylesheet" href="style.css">
     <style>
-         /* --- ESTILO HERO CON DEGRADADO (IGUAL A OFERTA EDUCATIVA) --- */
+        /* --- VARIABLES DE COLOR INSTITUCIONAL --- */
+        :root {
+            --azul-id: #193E9A;    
+            --verde-id: #317F77;   
+            --whatsapp: #2cb742; 
+            --blanco: #ffffff;
+            --fondo: #f8fafc;      
+            --texto: #334155;      
+        }
+
+        /* --- ESTILO DEL BANNER SUPERIOR AZUL --- */
+        .top-bar {
+            background: var(--azul-id); 
+            color: white;
+            padding: 10px 0;
+        }
+        .top-bar .container {
+            display: flex;
+            justify-content: flex-end;
+            align-items: center;
+        }
+        .top-bar a { 
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            width: 32px;
+            height: 32px;
+            background-color: rgba(255, 255, 255, 0.2); 
+            color: white !important; 
+            text-decoration: none; 
+            border-radius: 50%;
+            transition: all 0.3s ease;
+        }
+        .top-bar a:hover {
+            background-color: white; 
+            color: var(--azul-id) !important; 
+            transform: scale(1.1);
+        }
+        .top-bar i.fab.fa-facebook-f { 
+            font-size: 1rem; 
+        }
+
+        /* --- CORRECCIÓN UNIFICADA DEL MENÚ DE NAVEGACIÓN --- */
+        .navbar { 
+            background: var(--blanco) !important;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.05);
+            padding: 10px 0;
+            border-bottom: 3px solid var(--azul-id);
+        }
+        .navbar > .container {
+            display: flex !important;
+            justify-content: space-between !important;
+            align-items: center !important;
+            max-width: 100%;
+            padding-left: 40px;
+            padding-right: 40px;
+        }
+        .navbar-brand {
+            color: var(--azul-id) !important;
+            font-size: 1.8rem; 
+            font-weight: 900;
+            display: flex;
+            align-items: center;
+            margin-right: 0 !important;
+            flex: 0 0 auto;
+        }
+        .logo-colegio { 
+            height: 40px; /* Ajustado para emparejar con el resto de pestañas */
+            width: auto;
+            margin-right: 15px; 
+        }
+        .navbar-collapse {
+            flex-grow: 1; 
+            display: flex !important;
+            justify-content: center; 
+        }
+        .navbar-nav {
+            display: flex;
+            flex-direction: row;
+            justify-content: space-evenly; 
+            width: 80%; 
+            align-items: center;
+            margin: 0 auto;
+        }
+        .nav-link { 
+            color: var(--texto) !important; 
+            font-size: 0.95rem; 
+            font-weight: 600;
+            transition: 0.3s;
+            white-space: nowrap;
+            padding: 0 10px !important;
+        }
+        .nav-link:hover { color: var(--verde-id) !important; }
+
+        .btn-whatsapp-nav { 
+            background: var(--whatsapp); 
+            color: white !important; 
+            border-radius: 8px; 
+            padding: 8px 18px; 
+            font-weight: 700; 
+            box-shadow: 0 4px 12px rgba(44, 183, 66, 0.2);
+            flex: 0 0 auto;
+            text-transform: uppercase;
+            text-decoration: none;
+            display: inline-block;
+            font-size: 0.9rem;
+        }
+
+        /* --- ESTILO HERO CON DEGRADADO --- */
         .hero {
             background: linear-gradient(135deg, #193E9A 0%, #317F77 100%);
             padding: 80px 0;
@@ -21,17 +129,23 @@
             text-shadow: 2px 2px 4px rgba(0,0,0,0.2);
         }
 
-        /* ESTILOS CRÍTICOS PARA VISIBILIDAD */
+        /* --- FORMULARIOS Y ELEMENTOS CRÍTICOS --- */
         select.form-control {
             color: #212529 !important;
             background-color: #ffffff !important;
             height: auto !important;
             padding: 10px !important;
         }
+        .form-control { margin-bottom: 15px; border-radius: 8px; }
+        .btn-institucional { 
+            background-color: #193E9A; color: white; border: none; padding: 12px 30px; 
+            border-radius: 25px; font-weight: bold; transition: 0.3s; width: 100%;
+        }
+        .btn-institucional:hover { background-color: #0d2561; cursor: pointer; color: white; }
 
+        /* --- FOOTER --- */
         .footer-colegio { background-color: #193E9A; padding: 30px 0; margin-top: 50px; color: white; }
         .texto-nowrap { white-space: nowrap; font-size: 0.95rem; }
-        
         .link-unete {
             color: white !important; font-weight: 600; text-decoration: none; font-size: 0.9rem;
             transition: all 0.3s ease; padding: 8px 18px; border: 1px solid rgba(255, 255, 255, 0.6);
@@ -39,22 +153,20 @@
         }
         .link-unete:hover { background-color: white; color: #193E9A !important; }
 
-        .form-control { margin-bottom: 15px; border-radius: 8px; }
-
-        .btn-institucional { 
-            background-color: #193E9A; color: white; border: none; padding: 12px 30px; 
-            border-radius: 25px; font-weight: bold; transition: 0.3s; width: 100%;
+        @media (max-width: 1100px) {
+            .navbar-brand { font-size: 1.4rem; }
+            .logo-colegio { height: 35px; }
+            .nav-link { font-size: 0.8rem; }
+            .navbar-nav { width: 100%; }
         }
-        .btn-institucional:hover { background-color: #0d2561; cursor: pointer; color: white; }
-
         @media (max-width: 576px) { .texto-nowrap { white-space: normal; } }
     </style>
 </head>
 <body>
+
     <div class="top-bar d-none d-md-block">
         <div class="container d-flex justify-content-between align-items-center">
-            <div><i class="fas fa-envelope mr-1"></i> cnh.admi@hotmail.com | 55 5820 4881 - 55 9055 7078
-</div>
+            <div><i class="fas fa-envelope mr-1"></i> cnh.admi@hotmail.com | 55 5820 4881 - 55 9055 7078</div>
             <div><a href="#"><i class="fab fa-facebook-f"></i></a></div>
         </div>
     </div>
@@ -176,7 +288,6 @@
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
 
     <script>
-        // Este script hace que el nombre del archivo aparezca en el cuadro al seleccionarlo
         document.getElementById('customFile').onchange = function () {
             var fileName = this.value.split("\\").pop();
             document.getElementById('fileLabel').innerHTML = fileName;
