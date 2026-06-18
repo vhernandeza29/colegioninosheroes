@@ -107,11 +107,11 @@
             margin: 0 auto 50px;
             max-width: 850px;
             display: none;
-            position: relative; /* Esencial para posicionar el sello de fondo */
+            position: relative;
             overflow: hidden;
         }
 
-        /* SELLO INSTITUCIONAL / MARCA DE AGUA CENTRADA */
+        /* SELLO INSTITUCIONAL CENTRADO */
         .sello-agua-fondo {
             position: absolute;
             top: 55%;
@@ -119,12 +119,11 @@
             transform: translate(-50%, -50%) rotate(-10deg);
             width: 400px;
             height: auto;
-            opacity: 0.06; /* Atenuado ideal para no interferir con las notas */
-            pointer-events: none; /* No interrumpe la selección de texto */
+            opacity: 0.06;
+            pointer-events: none;
             z-index: 1;
         }
 
-        /* CAPA DEL CONTENIDO POR ENCIMA DEL SELLO */
         .boleta-content-wrapper {
             position: relative;
             z-index: 2;
@@ -151,7 +150,7 @@
 
         .boleta-title-box { text-align: center; margin-bottom: 25px; }
         
-        /* PALETAS DE COLOR TEMÁTICAS SEGÚN NIVEL */
+        /* PALETAS DE COLOR TEMÁTICAS */
         .bg-titulo-maternal { background-color: #FFF5B7 !important; color: #5d4037 !important; }
         .bg-titulo-preescolar { background-color: #FFB7CE !important; color: #4a148c !important; }
         .bg-titulo-primaria { background-color: #C1E7C4 !important; color: #1b5e20 !important; }
@@ -198,7 +197,7 @@
         .final-grade-label { font-weight: 800; text-transform: uppercase; color: #2C5282; margin-right: 15px; font-size: 0.85rem; }
         .final-grade-value { font-size: 1.7rem; font-weight: 900; color: #2B6CB0; line-height: 1; }
 
-        /* TABLA CONFIGURABLE CON COLORES ARMÓNICOS */
+        /* TABLAS */
         .grade-table-container { border-radius: 15px; overflow: hidden; border: 1px solid #E2E8F0; margin-bottom: 20px; }
         .grade-table { width: 100%; border-collapse: separate; border-spacing: 0; margin: 0; }
         .grade-table thead th { font-weight: 800; text-transform: uppercase; font-size: 0.82rem; padding: 14px 10px; text-align: center; border: none; }
@@ -206,7 +205,7 @@
         .grade-table tbody tr td { padding: 14px 10px; text-align: center; font-weight: 700; font-size: 0.95rem; border: none; border-bottom: 1px solid rgba(0,0,0,0.04) !important; }
         .grade-table tbody tr td.subject-col { text-align: left; padding-left: 25px; font-weight: 800; }
 
-        /* CONTROL DE TONOS DE TABLA SEGÚN NIVEL */
+        /* COLORES TABLAS */
         .pastel-amarillo thead th { background-color: #FBC02D !important; color: #5d4037 !important; }
         .pastel-amarillo tbody tr td { background-color: #FFF9C4 !important; color: #5d4037 !important; }
         .pastel-amarillo tbody tr td.promedio-col { background-color: #FBC02D !important; font-weight: 900 !important; }
@@ -227,7 +226,6 @@
         .pastel-lila tbody tr td { background-color: #F3E5F5 !important; color: #4a148c !important; }
         .pastel-lila tbody tr td.promedio-col { background-color: #BA68C8 !important; font-weight: 900 !important; }
 
-        /* IMPRESIÓN */
         @media print {
             body { background-color: white !important; }
             * { -webkit-print-color-adjust: exact !important; print-color-adjust: exact !important; }
@@ -235,7 +233,7 @@
             .report-card-container { display: block !important; border: none; box-shadow: none; padding: 0; margin: 0; width: 100%; max-width: 100%; border-radius: 0; }
             .header-boleta { margin: 0 0 30px 0; padding: 20px 0; }
             .page-break { page-break-before: always; }
-            .sello-agua-fondo { opacity: 0.08 !important; } /* Visibilidad ideal al guardar en PDF o imprimir */
+            .sello-agua-fondo { opacity: 0.08 !important; }
         }
     </style>
 </head>
@@ -275,7 +273,6 @@
         const idExtra = '12m7RYtCBAF-P6t8_hoS3TkJwVX0tHEf7uaHAs6m0pTs';
         const idIngles = '1EY955TiJLZtpffxAtNQW3bjVuw8vHfYm_JYhX_6hXd4';
 
-        // Nombres exactos de tus pestañas según la captura cargada
         const PESTANAS_SISTEMA = [
             "Maternal", "Kinder 1", "Kinder 2", "Kinder 3",
             "Primaria 1", "Primaria 2", "Primaria 3", "Primaria 4", "Primaria 5", "Primaria 6",
@@ -363,7 +360,6 @@
         }
 
         async function obtenerDatosPorPestaña(sheetId, mat, nombrePestaña, textoNivelCompleto, tipo) {
-            // SOLUCIÓN CLAVE: Cambiado de '/export' a '/gviz/tq?tqx=out:csv' especificando la pestaña de forma compatible
             const url = `https://docs.google.com/spreadsheets/d/${sheetId}/gviz/tq?tqx=out:csv&sheet=${encodeURIComponent(nombrePestaña)}&cb=${Date.now()}`;
             try {
                 const res = await fetch(url);
@@ -374,9 +370,11 @@
                 
                 if (!data || data.length < 3) return null;
 
-                const materiasRow = data[0] || []; 
+                // CORRECCIÓN CENTRAL: Mapeo estricto del encabezado en la Fila 2 (Índice 1 de base 0)
+                const materiasRow = data[1] || []; 
                 let studentRow = null;
 
+                // Empezamos la lectura estrictamente en la Fila 3 (Índice 2 de base 0) tal como se ve en tu captura
                 for (let r = 2; r < data.length; r++) {
                     if (data[r] && data[r][0] !== undefined && data[r][0] !== null) {
                         const celdaMatricula = data[r][0].toString().trim().toUpperCase();
@@ -436,7 +434,6 @@
             const clasePastel = obtenerClaseColor(d.nivel);
             const claseTituloColor = obtenerClaseClaseTitulo(d.nivel);
 
-            // Estructura limpia: Se integró el sello central de agua y se quitó por completo el div inferior de firmas.
             div.innerHTML = `
                 <img src="Iconos/logo.png" class="sello-agua-fondo">
 
