@@ -273,7 +273,7 @@
         const idExtra = '12m7RYtCBAF-P6t8_hoS3TkJwVX0tHEf7uaHAs6m0pTs';
         const idIngles = '1EY955TiJLZtpffxAtNQW3bjVuw8vHfYm_JYhX_6hXd4';
 
-        // REEMPLAZA ESTOS NÚMEROS DE EJEMPLO CON LOS "gid=" REALES QUE APARECEN EN TU GOOGLE SHEETS
+        // GIDs reales actualizados para ambos archivos de Google Sheets
         const GIDS_EXTRA = {
             "Maternal": "1923242623",
             "Kinder 1": "0",
@@ -370,9 +370,8 @@
             let dEx = null;
             let dIn = null;
 
-            // Recorrer las pestañas usando directamente la llamada segura por GID
             for (const pestañaActual in GIDS_EXTRA) {
-                let textoNivelCompleto = pestañaActual.replace(/Kinder/i, 'Preescolar');
+                let textoNivelCompleto = pestañaActual.replace(/Kinder/i, 'Preescolar').toUpperCase();
                 
                 let resEx = await obtenerDatosPorGid(idExtra, GIDS_EXTRA[pestañaActual], mat, textoNivelCompleto, 'extra', pestañaActual);
                 if (resEx) {
@@ -388,12 +387,11 @@
                 if (dEx) renderBoleta(dEx, 'Extra', 'ASIGNATURAS EXTRACURRICULARES');
                 if (dIn) renderBoleta(dIn, 'Ingles', 'BOLETA DE INGLÉS');
             } else {
-                status.innerHTML = `<span class='text-danger'>Matrícula "${mat}" no encontrada. Asegúrese de colocar los GIDs reales de sus hojas en el script.</span>`;
+                status.innerHTML = `<span class='text-danger'>Matrícula "${mat}" no encontrada. Asegúrese de que el alumno esté registrado correctamente.</span>`;
             }
         }
 
         async function obtenerDatosPorGid(sheetId, gid, mat, textoNivelCompleto, tipo, nombrePestaña) {
-            // Consulta directa e infalible vía exportación CSV apuntando al GID único de la hoja
             const url = `https://docs.google.com/spreadsheets/d/${sheetId}/export?format=csv&gid=${gid}&cb=${Date.now()}`;
             try {
                 const res = await fetch(url);
@@ -404,11 +402,9 @@
                 
                 if (!data || data.length < 3) return null;
 
-                // Fila 2 contiene los nombres de asignaturas (Índice 1)
                 const materiasRow = data[1] || []; 
                 let studentRow = null;
 
-                // Fila 3 en adelante contiene los alumnos reales (Índice 2)
                 for (let r = 2; r < data.length; r++) {
                     if (data[r] && data[r][0] !== undefined && data[r][0] !== null) {
                         const celdaMatricula = data[r][0].toString().trim().toUpperCase();
@@ -422,7 +418,7 @@
                 if (studentRow) {
                     const esPrepa = nombrePestaña.toUpperCase().includes('PREPARATORIA');
                     const jump = esPrepa ? 3 : 4; 
-                    const filtro = MATERIAS_MAP[tipo](textoNivelCompleto);
+                    const filtro = MATERIAS_MAP[tipo](nombrePestaña);
                     let listaMaterias = [];
                     
                     for (let i = 5; i < studentRow.length; i += jump) {
@@ -457,7 +453,7 @@
                         materias: listaMaterias, pf, esPrepa, tipo
                     };
                 }
-            } catch (e) { }
+            } catch (e) { console.error(e); }
             return null;
         }
 
