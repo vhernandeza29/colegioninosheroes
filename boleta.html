@@ -133,7 +133,7 @@
             z-index: 1;
         }
 
-        /* CONTENEDOR DEL SELLO INSTITUCIONAL DORADO (ABAJO) */
+        /* CONTENEDOR DEL SELLO INSTITUCIONAL ABAJO */
         .contenedor-sello-dorado {
             display: flex;
             justify-content: center;
@@ -143,10 +143,9 @@
             position: relative;
         }
         .sello-dorado {
-            width: 110px;
+            width: 150px; /* Ajustado el tamaño para que luzca mejor la firma/sello */
             height: auto;
-            opacity: 0.75;
-            filter: sepia(0.4) saturate(2.5) hue-rotate(10deg) brightness(0.95);
+            opacity: 0.95;
             mix-blend-mode: multiply;
             pointer-events: none;
         }
@@ -262,9 +261,9 @@
             .page-break { page-break-before: always; }
             .sello-agua-fondo { opacity: 0.06 !important; }
             .sello-dorado { 
-                opacity: 0.85 !important; 
-                -webkit-filter: sepia(0.4) saturate(2.5) hue-rotate(10deg) brightness(0.95) !important; 
-                filter: sepia(0.4) saturate(2.5) hue-rotate(10deg) brightness(0.95) !important;
+                opacity: 1 !important; 
+                filter: none !important;
+                -webkit-filter: none !important;
             }
         }
     </style>
@@ -291,7 +290,7 @@
         </div>
         
         <div class="text-center version-tag">
-            <i class="fas fa-code-branch mr-1"></i> Código actualizado: Versión del 18 de Junio de 2026 - 03:18 AM
+            <i class="fas fa-code-branch mr-1"></i> Código actualizado: Versión del 18 de Junio de 2026 - 03:35 AM
         </div>
         
         <div id="statusMsg" class="text-center mt-3 font-weight-bold"></div>
@@ -556,7 +555,7 @@
                     </div>
 
                     <div class="contenedor-sello-dorado">
-                        <img src="Iconos/logo.png" class="sello-dorado">
+                        <img src="sello.png" class="sello-dorado">
                     </div>
                 </div>
             `;
