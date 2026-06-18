@@ -267,18 +267,18 @@
     <div class="hero-banner no-print">
         <div class="container">
             <h1>Portal de Boletas Oficiales</h1>
-            <p>Introduce la matrícula para generar las boletas de manera local a partir de los libros Excel en el directorio.</p>
+            <p>Introduce la matrícula para generar las boletas a partir de los registros del repositorio.</p>
         </div>
     </div>
 
     <div class="container search-container no-print" id="searchSection" style="opacity: 0.5; pointer-events: none;">
         <div class="search-box-wrapper">
-            <input type="text" id="matriculaInput" class="form-control" placeholder="Cargando libros Excel, espere...">
+            <input type="text" id="matriculaInput" class="form-control" placeholder="Cargando base de datos, espere...">
             <button class="btn btn-buscar" onclick="buscarBoletasExcel()">BUSCAR</button>
         </div>
         
         <div class="text-center version-tag" id="loadStatus">
-            <i class="fas fa-spinner fa-spin mr-1"></i> Leyendo bases de datos extracurriculares e inglés...
+            <i class="fas fa-spinner fa-spin mr-1"></i> Sincronizando archivos Excel desde el repositorio GitHub...
         </div>
         
         <div id="statusMsg" class="text-center mt-3 font-weight-bold"></div>
@@ -293,7 +293,7 @@
     <div id="reportCardIngles" class="report-card-container page-break"></div>
 
     <script>
-        // NOMBRES EXACTOS DE TUS DOS ARCHIVOS EXCEL EN LA CARPETA
+        // Rutas relativas a la carpeta raíz de tu repositorio en GitHub
         const RUTA_EXCEL_EXTRA = "Datos/BoletaExtracurriculares.xlsx";
         const RUTA_EXCEL_INGLES = "Datos/BoletaInglés.xlsx";
         
@@ -319,21 +319,21 @@
         };
 
         window.addEventListener('DOMContentLoaded', () => {
-            cargarBasesDeDatosSimultaneas();
+            cargarBasesDeGitHub();
         });
 
-        // Carga los dos archivos de forma asíncrona en paralelo
-        async function cargarBasesDeDatosSimultaneas() {
+        async function cargarBasesDeGitHub() {
             const labelStatus = document.getElementById('loadStatus');
             const inputMat = document.getElementById('matriculaInput');
             try {
+                // Fetch automático desde las carpetas del servidor GitHub Pages
                 const [resExtra, resIngles] = await Promise.all([
                     fetch(RUTA_EXCEL_EXTRA),
                     fetch(RUTA_EXCEL_INGLES)
                 ]);
 
-                if (!resExtra.ok) throw new Error("Falta el archivo: " + RUTA_EXCEL_EXTRA);
-                if (!resIngles.ok) throw new Error("Falta el archivo: " + RUTA_EXCEL_INGLES);
+                if (!resExtra.ok) throw new Error("No se pudo leer: " + RUTA_EXCEL_EXTRA);
+                if (!resIngles.ok) throw new Error("No se pudo leer: " + RUTA_EXCEL_INGLES);
                 
                 const [bufExtra, bufIngles] = await Promise.all([
                     resExtra.arrayBuffer(),
@@ -343,14 +343,14 @@
                 BASE_EXTRA_MEMORIA = parsearLibroExcel(bufExtra);
                 BASE_INGLES_MEMORIA = parsearLibroExcel(bufIngles);
 
-                labelStatus.innerHTML = "<span class='text-success'><i class='fas fa-check-circle mr-1'></i> Ambos archivos Excel vinculados correctamente (Local).</span>";
+                labelStatus.innerHTML = "<span class='text-success'><i class='fas fa-check-circle mr-1'></i> Repositorio sincronizado en segundo plano correctamente.</span>";
                 inputMat.placeholder = "Ingrese la matrícula del alumno...";
                 document.getElementById('searchSection').style.opacity = "1";
                 document.getElementById('searchSection').style.pointerEvents = "auto";
 
             } catch (err) {
                 console.error(err);
-                labelStatus.innerHTML = `<span class='text-danger'><i class='fas fa-times-circle mr-1'></i> Error de Directorio: Asegúrate de tener "${RUTA_EXCEL_EXTRA}" y "${RUTA_EXCEL_INGLES}" en tu carpeta.</span>`;
+                labelStatus.innerHTML = `<span class='text-danger'><i class='fas fa-times-circle mr-1'></i> Error: Verifica que los archivos "${RUTA_EXCEL_EXTRA}" y "${RUTA_EXCEL_INGLES}" estén subidos en la raíz de tu GitHub.</span>`;
             }
         }
 
@@ -417,16 +417,14 @@
                 status.innerHTML = "<span class='text-success'>¡Información cargada con éxito!</span>";
                 document.getElementById('printBtnContainer').style.display = 'block';
 
-                // Si está en el Excel de extracurriculares, pinta su boleta
                 if (alumnoExtra) {
                     renderizarFilaExcel(alumnoExtra, 'Extra', 'ASIGNATURAS EXTRACURRICULARES', 'extra');
                 }
-                // Si está en el Excel de inglés, pinta su boleta
                 if (alumnoIngles) {
                     renderizarFilaExcel(alumnoIngles, 'Ingles', 'BOLETA DE INGLÉS', 'ingles');
                 }
             } else {
-                status.innerHTML = `<span class='text-danger'>La matrícula "${mat}" no se encontró en ningún archivo Excel.</span>`;
+                status.innerHTML = `<span class='text-danger'>La matrícula "${mat}" no se encuentra en el repositorio de GitHub.</span>`;
             }
         }
 
@@ -491,7 +489,7 @@
                     <div class="header-boleta">
                         <img src="Iconos/logo.png" class="logo-boleta">
                         <div class="school-info">
-                            <h1 class="school-name">COLEGIO NI%C3%91OS H%C3%89ROES</h1>
+                            <h1 class="school-name">COLEGIO NIÑOS HÉROES</h1>
                             <h2 class="school-subtitle">Sección Académica</h2>
                             <p class="school-address">DURANGO S/N AMP. ADOLFO LÓPEZ MATEOS, ATIZAPÁN DE ZARAGOZA.<br>TELS: 58204881 Y 5590557078</p>
                         </div>
