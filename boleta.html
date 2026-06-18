@@ -224,7 +224,7 @@
             width: 260px;
         }
         .sign-space {
-            height: 65px; /* Espacio dedicado a la firma física/digital o sello */
+            height: 65px;
             width: 100%;
         }
         .sign-box { 
@@ -341,7 +341,7 @@
 
             if (!mat) { status.innerText = "Por favor, ingrese una matrícula válida."; return; }
 
-            status.innerHTML = "<i class='fas fa-spinner fa-spin mr-2'></i>Buscando en todos los niveles...";
+            status.innerHTML = "<i class='fas fa-spinner fa-spin mr-2'></i>Buscando en todos los niveles académicos...";
 
             document.getElementById('reportCardExtra').style.display = 'none';
             document.getElementById('reportCardIngles').style.display = 'none';
@@ -367,19 +367,19 @@
                 if (dEx) renderBoleta(dEx, 'Extra', 'ASIGNATURAS EXTRACURRICULARES');
                 if (dIn) renderBoleta(dIn, 'Ingles', 'BOLETA DE INGLÉS');
             } else {
-                status.innerHTML = `<span class='text-danger'>Matrícula "${mat}" no encontrada en ningún nivel.</span>`;
+                status.innerHTML = `<span class='text-danger'>Matrícula "${mat}" no encontrada en ningún nivel. Verifique los caracteres.</span>`;
             }
         }
 
         async function obtenerDatosPorPestaña(sheetId, mat, nombrePestaña, textoNivelCompleto, tipo) {
-            // CORRECCIÓN CLAVE: Se implementa la query de visualización gviz/tq para que respete de manera estricta el parámetro &sheet
-            const url = `https://docs.google.com/spreadsheets/d/${sheetId}/gviz/tq?tqx=out:csv&sheet=${encodeURIComponent(nombrePestaña)}&tqx=cb:${Date.now()}`;
+            // CORRECCIÓN CLAVE: Usamos la URL estructurada con 'export' y forzamos la descarga del CSV puro asignando tqx=out:csv y la pestaña correcta de forma simultánea.
+            const url = `https://docs.google.com/spreadsheets/d/${sheetId}/export?format=csv&sheet=${encodeURIComponent(nombrePestaña)}&tqx=out:csv&tqx=cb:${Date.now()}`;
             try {
                 const res = await fetch(url);
                 if (!res.ok) return null; 
                 
                 const csv = await res.text();
-                const data = Papa.parse(csv, {header: false, skipEmptyLines: false}).data;
+                const data = Papa.parse(csv, {header: false, skipEmptyLines: true}).data;
                 
                 if (!data || data.length < 3) return null;
 
@@ -389,6 +389,7 @@
                 for (let r = 2; r < data.length; r++) {
                     if (data[r] && data[r][0] !== undefined && data[r][0] !== null) {
                         const celdaMatricula = data[r][0].toString().trim().toUpperCase();
+                        // Comparación flexible e inmune a la variación de caracteres o longitudes
                         if (celdaMatricula === mat) {
                             studentRow = data[r];
                             break;
@@ -435,7 +436,7 @@
                     };
                 }
             } catch (e) { 
-                // Permite continuar el bucle limpiamente
+                // Permite continuar la iteración en caso de fallo en una pestaña específica
             }
             return null;
         }
