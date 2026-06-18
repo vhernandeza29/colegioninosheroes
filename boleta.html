@@ -346,7 +346,6 @@
             "Preparatoria 3": "1196244263"
         };
 
-        // MATERIAS MAP COMPLETAMENTE EN MAYÚSCULAS Y CON ACENTOS CORREGIDOS
         const MATERIAS_MAP = {
             ingles: (n) => {
                 const nl = n.toUpperCase();
@@ -389,6 +388,13 @@
             if (v === undefined || v === null || v === "" || isNaN(v)) return '-';
             return (Math.floor(parseFloat(v) * 10) / 10).toFixed(1);
         };
+
+        function normalizarTexto(texto) {
+            if (!texto) return "";
+            return texto.toString().trim().toUpperCase()
+                .normalize("NFD")
+                .replace(/[\u0300-\u036f]/g, "");
+        }
 
         async function buscarBoletas() {
             const mat = document.getElementById('matriculaInput').value.trim().toUpperCase();
@@ -453,7 +459,9 @@
                 if (studentRow) {
                     const esPrepa = nombrePestaña.toUpperCase().includes('PREPARATORIA');
                     const jump = esPrepa ? 3 : 4; 
-                    const filtro = MATERIAS_MAP[tipo](nombrePestaña);
+                    
+                    const filtroOriginal = MATERIAS_MAP[tipo](nombrePestaña);
+                    const filtroNormalizado = filtroOriginal.map(m => normalizarTexto(m));
                     let listaMaterias = [];
                     
                     for (let i = 5; i < studentRow.length; i += jump) {
@@ -461,11 +469,12 @@
                             break;
                         }
 
-                        let nombreM = materiasRow[i] ? materiasRow[i].toString().trim().toUpperCase() : "";
+                        let nombreMateriaCelda = materiasRow[i] ? materiasRow[i].toString().trim() : "";
+                        let nombreMateriaNorm = normalizarTexto(nombreMateriaCelda);
 
-                        if (nombreM && filtro.includes(nombreM)) {
+                        if (nombreMateriaNorm && filtroNormalizado.includes(nombreMateriaNorm)) {
                             listaMaterias.push({
-                                n: nombreM,
+                                n: nombreMateriaCelda.toUpperCase(),
                                 v1: fmt(studentRow[i]),             
                                 v2: fmt(studentRow[i+1]),           
                                 v3: esPrepa ? null : fmt(studentRow[i+2]), 
