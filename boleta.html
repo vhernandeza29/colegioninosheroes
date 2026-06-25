@@ -278,7 +278,7 @@
         </div>
         
         <div class="text-center version-tag" id="loadStatus">
-            <i class="fas fa-spinner fa-spin mr-1"></i> Sincronizando archivos. 346
+            <i class="fas fa-spinner fa-spin mr-1"></i> Sincronizando archivos. 359
         </div>
         
         <div id="statusMsg" class="text-center mt-3 font-weight-bold"></div>
@@ -433,42 +433,63 @@
     const jump = alumno.esPrepa ? 3 : 4;
     
     // --- BLOQUE DE DIAGNÓSTICO EN CONSOLA ---
-    console.log(`=== DIAGNÓSTICO PARA: ${tituloFormateado} ===`);
-    console.log("Nombre de la pestaña (nivel detectado):", alumno.nivel);
-    
-    const filtroOriginal = MATERIAS_MAP[tipoMateria](alumno.nivel);
-    console.log("Materias esperadas para este nivel (según tu MATERIAS_MAP):", filtroOriginal);
-    
-    const filtroNormalizado = filtroOriginal.map(m => normalizarTexto(m));
-    let listaMaterias = [];
+console.log(`=== DIAGNÓSTICO PARA: ${nivel} ===`);
 
-    const limiteColumnas = Math.min(studentRow.length, materiasRow.length);
+// 1. Supongamos que 'objetoData' o 'filas' contiene las filas del archivo Excel/CSV parsed.
+// Asegúrate de usar las variables correctas de tu script (ej. data[0], filas[0], etc.)
+const filaMaterias = data[0];  // F1: Fila superior con los nombres de las materias
+const filaPeriodos = data[1];  // F2: Fila con T1, T2, T3, PF o S1, S2, PF
 
-    for (let i = 5; i < limiteColumnas; i += jump) {
-        if (!materiasRow[i]) continue;
+let materiaActual = ""; 
+let materiasA_Dibujar = [];
 
-        let nombreMateriaCelda = materiasRow[i].toString().trim();
-        let nombreMateriaNorm = normalizarTexto(nombreMateriaCelda);
+// Determinar materias esperadas según tu MATERIAS_MAP
+const materiasEsperadas = MATERIAS_MAP[nivel] || [];
+console.log("Materias esperadas para este nivel:", materiasEsperadas);
 
-        if (nombreMateriaNorm.includes("CICLO") || nombreMateriaNorm === "PROMEDIO" || nombreMateriaNorm === "PROMEDIO FINAL") {
-            continue;
-        }
+// 2. Iterar las columnas desde la 5 (donde empiezan las calificaciones)
+for (let i = 5; i < filaPeriodos.length; i++) {
+    let encabezadoF1 = filaMaterias[i] ? filaMaterias[i].trim() : "";
+    let encabezadoF2 = filaPeriodos[i] ? filaPeriodos[i].trim() : "";
 
-        // Imprime cada materia que encuentra en el Excel y su versión limpia para comparar
-        console.log(`Columna ${i} - Encontrado en Excel: "${nombreMateriaCelda}" | ¿Está en el filtro?:`, filtroNormalizado.includes(nombreMateriaNorm));
+    // Si la celda de la materia no está vacía, actualizamos la materia activa
+    if (encabezadoF1 !== "") {
+        materiaActual = encabezadoF1;
+    }
 
-        if (nombreMateriaNorm && filtroNormalizado.includes(nombreMateriaNorm)) {
-            listaMaterias.push({
-                n: nombreMateriaCelda.toUpperCase(),
-                v1: fmt(studentRow[i]),             
-                v2: fmt(studentRow[i+1]),           
-                v3: alumno.esPrepa ? null : fmt(studentRow[i+2]), 
-                vf: alumno.esPrepa ? fmt(studentRow[i+2]) : fmt(studentRow[i+3]) 
+    // Ignorar las columnas finales de promedios de la boleta general
+    if (encabezadoF2 === "PROMEDIO FINAL" || encabezadoF2 === "CICLO ESCOLAR") {
+        continue; 
+    }
+
+    // Evaluar si la materia recordada pertenece a las materias esperadas
+    if (materiasEsperadas.includes(materiaActual)) {
+        // Para no duplicar la materia por cada trimestre, solo la registramos 
+        // cuando inicia su bloque (es decir, en T1 o en S1)
+        if (encabezadoF2 === "T1" || encabezadoF2 === "S1") {
+            let esPrepa = nivel.toLowerCase().includes("preparatoria") || nivel.toLowerCase().includes("biller");
+            
+            materiasA_Dibujar.push({
+                nombre: materiaActual,
+                columnaInicio: i,
+                periodoTipo: encabezadoF2, // T1 o S1
+                tamañoBloque: esPrepa ? 3 : 4 // 3 columnas para prepa (S1,S2,PF), 4 para los demás (T1,T2,T3,PF)
             });
+            console.log(`Columna ${i} - ¡Materia detectada y aprobada!: "${materiaActual}" (Bloque de ${esPrepa ? 3 : 4} periodos)`);
+        }
+    } else {
+        // Registro de control por si escribe algo que no coincide con MATERIAS_MAP
+        if (encabezadoF2 === "T1" || encabezadoF2 === "S1") {
+            console.log(`Columna ${i} - Materia rechazada por el filtro: "${materiaActual}"`);
         }
     }
-    console.log("Total de materias que pasaron el filtro y se van a dibujar:", listaMaterias.length);
-    console.log("========================================");
+}
+
+console.log("Total de materias que pasaron el filtro y se van a dibujar:", materiasA_Dibujar.length);
+console.log("========================================");
+
+// Al terminar este bloque, debes usar el arreglo 'materiasA_Dibujar' 
+// en tu lógica posterior para hacer el ciclo que genera los elementos HTML (las tablas/filas de tu diseño).
     // --- FIN DEL BLOQUE DE DIAGNÓSTICO ---
 
     let pf = "-";
