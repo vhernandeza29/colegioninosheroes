@@ -283,6 +283,8 @@
         </div>
     </footer>
 
+   <!-- Mantén todo tu HTML y estilos exactamente iguales. Reemplaza el bloque de scripts del final por este: -->
+
     <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
 
@@ -306,6 +308,15 @@
 
             if (!file) {
                 alert('Por favor, selecciona tu CV.');
+                btn.textContent = 'Enviar Postulación';
+                btn.disabled = false;
+                return;
+            }
+
+            // --- VALIDACIÓN DE TAMAÑO MÁXIMO PARA EMAILJS (50 KB) ---
+            const maxBytes = 50 * 1024; // 50 Kilobytes
+            if (file.size > maxBytes) {
+                alert('El archivo es demasiado grande para el sistema de envíos de cortesía (Máximo 50 KB).\n\nPor favor, optimiza tu archivo PDF/Word, reduce su tamaño o compártelo mediante un enlace en el cuadro de experiencia.');
                 btn.textContent = 'Enviar Postulación';
                 btn.disabled = false;
                 return;
@@ -346,7 +357,7 @@
                         document.getElementById('bolsaTrabajoForm').reset();
                         document.getElementById('fileLabel').textContent = "Seleccionar archivo...";
                     } else {
-                        alert('Hubo un inconveniente en el servidor al enviar la postulación.');
+                        alert('El archivo excede el tamaño permitido por la plataforma de mensajería gratuita.');
                     }
                     btn.textContent = 'Enviar Postulación';
                     btn.disabled = false;
