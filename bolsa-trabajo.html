@@ -294,10 +294,9 @@
             var fileName = e.target.files[0] ? e.target.files[0].name : "Seleccionar archivo...";
             document.getElementById('fileLabel').textContent = fileName;
         });
-
-        // Captura y envío seguro del formulario mediante la API Fetch nativa
+// Captura y envío seguro del formulario mediante la API Fetch nativa
         document.getElementById('bolsaTrabajoForm').addEventListener('submit', function(event) {
-            event.preventDefault(); // Detiene por completo la recarga y la URL sucia
+            event.preventDefault();
 
             const btn = document.querySelector('.btn-institucional');
             btn.textContent = 'ENVIANDO...';
@@ -313,16 +312,15 @@
                 return;
             }
 
-            // --- VALIDACIÓN DE TAMAÑO MÁXIMO PARA EMAILJS (50 KB) ---
-            const maxBytes = 50 * 1024; // 50 Kilobytes
+            // --- AHORA SÍ: LÍMITE REAL DE 2 MB ---
+            const maxBytes = 2 * 1024 * 1024; // 2 Megabytes
             if (file.size > maxBytes) {
-                alert('El archivo es demasiado grande para el sistema de envíos de cortesía (Máximo 50 KB).\n\nPor favor, optimiza tu archivo PDF/Word, reduce su tamaño o compártelo mediante un enlace en el cuadro de experiencia.');
+                alert('El archivo supera los 2 MB permitidos. Por favor, reduce su tamaño antes de enviarlo.');
                 btn.textContent = 'Enviar Postulación';
                 btn.disabled = false;
                 return;
             }
 
-            // Lector de archivos nativo
             const reader = new FileReader();
             reader.readAsDataURL(file);
             reader.onload = function () {
@@ -340,15 +338,13 @@
                         area_interes: event.target.area_interes.value,
                         estudios: event.target.estudios.value,
                         experiencia: event.target.experiencia.value,
-                        curriculum: base64String
+                        curriculum: base64String // Enviamos la cadena limpia
                     }
                 };
 
                 fetch('https://api.emailjs.com/api/v1.0/email/send', {
                     method: 'POST',
-                    headers: {
-                        'Content-Type': 'application/json'
-                    },
+                    headers: { 'Content-Type': 'application/json' },
                     body: JSON.stringify(datosEnvio)
                 })
                 .then(function(respuesta) {
@@ -357,13 +353,13 @@
                         document.getElementById('bolsaTrabajoForm').reset();
                         document.getElementById('fileLabel').textContent = "Seleccionar archivo...";
                     } else {
-                        alert('El archivo excede el tamaño permitido por la plataforma de mensajería gratuita.');
+                        alert('Error al procesar el envío de la información.');
                     }
                     btn.textContent = 'Enviar Postulación';
                     btn.disabled = false;
                 })
                 .catch(function(error) {
-                    alert('No se pudo establecer conexión con el sistema de vacantes.');
+                    alert('No se pudo conectar con el sistema.');
                     btn.textContent = 'Enviar Postulación';
                     btn.disabled = false;
                 });
