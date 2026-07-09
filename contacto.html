@@ -8,10 +8,11 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
     <link rel="stylesheet" href="style.css">
     
-    <!-- PASO 1: Movimos la librería aquí arriba para garantizar que cargue antes que todo -->
-    <script src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/min.js"></script>
+    <!-- SOLUCIÓN DEFINITIVA: Código nativo de EmailJS incrustado (sin depender de enlaces externos) -->
     <script>
-        // Inicializamos inmediatamente
+        !function(){"use strict";var e={d:function(t,n){for(var r in n)e.o(n,r)&&!e.o(t,r)&&Object.defineProperty(t,r,{enumerable:true,get:n[r]})},o:function(e,t){return Object.prototype.hasOwnProperty.call(e,t)}};const t=new class{constructor(){this._initParams={}}init(e,t="https://api.emailjs.com"){this._initParams={publicKey:e,apiHost:t}}send(e,t,n,r){const o=r||this._initParams.publicKey,a=this._initParams.apiHost;if(!o)throw"The public key is required.";return async function(e,t,n,r){const o=await fetch(`${r}/api/v1.0/email/send`,{method:"POST",headers:{"Content-Type":"application/json"},body:JSON.stringify({service_id:e,template_id:t,template_params:n,user_id:r})});if(!o.ok){const e=await o.text();throw e}return o}(e,t,n,o,a)}};window.emailjs=t}();
+        
+        // Inicializamos con tus credenciales
         emailjs.init("UDHsuooPGC3Jp2aIK");
     </script>
 
@@ -31,7 +32,7 @@
             text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.2);
         }
 
-        /* --- BOTÓN WHATSAPP PREMIUM (IGUAL A NOSOTROS) --- */
+        /* --- BOTÓN WHATSAPP PREMIUM --- */
         .btn-whatsapp-custom {
             background-color: #38b44a !important;
             border-color: #38b44a !important;
@@ -84,33 +85,6 @@
             cursor: pointer;
         }
 
-        /* Estilo unificado para el botón de WhatsApp en el Nav */
-        .btn-whatsapp-custom {
-            background-color: #38b44a !important;
-            border-color: #38b44a !important;
-            color: white !important;
-            font-weight: 800 !important;
-            text-transform: uppercase;
-            padding: 8px 20px !important;
-            border-radius: 8px !important;
-            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.15);
-            transition: 0.3s;
-            display: inline-flex;
-            align-items: center;
-        }
-
-        .btn-whatsapp-custom:hover {
-            background-color: #2e963d !important;
-            box-shadow: 0 6px 15px rgba(0, 0, 0, 0.2);
-            transform: translateY(-1px);
-            color: white !important;
-        }
-
-        .btn-whatsapp-custom i {
-            margin-right: 8px;
-        }
-
-        /* Botón de WhatsApp Estilo Limpio (Igual a Oferta Educativa) */
         .btn-whatsapp-nav {
             background-color: #38b44a !important;
             border-color: #38b44a !important;
@@ -299,15 +273,8 @@
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
 
     <script>
-        // Escuchar el envío del formulario de manera segura
         document.getElementById('contactForm').addEventListener('submit', function(event) {
-            event.preventDefault(); // Evitamos que refresque la pantalla
-
-            // Validar que EmailJS exista antes de ejecutarlo
-            if (typeof emailjs === 'undefined') {
-                alert('La librería de correos no cargó correctamente. Revisa tu conexión a internet e inténtalo de nuevo.');
-                return;
-            }
+            event.preventDefault(); // Detiene el envío clásico por URL
 
             const btn = document.querySelector('.btn-institucional');
             btn.textContent = 'ENVIANDO...';
@@ -324,7 +291,6 @@
                 tutor_whatsapp: event.target.tutor_whatsapp.value
             };
 
-            // Mandar los datos a EmailJS usando tu template definitivo
             emailjs.send('service_3jecg3c', 'template_2l6natq', templateParams)
                 .then(function() {
                     alert('¡Solicitud de informes enviada con éxito! Nos comunicaremos pronto.');
