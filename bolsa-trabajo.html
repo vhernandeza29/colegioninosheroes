@@ -7,7 +7,6 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
     <link rel="stylesheet" href="style.css">
     <style>
-        /* --- VARIABLES DE COLOR INSTITUCIONAL --- */
         :root {
             --azul-id: #193E9A;    
             --verde-id: #317F77;   
@@ -17,7 +16,6 @@
             --texto: #334155;      
         }
 
-        /* --- ESTILO DEL BANNER SUPERIOR AZUL --- */
         .top-bar {
             background: var(--azul-id); 
             color: white;
@@ -45,11 +43,7 @@
             color: var(--azul-id) !important; 
             transform: scale(1.1);
         }
-        .top-bar i.fab.fa-facebook-f { 
-            font-size: 1rem; 
-        }
 
-        /* --- CORRECCIÓN UNIFICADA DEL MENÚ DE NAVEGACIÓN --- */
         .navbar { 
             background: var(--blanco) !important;
             box-shadow: 0 10px 30px rgba(0,0,0,0.05);
@@ -70,12 +64,10 @@
             font-weight: 900;
             display: flex;
             align-items: center;
-            margin-right: 0 !important;
             flex: 0 0 auto;
         }
         .logo-colegio { 
             height: 40px; 
-            width: auto;
             margin-right: 15px; 
         }
         .navbar-collapse {
@@ -89,15 +81,12 @@
             justify-content: space-evenly; 
             width: 80%; 
             align-items: center;
-            margin: 0 auto;
         }
         .nav-link { 
             color: var(--texto) !important; 
             font-size: 0.95rem; 
             font-weight: 600;
             transition: 0.3s;
-            white-space: nowrap;
-            padding: 0 10px !important;
         }
         .nav-link:hover { color: var(--verde-id) !important; }
 
@@ -107,60 +96,30 @@
             border-radius: 8px; 
             padding: 8px 18px; 
             font-weight: 700; 
-            box-shadow: 0 4px 12px rgba(44, 183, 66, 0.2);
-            flex: 0 0 auto;
             text-transform: uppercase;
             text-decoration: none;
-            display: inline-block;
             font-size: 0.9rem;
         }
 
-        /* --- ESTILO HERO CON DEGRADADO --- */
         .hero {
             background: linear-gradient(135deg, #317F77 0%, #317F77 100%);
-            padding: 80px 0;
+            padding: 60px 0;
             text-align: center;
             color: white;
             margin-bottom: 20px;
         }
-        .hero h1 {
-            font-weight: 800;
-            font-size: 3rem;
-            text-shadow: 2px 2px 4px rgba(0,0,0,0.2);
-        }
+        .hero h1 { font-weight: 800; font-size: 2.8rem; }
 
-        /* --- FORMULARIOS Y ELEMENTOS CRÍTICOS --- */
-        select.form-control {
-            color: #212529 !important;
-            background-color: #ffffff !important;
-            height: auto !important;
-            padding: 10px !important;
-        }
         .form-control { margin-bottom: 15px; border-radius: 8px; }
         .btn-institucional { 
             background-color: #193E9A; color: white !important; border: none; padding: 12px 30px; 
             border-radius: 25px; font-weight: bold; transition: 0.3s; width: 100%;
             text-transform: uppercase;
         }
-        .btn-institucional:hover { background-color: #0d2561; cursor: pointer; color: white !important; }
+        .btn-institucional:hover { background-color: #0d2561; cursor: pointer; }
 
-        /* --- FOOTER --- */
         .footer-colegio { background-color: #193E9A; padding: 30px 0; margin-top: 50px; color: white; }
         .texto-nowrap { white-space: nowrap; font-size: 0.95rem; }
-        .link-unete {
-            color: white !important; font-weight: 600; text-decoration: none; font-size: 0.9rem;
-            transition: all 0.3s ease; padding: 8px 18px; border: 1px solid rgba(255, 255, 255, 0.6);
-            border-radius: 25px; display: inline-block; white-space: nowrap;
-        }
-        .link-unete:hover { background-color: white; color: #193E9A !important; }
-
-        @media (max-width: 1100px) {
-            .navbar-brand { font-size: 1.4rem; }
-            .logo-colegio { height: 35px; }
-            .nav-link { font-size: 0.8rem; }
-            .navbar-nav { width: 100%; }
-        }
-        @media (max-width: 576px) { .texto-nowrap { white-space: normal; } }
     </style>
 </head>
 <body>
@@ -198,7 +157,8 @@
 
     <header class="hero">
         <div class="container">
-            <h1 style="font-weight: 800;">Únete a nuestro Equipo</h1>
+            <h1>Únete a nuestro Equipo</h1>
+            <p class="lead">Completa tus datos para iniciar tu proceso de postulación</p>
         </div>
     </header>
 
@@ -208,25 +168,25 @@
                 
                 <h4 style="color: #193E9A; margin-bottom: 20px; font-weight: 700;">Datos Personales</h4>
                 <div class="row">
-                    <div class="col-md-6 mb-3">
+                    <div class="col-md-6">
                         <input type="text" name="nombre" class="form-control" placeholder="Nombre(s) *" required>
                     </div>
-                    <div class="col-md-6 mb-3">
+                    <div class="col-md-6">
                         <input type="text" name="apellidos" class="form-control" placeholder="Apellidos *" required>
                     </div>
                 </div>
                 <div class="row">
-                    <div class="col-md-6 mb-3">
+                    <div class="col-md-6">
                         <input type="email" name="email" class="form-control" placeholder="Correo electrónico *" required>
                     </div>
-                    <div class="col-md-6 mb-3">
+                    <div class="col-md-6">
                         <input type="tel" name="whatsapp" class="form-control" placeholder="Teléfono / WhatsApp *" required>
                     </div>
                 </div>
 
                 <h4 class="mt-4" style="color: #193E9A; margin-bottom: 20px; font-weight: 700;">Perfil Profesional</h4>
                 <div class="row">
-                    <div class="col-md-6 mb-3">
+                    <div class="col-md-6">
                         <label class="small font-weight-bold">Área de interés *</label>
                         <select name="area_interes" class="form-control" required>
                             <option value="" disabled selected>Selecciona una opción...</option>
@@ -239,62 +199,45 @@
                             <option value="Extracurriculares">Extracurriculares / After School</option>
                         </select>
                     </div>
-                    <div class="col-md-6 mb-3">
+                    <div class="col-md-6">
                         <label class="small font-weight-bold">Último grado de estudios *</label>
                         <input type="text" name="estudios" class="form-control" placeholder="Ej. Licenciatura en Educación" required>
                     </div>
                 </div>
 
                 <div class="row">
-                    <div class="col-12 mb-3">
-                        <label class="small font-weight-bold">Adjuntar CV (PDF o Word) *</label>
-                        <div class="custom-file">
-                            <input type="file" name="curriculum" class="custom-file-input" id="customFile" accept=".pdf,.doc,.docx" required>
-                            <label class="custom-file-label" for="customFile" id="fileLabel">Seleccionar archivo...</label>
-                        </div>
+                    <div class="col-12">
+                        <label class="small font-weight-bold">Enlace a tu Currículum Vitae (Google Drive, OneDrive, Dropbox) *</label>
+                        <input type="url" name="curriculum_url" class="form-control" placeholder="https://drive.google.com/file/d/..." required>
+                        <small class="form-text text-muted mb-3" style="margin-top: -10px;">
+                            Sube tu CV a tu nube favorita (Drive, Dropbox, etc.) y asegúrate de que el enlace sea de acceso <strong>público</strong>.
+                        </small>
                     </div>
                 </div>
 
-                <div class="row mt-3">
+                <div class="row">
                     <div class="col-12">
-                        <textarea name="experiencia" class="form-control" rows="3" placeholder="Cuéntanos brevemente sobre tu experiencia..."></textarea>
+                        <textarea name="experiencia" class="form-control" rows="3" placeholder="Cuéntanos brevemente sobre tu experiencia laboral..."></textarea>
                     </div>
                 </div>
                 
-                <button type="submit" class="btn-institucional mt-4">Enviar Postulación</button>
+                <button type="submit" class="btn-institucional mt-3">Enviar Postulación por Correo</button>
             </form>
         </div>
     </section>
 
     <footer class="footer-colegio">
-        <div class="container">
-            <div class="row align-items-center">
-                <div class="col-md-8 text-center text-md-left mb-3 mb-md-0">
-                    <p class="mb-0 text-white texto-nowrap">
-                        © 2026 <strong>Colegio Niños Héroes Atizapán</strong>. Todos los derechos reservados.
-                    </p>
-                </div>
-                <div class="col-md-4 text-center text-md-right">
-                    <a href="bolsa-trabajo.html" class="link-unete">
-                        <i class="fas fa-briefcase mr-2"></i>Únete a nuestro equipo
-                    </a>
-                </div>
-            </div>
+        <div class="container text-center">
+            <p class="mb-0 text-white texto-nowrap">
+                © 2026 <strong>Colegio Niños Héroes Atizapán</strong>. Todos los derechos reservados.
+            </p>
         </div>
     </footer>
-
-   <!-- Mantén todo tu HTML y estilos exactamente iguales. Reemplaza el bloque de scripts del final por este: -->
 
     <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
 
     <script>
-        // Manejador visual para cambiar el texto del archivo seleccionado
-        document.getElementById('customFile').addEventListener('change', function(e) {
-            var fileName = e.target.files[0] ? e.target.files[0].name : "Seleccionar archivo...";
-            document.getElementById('fileLabel').textContent = fileName;
-        });
-// Captura y envío seguro del formulario mediante la API Fetch nativa
         document.getElementById('bolsaTrabajoForm').addEventListener('submit', function(event) {
             event.preventDefault();
 
@@ -302,68 +245,42 @@
             btn.textContent = 'ENVIANDO...';
             btn.disabled = true;
 
-            const fileInput = document.getElementById('customFile');
-            const file = fileInput.files[0];
-
-            if (!file) {
-                alert('Por favor, selecciona tu CV.');
-                btn.textContent = 'Enviar Postulación';
-                btn.disabled = false;
-                return;
-            }
-
-            // --- AHORA SÍ: LÍMITE REAL DE 2 MB ---
-            const maxBytes = 2 * 1024 * 1024; // 2 Megabytes
-            if (file.size > maxBytes) {
-                alert('El archivo supera los 2 MB permitidos. Por favor, reduce su tamaño antes de enviarlo.');
-                btn.textContent = 'Enviar Postulación';
-                btn.disabled = false;
-                return;
-            }
-
-            const reader = new FileReader();
-            reader.readAsDataURL(file);
-            reader.onload = function () {
-                const base64String = reader.result.split(',')[1];
-
-                const datosEnvio = {
-                    service_id: 'service_3jecg3c',
-                    template_id: 'template_9ji5y7s',
-                    user_id: 'UDHsuooPGC3Jp2aIK',
-                    template_params: {
-                        nombre: event.target.nombre.value,
-                        apellidos: event.target.apellidos.value,
-                        email: event.target.email.value,
-                        whatsapp: event.target.whatsapp.value,
-                        area_interes: event.target.area_interes.value,
-                        estudios: event.target.estudios.value,
-                        experiencia: event.target.experiencia.value,
-                        curriculum: base64String // Enviamos la cadena limpia
-                    }
-                };
-
-                fetch('https://api.emailjs.com/api/v1.0/email/send', {
-                    method: 'POST',
-                    headers: { 'Content-Type': 'application/json' },
-                    body: JSON.stringify(datosEnvio)
-                })
-                .then(function(respuesta) {
-                    if (respuesta.ok) {
-                        alert('¡Postulación enviada con éxito!');
-                        document.getElementById('bolsaTrabajoForm').reset();
-                        document.getElementById('fileLabel').textContent = "Seleccionar archivo...";
-                    } else {
-                        alert('Error al procesar el envío de la información.');
-                    }
-                    btn.textContent = 'Enviar Postulación';
-                    btn.disabled = false;
-                })
-                .catch(function(error) {
-                    alert('No se pudo conectar con el sistema.');
-                    btn.textContent = 'Enviar Postulación';
-                    btn.disabled = false;
-                });
+            const datosEnvio = {
+                service_id: 'service_3jecg3c',
+                template_id: 'template_9ji5y7s',
+                user_id: 'UDHsuooPGC3Jp2aIK',
+                template_params: {
+                    nombre: event.target.nombre.value,
+                    apellidos: event.target.apellidos.value,
+                    email: event.target.email.value,
+                    whatsapp: event.target.whatsapp.value,
+                    area_interes: event.target.area_interes.value,
+                    estudios: event.target.estudios.value,
+                    experiencia: event.target.experiencia.value,
+                    curriculum: event.target.curriculum_url.value // Enviamos el enlace de forma ultraligera
+                }
             };
+
+            fetch('https://api.emailjs.com/api/v1.0/email/send', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify(datosEnvio)
+            })
+            .then(function(respuesta) {
+                if (respuesta.ok) {
+                    alert('¡Postulación enviada con éxito!');
+                    document.getElementById('bolsaTrabajoForm').reset();
+                } else {
+                    alert('Error en el servidor al procesar la información.');
+                }
+                btn.textContent = 'Enviar Postulación por Correo';
+                btn.disabled = false;
+            })
+            .catch(function(error) {
+                alert('No se pudo establecer conexión.');
+                btn.textContent = 'Enviar Postulación por Correo';
+                btn.disabled = false;
+            });
         });
     </script>
 </body>
