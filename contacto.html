@@ -7,16 +7,6 @@
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
     <link rel="stylesheet" href="style.css">
-    
-    <!-- Cargamos la librería oficial mediante un CDN alternativo de alta compatibilidad -->
-    <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/min.js"></script>
-    <script type="text/javascript">
-        (function(){
-            emailjs.init({
-                publicKey: "UDHsuooPGC3Jp2aIK",
-            });
-        })();
-    </script>
 
     <style>
         /* --- ESTILO HERO CON DEGRADADO --- */
@@ -282,29 +272,46 @@
             btn.textContent = 'ENVIANDO...';
             btn.disabled = true;
 
-            const templateParams = {
-                alumno_nombre: event.target.alumno_nombre.value,
-                alumno_apellido_p: event.target.alumno_apellido_p.value,
-                alumno_apellido_m: event.target.alumno_apellido_m.value,
-                grado_aspira: event.target.grado_aspira.value,
-                ciclo_escolar: event.target.ciclo_escolar.value,
-                tutor_nombre: event.target.tutor_nombre.value,
-                tutor_email: event.target.tutor_email.value,
-                tutor_whatsapp: event.target.tutor_whatsapp.value
+            // Preparamos los datos estructurados en formato plano
+            const datosEnvio = {
+                service_id: 'service_3jecg3c',
+                template_id: 'template_2l6natq',
+                user_id: 'UDHsuooPGC3Jp2aIK',
+                template_params: {
+                    alumno_nombre: event.target.alumno_nombre.value,
+                    alumno_apellido_p: event.target.alumno_apellido_p.value,
+                    alumno_apellido_m: event.target.alumno_apellido_m.value,
+                    grado_aspira: event.target.grado_aspira.value,
+                    ciclo_escolar: event.target.ciclo_escolar.value,
+                    tutor_nombre: event.target.tutor_nombre.value,
+                    tutor_email: event.target.tutor_email.value,
+                    tutor_whatsapp: event.target.tutor_whatsapp.value
+                }
             };
 
-            // Mandar los datos directo a la API global oficial de EmailJS
-            emailjs.send('service_3jecg3c', 'template_2l6natq', templateParams)
-                .then(function() {
+            // Petición nativa Fetch estándar (Sin usar variables EmailJS de internet)
+            fetch('https://api.emailjs.com/api/v1.0/email/send', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify(datosEnvio)
+            })
+            .then(function(respuesta) {
+                if (respuesta.ok) {
                     alert('¡Solicitud de informes enviada con éxito! Nos comunicaremos pronto.');
-                    event.target.reset();
-                    btn.textContent = 'Enviar Solicitud de Información';
-                    btn.disabled = false;
-                }, function(error) {
-                    alert('Error al enviar: ' + JSON.stringify(error));
-                    btn.textContent = 'Enviar Solicitud de Información';
-                    btn.disabled = false;
-                });
+                    document.getElementById('contactForm').reset();
+                } else {
+                    alert('Hubo un inconveniente en el servidor al procesar el envío.');
+                }
+                btn.textContent = 'Enviar Solicitud de Información';
+                btn.disabled = false;
+            })
+            .catch(function(error) {
+                alert('No se pudo establecer conexión con el sistema de correos.');
+                btn.textContent = 'Enviar Solicitud de Información';
+                btn.disabled = false;
+            });
         });
     </script>
 </body>
