@@ -138,11 +138,11 @@
         }
         .form-control { margin-bottom: 15px; border-radius: 8px; }
         .btn-institucional { 
-            background-color: #193E9A; color: white; border: none; padding: 12px 30px; 
+            background-color: #193E9A; color: white !important; border: none; padding: 12px 30px; 
             border-radius: 25px; font-weight: bold; transition: 0.3s; width: 100%;
             text-transform: uppercase;
         }
-        .btn-institucional:hover { background-color: #0d2561; cursor: pointer; color: white; }
+        .btn-institucional:hover { background-color: #0d2561; cursor: pointer; color: white !important; }
 
         /* --- FOOTER --- */
         .footer-colegio { background-color: #193E9A; padding: 30px 0; margin-top: 50px; color: white; }
@@ -204,7 +204,7 @@
 
     <section class="container mt-4 mb-5">
         <div class="form-container card-moderna p-4 shadow-sm bg-white" style="border-radius: 15px;">
-            <form id="employmentForm">
+            <form id="bolsaTrabajoForm">
                 
                 <h4 style="color: #193E9A; margin-bottom: 20px; font-weight: 700;">Datos Personales</h4>
                 <div class="row">
@@ -287,15 +287,15 @@
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
 
     <script>
-        // Manejar visualmente el cambio de nombre del archivo adjunto
+        // Manejador visual para cambiar el texto del archivo seleccionado
         document.getElementById('customFile').addEventListener('change', function(e) {
             var fileName = e.target.files[0] ? e.target.files[0].name : "Seleccionar archivo...";
             document.getElementById('fileLabel').textContent = fileName;
         });
 
-        // Procesar y enviar el formulario de manera directa mediante Fetch Nativo
-        document.getElementById('employmentForm').addEventListener('submit', function(event) {
-            event.preventDefault();
+        // Captura y envío seguro del formulario mediante la API Fetch nativa
+        document.getElementById('bolsaTrabajoForm').addEventListener('submit', function(event) {
+            event.preventDefault(); // Detiene por completo la recarga y la URL sucia
 
             const btn = document.querySelector('.btn-institucional');
             btn.textContent = 'ENVIANDO...';
@@ -311,13 +311,12 @@
                 return;
             }
 
-            // Convertir el archivo a Base64 para el envío seguro por JSON
+            // Lector de archivos nativo
             const reader = new FileReader();
             reader.readAsDataURL(file);
             reader.onload = function () {
                 const base64String = reader.result.split(',')[1];
 
-                // Estructura de envío limpia para la API pública de EmailJS
                 const datosEnvio = {
                     service_id: 'service_3jecg3c',
                     template_id: 'template_9ji5y7s',
@@ -334,7 +333,6 @@
                     }
                 };
 
-                // Petición POST nativa
                 fetch('https://api.emailjs.com/api/v1.0/email/send', {
                     method: 'POST',
                     headers: {
@@ -345,7 +343,7 @@
                 .then(function(respuesta) {
                     if (respuesta.ok) {
                         alert('¡Postulación enviada con éxito!');
-                        document.getElementById('employmentForm').reset();
+                        document.getElementById('bolsaTrabajoForm').reset();
                         document.getElementById('fileLabel').textContent = "Seleccionar archivo...";
                     } else {
                         alert('Hubo un inconveniente en el servidor al enviar la postulación.');
