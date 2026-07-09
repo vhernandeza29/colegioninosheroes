@@ -259,71 +259,71 @@
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
 
     <!-- PROCESADOR EXCLUSIVO PARA EMAILJS SIN LÍMITES DE TAMAÑO -->
-    <script>
-        document.getElementById('bolsaTrabajoForm').addEventListener('submit', function(event) {
-            event.preventDefault();
+   <script>
+    document.getElementById('bolsaTrabajoForm').addEventListener('submit', function(event) {
+        event.preventDefault();
 
-            const btn = document.querySelector('.btn-institucional');
-            btn.textContent = 'PROCESANDO Y ENVIANDO...';
-            btn.disabled = true;
+        const btn = document.querySelector('.btn-institucional');
+        btn.textContent = 'PROCESANDO Y ENVIANDO...';
+        btn.disabled = true;
 
-            const fileInput = document.getElementById('customFile');
-            const file = fileInput.files[0];
+        const fileInput = document.getElementById('customFile');
+        const file = fileInput.files[0];
 
-            if (!file) {
-                alert('Por favor, selecciona tu archivo CV.');
+        if (!file) {
+            alert('Por favor, selecciona tu archivo CV.');
+            btn.textContent = 'Enviar Postulación';
+            btn.disabled = false;
+            return;
+        }
+
+        const reader = new FileReader();
+        reader.readAsDataURL(file);
+        reader.onload = function () {
+            // Convertimos el archivo en el formato nativo que EmailJS requiere para adjuntos tradicionales
+            const base64Content = reader.result.split(',')[1];
+
+            const datosEnvio = {
+                service_id: 'service_3jecg3c',
+                template_id: 'template_9ji5y7s',
+                user_id: 'UDHsuooPGC3Jp2aIK',
+                template_params: {
+                    nombre: event.target.nombre.value,
+                    apellidos: event.target.apellidos.value,
+                    email: event.target.email.value,
+                    whatsapp: event.target.whatsapp.value,
+                    area_interes: event.target.area_interes.value,
+                    estudios: event.target.estudios.value,
+                    experiencia: event.target.experiencia.value,
+                    // Enviamos el adjunto usando el parámetro reservado por la API de EmailJS
+                    "content": base64Content,
+                    "filename": event.target.nombre.value + "_CV.pdf"
+                }
+            };
+
+            fetch('https://api.emailjs.com/api/v1.0/email/send', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify(datosEnvio)
+            })
+            .then(function(respuesta) {
+                if (respuesta.ok) {
+                    alert('¡Postulación enviada con éxito desde la web corporativa!');
+                    document.getElementById('bolsaTrabajoForm').reset();
+                    document.getElementById('fileLabel').textContent = "Seleccionar archivo...";
+                } else {
+                    alert('Error al procesar el archivo. Inténtalo con un documento PDF o Word más ligero.');
+                }
                 btn.textContent = 'Enviar Postulación';
                 btn.disabled = false;
-                return;
-            }
-
-            const reader = new FileReader();
-            reader.readAsDataURL(file);
-            reader.onload = function () {
-                // Obtenemos la cadena comprimida para evitar errores de saturación HTTP
-                const base64String = reader.result.split(',')[1];
-                
-                // Dividimos la cadena en fragmentos si el archivo es pesado para burlar el límite del 413
-                const deofuscado = base64String.substring(0, 45000); 
-
-                const datosEnvio = {
-                    service_id: 'service_3jecg3c',
-                    template_id: 'template_9ji5y7s',
-                    user_id: 'UDHsuooPGC3Jp2aIK',
-                    template_params: {
-                        nombre: event.target.nombre.value,
-                        apellidos: event.target.apellidos.value,
-                        email: event.target.email.value,
-                        whatsapp: event.target.whatsapp.value,
-                        area_interes: event.target.area_interes.value,
-                        estudios: event.target.estudios.value,
-                        experiencia: event.target.experiencia.value + " [Datos Adjuntos Procesados]",
-                        curriculum: deofuscado // Pasa de forma limpia por los servidores de GitHub y EmailJS
-                    }
-                };
-
-                fetch('https://api.emailjs.com/api/v1.0/email/send', {
-                    method: 'POST',
-                    headers: { 'Content-Type': 'application/json' },
-                    body: JSON.stringify(datosEnvio)
-                })
-                .then(function(respuesta) {
-                    if (respuesta.ok) {
-                        alert('¡Postulación enviada con éxito desde la web corporativa!');
-                        document.getElementById('bolsaTrabajoForm').reset();
-                    } else {
-                        alert('Error al sincronizar el peso del archivo adjunto.');
-                    }
-                    btn.textContent = 'Enviar Postulación';
-                    btn.disabled = false;
-                })
-                .catch(function(error) {
-                    alert('Error en el canal de comunicación.');
-                    btn.textContent = 'Enviar Postulación';
-                    btn.disabled = false;
-                });
-            };
-        });
-    </script>
+            })
+            .catch(function(error) {
+                alert('Hubo un error en el canal de comunicación.');
+                btn.textContent = 'Enviar Postulación';
+                btn.disabled = false;
+            });
+        };
+    });
+</script>
 </body>
 </html>
