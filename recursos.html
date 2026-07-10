@@ -9,7 +9,7 @@
     <link rel="stylesheet" href="style.css">
     <script src="https://cdnjs.cloudflare.com/ajax/libs/PapaParse/5.3.2/papaparse.min.js"></script>
     <style>
-         /* --- ESTILO HERO CON DEGRADADO (IGUAL A OFERTA EDUCATIVA) --- */
+        /* --- ESTILO HERO CON DEGRADADO --- */
         .hero {
             background: linear-gradient(135deg, #317F77 0%, #317F77 100%);
             padding: 80px 0;
@@ -48,7 +48,7 @@
             transition: 0.3s;
             margin-bottom: 30px;
             border-left: 5px solid var(--verde-id);
-            height: calc(100% - 30px); /* Mantiene tarjetas alineadas */
+            height: calc(100% - 30px);
         }
 
         .card-download:hover {
@@ -104,7 +104,6 @@
             color: #193E9A !important;
         }
 
-        /* Ajustes estéticos para las ventanas de validación */
         .modal-content {
             border-radius: 15px;
             border: none;
@@ -260,11 +259,7 @@
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
 
     <script>
-        // CONFIGURACIÓN PRINCIPAL
         const idExcelMatriculas = '18JCUK-SGSQCXMvWng3O3hZYxD4GU_BVILkvO_tawDZo'; 
-        
-        // ⚠️ REEMPLAZA EL '0' POR EL NÚMERO DE GID DE TU PESTAÑA "Matriculas"
-        // Lo encuentras en la URL de tu navegador al seleccionar esa pestaña (ej: gid=145236)
         const gidPestana = '905049780'; 
 
         function validarYDescargar() {
@@ -277,7 +272,6 @@
                 return;
             }
 
-            // URL Estricta de exportación por GID que evita redirecciones forzadas de Google
             const url = `https://docs.google.com/spreadsheets/d/${idExcelMatriculas}/export?format=csv&gid=${gidPestana}`;
 
             Papa.parse(url, {
@@ -286,7 +280,6 @@
                     const datos = results.data;
                     let matriculaValida = false;
 
-                    // Buscamos directamente en la Columna A (índice 0)
                     for (let i = 0; i < datos.length; i++) {
                         if (datos[i][0]) { 
                             const valorCelda = datos[i][0].toString().trim().toUpperCase();
@@ -299,12 +292,12 @@
 
                     if (matriculaValida) {
                         errorElemento.style.display = "none";
-                        $('#modalMatricula').modal('hide'); // Ocultar cuadro
-                        document.getElementById('inputMatricula').value = ""; // Limpiar el campo
+                        $('#modalMatricula').modal('hide'); 
+                        document.getElementById('inputMatricula').value = ""; 
                         
-                        // Forzamos la descarga automática del archivo real
+                        // NOTA: Asegúrate de que el archivo real exista en tu carpeta Adjuntos con este nombre exacto:
                         const linkDescarga = document.createElement('a');
-                        linkDescarga.href = 'Adjuntos/examenes.pdf'; 
+                        linkDescarga.href = 'Adjuntos/calendario-2026.pdf'; 
                         linkDescarga.download = 'Cronograma_Evaluaciones.pdf';
                         document.body.appendChild(linkDescarga);
                         linkDescarga.click();
