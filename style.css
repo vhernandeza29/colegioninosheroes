@@ -5,7 +5,7 @@
     --verde-id: #317F77;   
     --whatsapp: #2cb742; 
     --blanco: #ffffff;
-    --fondo: #f8fafc;      /* RESTAURADO: Se mantiene el fondo original */
+    --fondo: #f8fafc;      
     --texto: #334155;      
 }
 
@@ -21,10 +21,10 @@ h1, h2, h3, h4, h5, .navbar-brand, .nav-link {
 }
 
 /* =========================================
-   BANNER SUPERIOR AZUL INSTITUCIONAL (MODIFICADO)
+   BANNER SUPERIOR AZUL INSTITUCIONAL
    ========================================= */
 .top-bar {
-    background: var(--azul-id); /* MODIFICADO: Cambiado de verde a azul institucional */
+    background: var(--azul-id); 
     color: white;
     padding: 10px 0;
 }
@@ -34,14 +34,13 @@ h1, h2, h3, h4, h5, .navbar-brand, .nav-link {
     align-items: center;
 }
 
-/* MODIFICADO: Nuevo diseño circular para destacar el enlace de Facebook */
 .top-bar a { 
     display: inline-flex;
     align-items: center;
     justify-content: center;
     width: 32px;
     height: 32px;
-    background-color: rgba(255, 255, 255, 0.2); /* Círculo sutil blanco */
+    background-color: rgba(255, 255, 255, 0.2); 
     color: white !important; 
     text-decoration: none; 
     border-radius: 50%;
@@ -49,17 +48,17 @@ h1, h2, h3, h4, h5, .navbar-brand, .nav-link {
 }
 
 .top-bar a:hover {
-    background-color: white; /* Fondo blanco completo al pasar el mouse */
-    color: var(--azul-id) !important; /* Icono azul al pasar el mouse */
+    background-color: white; 
+    color: var(--azul-id) !important; 
     transform: scale(1.1);
 }
 
 .top-bar i.fab.fa-facebook-f { 
-    font-size: 1rem; /* Ajustado para que encaje estéticamente dentro del círculo */
+    font-size: 1rem; 
 }
 
 /* =========================================
-   NAVEGACIÓN (CORREGIDA)
+   NAVEGACIÓN GLOBAL Base
    ========================================= */
 .navbar { 
     background: var(--blanco) !important;
@@ -68,7 +67,6 @@ h1, h2, h3, h4, h5, .navbar-brand, .nav-link {
     border-bottom: 3px solid var(--azul-id);
 }
 
-/* Quitamos los !important de aquí para permitir que colapse */
 .navbar > .container {
     display: flex;
     justify-content: space-between;
@@ -88,24 +86,9 @@ h1, h2, h3, h4, h5, .navbar-brand, .nav-link {
 }
 
 .logo-colegio { 
-    height: 60px; 
+    height: 60px; /* Tamaño base por defecto */
     width: auto;
     margin-right: 15px; 
-}
-
-/* Estilos por defecto para Móviles (Menú colapsado) */
-.navbar-collapse {
-    text-align: center;
-    padding: 20px 0;
-}
-
-.navbar-nav {
-    display: flex;
-    flex-direction: column; /* En celular, van uno abajo del otro */
-    gap: 15px;
-    width: 100%; 
-    align-items: center;
-    margin: 15px 0;
 }
 
 .nav-link { 
@@ -128,12 +111,65 @@ h1, h2, h3, h4, h5, .navbar-brand, .nav-link {
     text-transform: uppercase;
     text-decoration: none;
     display: inline-block;
-    width: 100%; /* Ocupa el ancho disponible en móvil */
-    max-width: 250px;
 }
 
 /* =========================================
-   MEDIA QUERY: Para pantallas grandes (Escritorio)
+   MÓVILES (Celulares y Tablets)
+   ========================================= */
+@media (max-width: 991px) {
+    /* Mantiene tamaño grande original en el cel como te gusta */
+    .logo-colegio { 
+        height: 90px; 
+    }
+
+    /* Permite que los elementos se acomoden sin achicarse */
+    .navbar > .container {
+        display: flex !important;
+        flex-direction: row !important;
+        flex-wrap: wrap !important; 
+        justify-content: space-between !important;
+        align-items: center !important;
+    }
+
+    /* El nombre usa el espacio izquierdo libre */
+    .navbar-brand {
+        display: flex !important;
+        align-items: center !important;
+        flex: 1 !important; 
+        margin-right: 10px !important;
+    }
+
+    /* Manda la hamburguesa arriba a la derecha de forma fija */
+    .navbar-toggler {
+        order: 2 !important; 
+        margin-left: auto !important;
+    }
+
+    /* Estilos del menú desplegable vertical en móviles */
+    .navbar-collapse {
+        text-align: center;
+        padding: 20px 0;
+        width: 100%;
+        order: 3; /* Se despliega abajo del encabezado */
+    }
+
+    .navbar-nav {
+        display: flex;
+        flex-direction: column; 
+        gap: 15px;
+        width: 100%; 
+        align-items: center;
+        margin: 15px 0;
+    }
+
+    .btn-whatsapp-nav { 
+        width: 100%; 
+        max-width: 250px;
+    }
+}
+
+/* =========================================
+   ESCRITORIO (Pantallas Grandes)
    ========================================= */
 @media (min-width: 992px) {
     .navbar > .container {
@@ -149,29 +185,34 @@ h1, h2, h3, h4, h5, .navbar-brand, .nav-link {
         height: 90px; 
     }
 
-    /* En escritorio, Bootstrap maneja el flex, no forzamos con !important */
     .navbar-collapse {
-        display: flex;
+        display: flex !important;
         justify-content: center; 
         padding: 0;
     }
 
     .navbar-nav {
-        flex-direction: row; /* Enlaces lado a lado */
+        display: flex;
+        flex-direction: row; 
         justify-content: space-evenly; 
-        width: 80%; 
+        width: 85%; /* Aumentado ligeramente para dar más aire al texto grande */
         margin: 0 auto;
-        gap: 0;
+        gap: 15px; /* Añade una separación interna limpia entre los enlaces */
     }
 
+    /* ¡AQUÍ ESTÁ EL CAMBIO! Aumentamos el tamaño de la letra del menú */
     .nav-link { 
-        font-size: 0.95rem; 
+        font-size: 1.25rem !important; /* Subió de 0.95rem a 1.25rem */
+        font-weight: 700 !important;   /* Letra un poco más gruesa y vistosa */
         white-space: nowrap;
-        padding: 0 10px !important;
+        padding: 0 15px !important;
     }
 
+    /* Aumentamos también el tamaño del botón de WhatsApp en la compu */
     .btn-whatsapp-nav { 
-        width: auto; /* Botón con su tamaño normal */
+        width: auto; 
+        font-size: 1.1rem !important;  /* Letra más grande dentro del botón */
+        padding: 14px 30px !important; /* Botón con más cuerpo */
     }
 }
 
