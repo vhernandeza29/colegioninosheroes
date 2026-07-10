@@ -297,8 +297,17 @@
                 font-size: 1rem;
                 margin-bottom: 5px;
             }
+
+            /* 1. LE DA MÁS ESPACIO AL CONTENEDOR VERDE ARRIBA PARA QUE NO COMAN LAS LETRAS */
+            .hero {
+                padding: 45px 0 35px 0 !important; /* Aumenta el espacio superior en móvil */
+            }
+
+            /* 2. AJUSTA EL TAMAÑO DE LA LETRA PARA QUE JÁMAS CHOQUE CON EL NAV */
             .hero h1 {
-                font-size: 2rem !important;
+                font-size: 1.85rem !important; /* Un pelín más pequeño en móvil para que quepa perfecto */
+                line-height: 1.2 !important;   /* Controla la altura de la línea */
+                margin-top: 10px !important;   /* Separa el título del borde superior */
             }
         }
 
