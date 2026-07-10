@@ -6,315 +6,313 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link class="icon" href="data:,">
     <title>Consulta de Calificaciones - Colegio Niños Héroes</title>
-    <!-- Pon esto en el <head> de tu archivo de Boletas -->
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
-    <link rel="stylesheet" href="style.css"> <!-- <-- ESTA LÍNEA ES CLAVE -->>
+    <link rel="stylesheet" href="style.css">
     <script src="https://cdn.jsdelivr.net/npm/xlsx@0.18.5/dist/xlsx.full.min.js"></script>
-   <style>
-    :root {
-        --azul-id: #193E9A;
-        --verde-id: #317F77;
-        --gris-fondo: #F0F2F5;
-        --blanco: #FFFFFF;
-    }
+    <style>
+        :root {
+            --azul-id: #193E9A;
+            --verde-id: #317F77;
+            --gris-fondo: #F0F2F5;
+            --blanco: #FFFFFF;
+        }
 
-    body {
-        background-color: var(--gris-fondo);
-    }
+        body {
+            background-color: var(--gris-fondo);
+        }
 
-    /* NAVBAR UNIFICADO */
-    .navbar-brand { 
-        font-weight: 800; 
-        color: var(--azul-id) !important; 
-        display: flex;
-        align-items: center;
-    }
+        /* NAVBAR UNIFICADO */
+        .navbar-brand { 
+            font-weight: 800; 
+            color: var(--azul-id) !important; 
+            display: flex;
+            align-items: center;
+        }
 
-    .btn-volver { 
-        border: 2px solid var(--azul-id); 
-        color: var(--azul-id); 
-        font-weight: 700; 
-        border-radius: 10px; 
-        padding: 5px 20px; 
-        transition: 0.3s; 
-        text-decoration: none !important; 
-        display: inline-block; 
-    }
-    .btn-volver:hover { background: var(--azul-id); color: white !important; }
+        .btn-volver { 
+            border: 2px solid var(--azul-id); 
+            color: var(--azul-id); 
+            font-weight: 700; 
+            border-radius: 10px; 
+            padding: 5px 20px; 
+            transition: 0.3s; 
+            text-decoration: none !important; 
+            display: inline-block; 
+        }
+        .btn-volver:hover { background: var(--azul-id); color: white !important; }
 
-    /* EL HERO UNIFICADO CON EL DE CALENDARIOS (Ajustado a 3rem e idéntico) */
-    .hero {
-        background: linear-gradient(135deg, #317F77 0%, #317F77 100%);
-        padding: 80px 0; /* Igual a Calendarios */
-        text-align: center;
-        color: white;
-        margin-bottom: 20px;
-    }
-    .hero h1 {
-        font-weight: 800;
-        font-size: 3rem; /* Cambiado a 3rem para igualar a Calendarios */
-        text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.2);
-    }
-
-    /* BUSCADOR (Actualizado con bordes redondeados de 20px como las tarjetas de recursos) */
-    .search-container { 
-        max-width: 600px; 
-        margin: 0 auto 40px; 
-    }
-    .search-box-wrapper {
-        display: flex;
-        gap: 10px;
-        box-shadow: 0 5px 15px rgba(0,0,0,0.08); /* Sombra suave idéntica */
-        background: white;
-        padding: 10px;
-        border-radius: 20px; /* Bordes de 20px como las tarjetas de recursos */
-    }
-    #matriculaInput { 
-        border: 1px solid #ced4da; 
-        border-radius: 12px; /* Redondeado sutil para inputs */
-        padding-left: 15px; 
-        height: 50px; 
-        font-size: 1rem; 
-        font-weight: 600;
-    }
-    .btn-buscar { 
-        background: var(--verde-id) !important; 
-        color: white !important; 
-        border: none !important; 
-        border-radius: 12px !important;
-        padding: 0 30px; 
-        font-weight: 700; 
-        height: 50px;
-    }
-
-    .version-tag {
-        font-size: 0.78rem;
-        color: #a0aec0;
-        margin-top: 12px;
-        font-weight: 600;
-        letter-spacing: 0.5px;
-    }
-
-    /* DISEÑO DE LA BOLETA MODERNA */
-    .report-card-container {
-        background: var(--blanco);
-        padding: 40px;
-        border-radius: 25px;
-        box-shadow: 0 15px 50px rgba(0,0,0,0.1);
-        margin: 0 auto 50px;
-        max-width: 850px;
-        display: none;
-        position: relative;
-        overflow: hidden;
-    }
-
-    .sello-agua-fondo {
-        position: absolute;
-        top: 50%;
-        left: 50%;
-        transform: translate(-50%, -50%) rotate(-10deg);
-        width: 420px;
-        height: auto;
-        opacity: 0.05;
-        pointer-events: none;
-        z-index: 1;
-    }
-
-    .contenedor-sello-dorado {
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        margin-top: 25px;
-        padding-top: 10px;
-        position: relative;
-    }
-    .sello-dorado {
-        width: 130px; 
-        height: auto;
-        opacity: 0.95;
-        mix-blend-mode: multiply;
-        pointer-events: none;
-    }
-
-    /* Firmas autorizadas */
-    .contenedor-firmas {
-        display: flex;
-        justify-content: space-between;
-        margin-top: 15px;
-        padding: 0 20px;
-        text-align: center;
-    }
-    .col-firma {
-        width: 45%;
-    }
-    .linea-firma {
-        border-top: 1px solid #cbd5e0;
-        margin-bottom: 5px;
-    }
-    .nombre-firma {
-        font-size: 0.88rem;
-        font-weight: 700;
-        color: #2d3748;
-        margin: 0;
-    }
-    .puesto-firma {
-        font-size: 0.78rem;
-        font-weight: 600;
-        color: #718096;
-        margin: 0;
-        text-transform: uppercase;
-    }
-
-    .boleta-content-wrapper {
-        position: relative;
-        z-index: 2;
-    }
-
-    .header-boleta {
-        margin: -40px -40px 30px -40px;
-        padding: 30px 40px;
-        display: flex;
-        align-items: center;
-        justify-content: space-between;
-        background-color: #fff;
-        border-bottom: 2px solid #edf2f7;
-    }
-    
-    .logo-boleta { height: 95px; }
-    .school-info { text-align: right; }
-    .school-name { font-weight: 800; font-size: 1.7rem; color: var(--azul-id); margin: 0; }
-    .school-subtitle { font-weight: 700; font-size: 1.1rem; color: var(--verde-id); margin: 2px 0 0; }
-    .school-address { font-size: 0.75rem; margin: 4px 0 0; color: #718096; line-height: 1.3; }
-
-    .boleta-title-box { text-align: center; margin-bottom: 25px; }
-    
-    .bg-titulo-maternal { background-color: #FFF5B7 !important; color: #5d4037 !important; }
-    .bg-titulo-preescolar { background-color: #FFB7CE !important; color: #4a148c !important; }
-    .bg-titulo-primaria { background-color: #C1E7C4 !important; color: #1b5e20 !important; }
-    .bg-titulo-secundaria { background-color: #B3E5FC !important; color: #0d47a1 !important; }
-    .bg-titulo-prepa { background-color: #E1BEE7 !important; color: #4a148c !important; }
-
-    .boleta-title-text {
-        font-weight: 800;
-        font-size: 1.1rem;
-        text-transform: uppercase;
-        padding: 10px 35px;
-        border-radius: 20px;
-        display: inline-block;
-        letter-spacing: 1px;
-        box-shadow: 0 4px 10px rgba(0,0,0,0.05);
-    }
-
-    .student-info-grid {
-        display: grid;
-        grid-template-columns: repeat(2, 1fr);
-        gap: 12px;
-        background-color: #F7FAFC;
-        padding: 20px;
-        border-radius: 15px;
-        margin-bottom: 25px;
-        font-size: 0.9rem;
-    }
-    .info-item { display: flex; align-items: center; }
-    .info-label { font-weight: 700; color: #4A5568; min-width: 120px; text-transform: uppercase; font-size: 0.75rem; }
-    .info-value { flex-grow: 1; background-color: var(--blanco); padding: 6px 12px; border-radius: 8px; font-weight: 600; color: #2d3748; border: 1px solid #E2E8F0; }
-    
-    .final-grade-box {
-        grid-column: span 2;
-        background-color: #EBF8FF;
-        border: 1px solid #90CDF4;
-        border-radius: 10px;
-        padding: 10px 20px;
-        display: flex;
-        justify-content: flex-end;
-        align-items: center;
-        margin-top: 5px;
-    }
-    .final-grade-label { font-weight: 800; text-transform: uppercase; color: #2C5282; margin-right: 15px; font-size: 0.85rem; }
-    .final-grade-value { font-size: 1.7rem; font-weight: 900; color: #2B6CB0; line-height: 1; }
-
-    /* TABLAS ACCESIBLES */
-    .grade-table-container { border-radius: 15px; overflow: hidden; border: 1px solid #E2E8F0; margin-bottom: 20px; }
-    .grade-table { width: 100%; border-collapse: separate; border-spacing: 0; margin: 0; }
-    .grade-table thead th { font-weight: 800; text-transform: uppercase; font-size: 0.82rem; padding: 14px 10px; text-align: center; border: none; }
-    .grade-table thead th.subject-col { text-align: left; padding-left: 25px; }
-    .grade-table tbody tr td { padding: 14px 10px; text-align: center; font-weight: 700; font-size: 0.95rem; border: none; border-bottom: 1px solid rgba(0,0,0,0.04) !important; }
-    .grade-table tbody tr td.subject-col { text-align: left; padding-left: 25px; font-weight: 800; }
-
-    /* PALETAS DE COLOR */
-    .pastel-amarillo thead th { background-color: #FBC02D !important; color: #5d4037 !important; }
-    .pastel-amarillo tbody tr td { background-color: #FFF9C4 !important; color: #5d4037 !important; }
-    .pastel-amarillo tbody tr td.promedio-col { background-color: #FBC02D !important; font-weight: 900 !important; }
-
-    .pastel-preescolar thead th { background-color: #F48FB1 !important; color: #4a148c !important; }
-    .pastel-preescolar tbody tr td { background-color: #FCE4EC !important; color: #4a148c !important; }
-    .pastel-preescolar tbody tr td.promedio-col { background-color: #F48FB1 !important; font-weight: 900 !important; }
-
-    .pastel-verde thead th { background-color: #81C784 !important; color: #1b5e20 !important; }
-    .pastel-verde tbody tr td { background-color: #E8F5E9 !important; color: #1b5e20 !important; }
-    .pastel-verde tbody tr td.promedio-col { background-color: #81C784 !important; font-weight: 900 !important; }
-
-    .pastel-azul thead th { background-color: #4FC3F7 !important; color: #0d47a1 !important; }
-    .pastel-azul tbody tr td { background-color: #E1F5FE !important; color: #0d47a1 !important; }
-    .pastel-azul tbody tr td.promedio-col { background-color: #4FC3F7 !important; font-weight: 900 !important; }
-
-    .pastel-lila thead th { background-color: #BA68C8 !important; color: #4a148c !important; }
-    .pastel-lila tbody tr td { background-color: #F3E5F5 !important; color: #4a148c !important; }
-    .pastel-lila tbody tr td.promedio-col { background-color: #BA68C8 !important; font-weight: 900 !important; }
-
-    /* RESPONSIVO AJUSTADO PARA EVITAR DESFASES */
-    @media (max-width: 768px) {
-        .navbar .container {
-            flex-direction: column !important;
-            gap: 12px;
+        /* EL HERO UNIFICADO */
+        .hero {
+            background: linear-gradient(135deg, #317F77 0%, #317F77 100%);
+            padding: 80px 0;
             text-align: center;
+            color: white;
+            margin-bottom: 20px;
         }
-        .navbar-brand {
-            font-size: 1.3rem;
-            justify-content: center;
-            margin-right: 0;
-        }
-        .navbar-brand img {
-            height: 50px !important; /* Mantenemos consistencia con Calendarios */
-        }
-        .btn-volver {
-            width: 100%;
-            max-width: 200px;
-            text-align: center;
-        }
-        /* Forzar que el título se autoajuste bien en móviles */
         .hero h1 {
-            font-size: 2rem !important;
+            font-weight: 800;
+            font-size: 3rem;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.2);
         }
-    }
 
-    @media print {
-        body { background-color: white !important; }
-        * { -webkit-print-color-adjust: exact !important; print-color-adjust: exact !important; }
-        .no-print, .hero-banner, .search-container, .navbar, .hero { display: none !important; }
-        .report-card-container { display: block !important; border: none; box-shadow: none; padding: 0; margin: 0; width: 100%; max-width: 100%; border-radius: 0; }
-        .header-boleta { margin: 0 0 30px 0; padding: 20px 0; }
-        .page-break { page-break-before: always; }
-        .sello-agua-fondo { opacity: 0.06 !important; }
-        .sello-dorado { opacity: 1 !important; filter: none !important; }
-    }
-</style>
+        /* BUSCADOR */
+        .search-container { 
+            max-width: 600px; 
+            margin: 0 auto 40px; 
+        }
+        .search-box-wrapper {
+            display: flex;
+            gap: 10px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.08);
+            background: white;
+            padding: 10px;
+            border-radius: 20px;
+        }
+        #matriculaInput { 
+            border: 1px solid #ced4da; 
+            border-radius: 12px;
+            padding-left: 15px; 
+            height: 50px; 
+            font-size: 1rem; 
+            font-weight: 600;
+        }
+        .btn-buscar { 
+            background: var(--verde-id) !important; 
+            color: white !important; 
+            border: none !important; 
+            border-radius: 12px !important;
+            padding: 0 30px; 
+            font-weight: 700; 
+            height: 50px;
+        }
+
+        .version-tag {
+            font-size: 0.78rem;
+            color: #a0aec0;
+            margin-top: 12px;
+            font-weight: 600;
+            letter-spacing: 0.5px;
+        }
+
+        /* DISEÑO DE LA BOLETA MODERNA */
+        .report-card-container {
+            background: var(--blanco);
+            padding: 40px;
+            border-radius: 25px;
+            box-shadow: 0 15px 50px rgba(0,0,0,0.1);
+            margin: 0 auto 50px;
+            max-width: 850px;
+            display: none;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .sello-agua-fondo {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%) rotate(-10deg);
+            width: 420px;
+            height: auto;
+            opacity: 0.05;
+            pointer-events: none;
+            z-index: 1;
+        }
+
+        .contenedor-sello-dorado {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            margin-top: 25px;
+            padding-top: 10px;
+            position: relative;
+        }
+        .sello-dorado {
+            width: 130px; 
+            height: auto;
+            opacity: 0.95;
+            mix-blend-mode: multiply;
+            pointer-events: none;
+        }
+
+        /* Firmas autorizadas */
+        .contenedor-firmas {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 15px;
+            padding: 0 20px;
+            text-align: center;
+        }
+        .col-firma {
+            width: 45%;
+        }
+        .linea-firma {
+            border-top: 1px solid #cbd5e0;
+            margin-bottom: 5px;
+        }
+        .nombre-firma {
+            font-size: 0.88rem;
+            font-weight: 700;
+            color: #2d3748;
+            margin: 0;
+        }
+        .puesto-firma {
+            font-size: 0.78rem;
+            font-weight: 600;
+            color: #718096;
+            margin: 0;
+            text-transform: uppercase;
+        }
+
+        .boleta-content-wrapper {
+            position: relative;
+            z-index: 2;
+        }
+
+        .header-boleta {
+            margin: -40px -40px 30px -40px;
+            padding: 30px 40px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            background-color: #fff;
+            border-bottom: 2px solid #edf2f7;
+        }
+        
+        .logo-boleta { height: 95px; }
+        .school-info { text-align: right; }
+        .school-name { font-weight: 800; font-size: 1.7rem; color: var(--azul-id); margin: 0; }
+        .school-subtitle { font-weight: 700; font-size: 1.1rem; color: var(--verde-id); margin: 2px 0 0; }
+        .school-address { font-size: 0.75rem; margin: 4px 0 0; color: #718096; line-height: 1.3; }
+
+        .boleta-title-box { text-align: center; margin-bottom: 25px; }
+        
+        .bg-titulo-maternal { background-color: #FFF5B7 !important; color: #5d4037 !important; }
+        .bg-titulo-preescolar { background-color: #FFB7CE !important; color: #4a148c !important; }
+        .bg-titulo-primaria { background-color: #C1E7C4 !important; color: #1b5e20 !important; }
+        .bg-titulo-secundaria { background-color: #B3E5FC !important; color: #0d47a1 !important; }
+        .bg-titulo-prepa { background-color: #E1BEE7 !important; color: #4a148c !important; }
+
+        .boleta-title-text {
+            font-weight: 800;
+            font-size: 1.1rem;
+            text-transform: uppercase;
+            padding: 10px 35px;
+            border-radius: 20px;
+            display: inline-block;
+            letter-spacing: 1px;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.05);
+        }
+
+        .student-info-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 12px;
+            background-color: #F7FAFC;
+            padding: 20px;
+            border-radius: 15px;
+            margin-bottom: 25px;
+            font-size: 0.9rem;
+        }
+        .info-item { display: flex; align-items: center; }
+        .info-label { font-weight: 700; color: #4A5568; min-width: 120px; text-transform: uppercase; font-size: 0.75rem; }
+        .info-value { flex-grow: 1; background-color: var(--blanco); padding: 6px 12px; border-radius: 8px; font-weight: 600; color: #2d3748; border: 1px solid #E2E8F0; }
+        
+        .final-grade-box {
+            grid-column: span 2;
+            background-color: #EBF8FF;
+            border: 1px solid #90CDF4;
+            border-radius: 10px;
+            padding: 10px 20px;
+            display: flex;
+            justify-content: flex-end;
+            align-items: center;
+            margin-top: 5px;
+        }
+        .final-grade-label { font-weight: 800; text-transform: uppercase; color: #2C5282; margin-right: 15px; font-size: 0.85rem; }
+        .final-grade-value { font-size: 1.7rem; font-weight: 900; color: #2B6CB0; line-height: 1; }
+
+        /* TABLAS ACCESIBLES */
+        .grade-table-container { border-radius: 15px; overflow: hidden; border: 1px solid #E2E8F0; margin-bottom: 20px; }
+        .grade-table { width: 100%; border-collapse: separate; border-spacing: 0; margin: 0; }
+        .grade-table thead th { font-weight: 800; text-transform: uppercase; font-size: 0.82rem; padding: 14px 10px; text-align: center; border: none; }
+        .grade-table thead th.subject-col { text-align: left; padding-left: 25px; }
+        .grade-table tbody tr td { padding: 14px 10px; text-align: center; font-weight: 700; font-size: 0.95rem; border: none; border-bottom: 1px solid rgba(0,0,0,0.04) !important; }
+        .grade-table tbody tr td.subject-col { text-align: left; padding-left: 25px; font-weight: 800; }
+
+        /* PALETAS DE COLOR */
+        .pastel-amarillo thead th { background-color: #FBC02D !important; color: #5d4037 !important; }
+        .pastel-amarillo tbody tr td { background-color: #FFF9C4 !important; color: #5d4037 !important; }
+        .pastel-amarillo tbody tr td.promedio-col { background-color: #FBC02D !important; font-weight: 900 !important; }
+
+        .pastel-preescolar thead th { background-color: #F48FB1 !important; color: #4a148c !important; }
+        .pastel-preescolar tbody tr td { background-color: #FCE4EC !important; color: #4a148c !important; }
+        .pastel-preescolar tbody tr td.promedio-col { background-color: #F48FB1 !important; font-weight: 900 !important; }
+
+        .pastel-verde thead th { background-color: #81C784 !important; color: #1b5e20 !important; }
+        .pastel-verde tbody tr td { background-color: #E8F5E9 !important; color: #1b5e20 !important; }
+        .pastel-verde tbody tr td.promedio-col { background-color: #81C784 !important; font-weight: 900 !important; }
+
+        .pastel-azul thead th { background-color: #4FC3F7 !important; color: #0d47a1 !important; }
+        .pastel-azul tbody tr td { background-color: #E1F5FE !important; color: #0d47a1 !important; }
+        .pastel-azul tbody tr td.promedio-col { background-color: #4FC3F7 !important; font-weight: 900 !important; }
+
+        .pastel-lila thead th { background-color: #BA68C8 !important; color: #4a148c !important; }
+        .pastel-lila tbody tr td { background-color: #F3E5F5 !important; color: #4a148c !important; }
+        .pastel-lila tbody tr td.promedio-col { background-color: #BA68C8 !important; font-weight: 900 !important; }
+
+        /* RESPONSIVO */
+        @media (max-width: 768px) {
+            .navbar .container {
+                flex-direction: column !important;
+                gap: 12px;
+                text-align: center;
+            }
+            .navbar-brand {
+                font-size: 1.3rem;
+                justify-content: center;
+                margin-right: 0;
+            }
+            .navbar-brand img {
+                height: 50px !important;
+            }
+            .btn-volver {
+                width: 100%;
+                max-width: 200px;
+                text-align: center;
+            }
+            .hero h1 {
+                font-size: 2rem !important;
+            }
+        }
+
+        @media print {
+            body { background-color: white !important; }
+            * { -webkit-print-color-adjust: exact !important; print-color-adjust: exact !important; }
+            .no-print, .hero-banner, .search-container, .navbar, .hero, #printBtnContainer, #statusMsg { display: none !important; }
+            .report-card-container { display: block !important; border: none; box-shadow: none; padding: 0; margin: 0; width: 100%; max-width: 100%; border-radius: 0; }
+            .header-boleta { margin: 0 0 30px 0; padding: 20px 0; }
+            .page-break { page-break-before: always; }
+            .sello-agua-fondo { opacity: 0.06 !important; }
+            .sello-dorado { opacity: 1 !important; filter: none !important; }
+        }
+    </style>
 </head>
 
 <body>
 
-    <!-- NAVBAR IDENTICO AL DE RECURSOS -->
+<!-- NAVBAR -->
 <nav class="navbar navbar-expand-lg sticky-top navbar-light bg-white shadow-sm">
     <div class="container d-flex justify-content-between align-items-center">
-        <a class="navbar-brand" href="index.html" style="font-weight: 800; color: #193E9A !important;">
+        <a class="navbar-brand" href="index.html">
             <img src="Iconos/logo.png" style="height: 50px;"> Colegio Niños Héroes
         </a>
         <a href="comunidad.html" class="btn-volver">← Volver</a>
     </div>
 </nav>
 
-<!-- HERO IDENTICO -->
+<!-- HERO -->
 <header class="hero">
     <div class="container">
         <h1>Portal de Boletas Oficiales</h1>
@@ -322,29 +320,29 @@
     </div>
 </header>
 
-<!-- BUSCADOR CON DISEÑO DE BORDES REDONDEADOS IGUAL A LAS TARJETAS -->
+<!-- BUSCADOR -->
 <div class="container mt-5">
-    <div class="search-container">
+    <div class="search-container" id="searchSection">
         <div class="search-box-wrapper">
-            <input type="text" id="matriculaInput" class="form-control" placeholder="Ingrese la matrícula">
-            <button class="btn btn-buscar" onclick="buscarBoleta()">BUSCAR</button>
+            <input type="text" id="matriculaInput" class="form-control" placeholder="Cargando repositorio...">
+            <button class="btn btn-buscar" onclick="buscarBoletasExcel()">BUSCAR</button>
         </div>
-        <div class="text-center version-tag text-success mt-3">
-            <i class="fas fa-check-circle"></i> Repositorio sincronizado correctamente.
+        <div class="text-center version-tag mt-3" id="statusMsg">
+            <i class="fas fa-spinner fa-spin mr-1"></i> Conectando al repositorio de datos...
         </div>
+    </div>
+    
+    <div class="text-center mt-3" id="printBtnContainer" style="display:none;">
+        <button class="btn btn-danger btn-lg shadow" onclick="window.print()">
+            <i class="fas fa-file-pdf mr-2"></i> DESCARGAR PDF / IMPRIMIR BOLETAS
+        </button>
     </div>
 </div>
-        
-        <div id="statusMsg" class="text-center mt-3 font-weight-bold"></div>
-        <div class="text-center mt-3" id="printBtnContainer" style="display:none;">
-            <button class="btn btn-danger btn-lg shadow" onclick="window.print()">
-                <i class="fas fa-file-pdf mr-2"></i> DESCARGAR PDF / IMPRIMIR BOLETAS
-            </button>
-        </div>
-    </div>
 
-    <div id="reportCardExtra" class="report-card-container"></div>
-    <div id="reportCardIngles" class="report-card-container page-break"></div>
+<!-- CONTENEDORES DE LAS BOLETAS -->
+<div id="reportCardExtra" class="report-card-container"></div>
+<div id="reportCardIngles" class="report-card-container page-break"></div>
+
 <script>
         const RUTA_EXCEL_EXTRA = "Datos/BoletaExtracurriculares.xlsx";
         const RUTA_EXCEL_INGLES = "Datos/BoletaInglés.xlsx";
@@ -352,7 +350,6 @@
         let BASE_EXTRA_MEMORIA = {};
         let BASE_INGLES_MEMORIA = {};
 
-        // Convertimos a mayúsculas todo el mapa de validación para evitar fallos de case-sensitivity
         const MATERIAS_MAP = {
             ingles: (nivelTexto) => {
                 const nl = (nivelTexto || "").toUpperCase();
@@ -376,7 +373,7 @@
         });
 
         async function cargarBasesDeGitHub() {
-            const labelStatus = document.getElementById('loadStatus');
+            const labelStatus = document.getElementById('statusMsg');
             const inputMat = document.getElementById('matriculaInput');
             try {
                 const [resExtra, resIngles] = await Promise.all([
@@ -397,12 +394,10 @@
 
                 labelStatus.innerHTML = "<span class='text-success'><i class='fas fa-check-circle mr-1'></i> Repositorio sincronizado correctamente.</span>";
                 inputMat.placeholder = "Ingrese la matrícula del alumno...";
-                document.getElementById('searchSection').style.opacity = "1";
-                document.getElementById('searchSection').style.pointerEvents = "auto";
 
             } catch (err) {
                 console.error(err);
-                labelStatus.innerHTML = `<span class='text-danger'><i class='fas fa-times-circle mr-1'></i> Error al cargar datos. Revisa las rutas en tu carpeta 'Datos'.</span>`;
+                labelStatus.innerHTML = `<span class='text-danger'><i class='fas fa-times-circle mr-1'></i> Error al cargar datos. Revisa tus archivos Excel.</span>`;
             }
         }
 
@@ -417,11 +412,9 @@
                 
                 if (rows.length < 3) return;
 
-                // CORRECCIÓN AQUÍ: rows[0] apunta a la Fila 1 de Excel (donde están los nombres reales de las materias)
                 const materiasRow = rows[0];
                 const esPrepa = sheetName.toUpperCase().includes('PREPARATORIA');
 
-                // Las calificaciones de los alumnos inician en la Fila 3 de Excel (índice 2)
                 for (let r = 2; r < rows.length; r++) {
                     const studentRow = rows[r];
                     if (!studentRow[0]) continue;
@@ -468,7 +461,7 @@
             const mat = document.getElementById('matriculaInput').value.trim().toUpperCase();
             const status = document.getElementById('statusMsg');
 
-            if (!mat) { status.innerText = "Por favor, ingrese una matrícula válida."; return; }
+            if (!mat) { status.innerHTML = "<span class='text-warning'>Por favor, ingrese una matrícula válida.</span>"; return; }
 
             document.getElementById('reportCardExtra').style.display = 'none';
             document.getElementById('reportCardIngles').style.display = 'none';
@@ -478,7 +471,7 @@
             const alumnoIngles = BASE_INGLES_MEMORIA[mat];
 
             if (alumnoExtra || alumnoIngles) {
-                status.innerHTML = "<span class='text-success'>¡Información cargada con éxito!</span>";
+                status.innerHTML = "<span class='text-success'><i class='fas fa-check-circle'></i> ¡Información cargada con éxito!</span>";
                 document.getElementById('printBtnContainer').style.display = 'block';
 
                 if (alumnoExtra) {
@@ -488,7 +481,7 @@
                     renderizarFilaExcel(alumnoIngles, 'Ingles', 'BOLETA DE INGLÉS', 'ingles');
                 }
             } else {
-                status.innerHTML = `<span class='text-danger'>La matrícula "${mat}" no se encuentra registrada.</span>`;
+                status.innerHTML = `<span class='text-danger'><i class='fas fa-times-circle'></i> La matrícula "${mat}" no se encuentra registrada.</span>`;
             }
         }
 
@@ -518,19 +511,12 @@
             const studentRow = alumno.studentRow;
             const materiasRow = alumno.materiasRow;
             
-            // --- BLOQUE DE DIAGNÓSTICO EN CONSOLA ---
-            console.log(`=== DIAGNÓSTICO PARA: ${tituloFormateado} ===`);
-            console.log("Nombre de la pestaña (nivel detectado):", alumno.nivel);
-            
             const filtroOriginal = MATERIAS_MAP[tipoMateria](alumno.nivel);
-            console.log("Materias esperadas para este nivel (según tu MATERIAS_MAP):", filtroOriginal);
-            
             const filtroNormalizado = filtroOriginal.map(m => normalizarTexto(m));
             let listaMaterias = [];
 
             const limiteColumnas = Math.max(studentRow.length, materiasRow.length);
 
-            // Recorremos desde la columna F (índice 5)
             for (let i = 5; i < limiteColumnas; i++) {
                 if (!materiasRow[i] || materiasRow[i].toString().trim() === "") continue;
 
@@ -541,14 +527,12 @@
                     continue;
                 }
 
-                console.log(`Columna ${i} - Encontrado en Excel: "${nombreMateriaCelda}"`);
-
                 if (filtroNormalizado.length === 0 || filtroNormalizado.includes(nombreMateriaNorm)) {
                     
-                    let v1 = fmt(studentRow[i]);       // T1 o S1
-                    let v2 = fmt(studentRow[i+1]);     // T2 o S2
-                    let v3 = alumno.esPrepa ? null : fmt(studentRow[i+2]);  // T3 (Solo si no es Prepa)
-                    let vf = alumno.esPrepa ? fmt(studentRow[i+2]) : fmt(studentRow[i+3]); // PF
+                    let v1 = fmt(studentRow[i]);
+                    let v2 = fmt(studentRow[i+1]);
+                    let v3 = alumno.esPrepa ? null : fmt(studentRow[i+2]);
+                    let vf = alumno.esPrepa ? fmt(studentRow[i+2]) : fmt(studentRow[i+3]);
 
                     listaMaterias.push({
                         n: nombreMateriaCelda.toUpperCase(),
@@ -558,13 +542,9 @@
                         vf: vf 
                     });
                     
-                    // Salto adaptativo corregido: 2 columnas extras para Prepa, 3 para los demás niveles
                     i += (alumno.esPrepa ? 2 : 3);
                 }
             }
-            console.log("Total de materias que pasaron el filtro y se van a dibujar:", listaMaterias.length);
-            console.log("========================================");
-            // --- FIN DEL BLOQUE DE DIAGNÓSTICO ---
 
             let pf = "-";
             for (let k = studentRow.length - 1; k >= 5; k--) {
@@ -593,7 +573,6 @@
                 alumno.nivel.toUpperCase().includes('PREPARATORIA') ? 'bg-titulo-prepa' : ''
             ) : '';
 
-            // Obtener nombres de las firmas dinámicas y limpiar el texto del nivel educativo
             const firmas = obtenerFirmasPorNivel(alumno.nivel);
             const nivelLimpio = obtenerNivelEducativoFormateado(alumno.nivel);
 
