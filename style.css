@@ -59,7 +59,7 @@ h1, h2, h3, h4, h5, .navbar-brand, .nav-link {
 }
 
 /* =========================================
-   NAVEGACIÓN
+   NAVEGACIÓN (CORREGIDA)
    ========================================= */
 .navbar { 
     background: var(--blanco) !important;
@@ -68,54 +68,52 @@ h1, h2, h3, h4, h5, .navbar-brand, .nav-link {
     border-bottom: 3px solid var(--azul-id);
 }
 
+/* Quitamos los !important de aquí para permitir que colapse */
 .navbar > .container {
-    display: flex !important;
-    justify-content: space-between !important;
-    align-items: center !important;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
     max-width: 100%;
-    padding-left: 40px;
-    padding-right: 40px;
+    padding-left: 20px;
+    padding-right: 20px;
 }
 
 .navbar-brand {
     color: var(--azul-id) !important;
-    font-size: 1.8rem; 
+    font-size: 1.5rem; 
     font-weight: 900;
     display: flex;
     align-items: center;
     margin-right: 0 !important;
-    flex: 0 0 auto;
 }
 
 .logo-colegio { 
-    height: 90px; 
+    height: 60px; 
     width: auto;
     margin-right: 15px; 
 }
 
+/* Estilos por defecto para Móviles (Menú colapsado) */
 .navbar-collapse {
-    flex-grow: 1; 
-    display: flex !important;
-    justify-content: center; 
+    text-align: center;
+    padding: 20px 0;
 }
 
 .navbar-nav {
     display: flex;
-    flex-direction: row;
-    justify-content: space-evenly; 
-    width: 80%; 
+    flex-direction: column; /* En celular, van uno abajo del otro */
+    gap: 15px;
+    width: 100%; 
     align-items: center;
-    margin: 0 auto;
+    margin: 15px 0;
 }
 
 .nav-link { 
     color: var(--texto) !important; 
-    font-size: 0.95rem; 
+    font-size: 1rem; 
     font-weight: 600;
-    text-transform: none; 
     transition: 0.3s;
-    white-space: nowrap;
-    padding: 0 10px !important;
+    padding: 8px 0 !important;
 }
 
 .nav-link:hover { color: var(--verde-id) !important; }
@@ -127,10 +125,62 @@ h1, h2, h3, h4, h5, .navbar-brand, .nav-link {
     padding: 12px 25px; 
     font-weight: 700; 
     box-shadow: 0 4px 12px rgba(44, 183, 66, 0.2);
-    flex: 0 0 auto;
     text-transform: uppercase;
     text-decoration: none;
     display: inline-block;
+    width: 100%; /* Ocupa el ancho disponible en móvil */
+    max-width: 250px;
+}
+
+/* =========================================
+   MEDIA QUERY: Para pantallas grandes (Escritorio)
+   ========================================= */
+@media (min-width: 992px) {
+    .navbar > .container {
+        padding-left: 40px;
+        padding-right: 40px;
+    }
+
+    .navbar-brand {
+        font-size: 1.8rem;
+    }
+
+    .logo-colegio { 
+        height: 90px; 
+    }
+
+    /* En escritorio, Bootstrap maneja el flex, no forzamos con !important */
+    .navbar-collapse {
+        display: flex;
+        justify-content: center; 
+        padding: 0;
+    }
+
+    .navbar-nav {
+        flex-direction: row; /* Enlaces lado a lado */
+        justify-content: space-evenly; 
+        width: 80%; 
+        margin: 0 auto;
+        gap: 0;
+    }
+
+    .nav-link { 
+        font-size: 0.95rem; 
+        white-space: nowrap;
+        padding: 0 10px !important;
+    }
+
+    .btn-whatsapp-nav { 
+        width: auto; /* Botón con su tamaño normal */
+    }
+}
+
+/* Ajustes extras para secciones en móviles */
+@media (max-width: 768px) {
+    section { padding: 40px 0; }
+    .form-container { padding: 25px; }
+    .hero { height: auto; padding: 40px 20px; }
+    .hero h1 { font-size: 1.5rem; }
 }
 
 /* =========================================
@@ -240,11 +290,4 @@ footer {
     border-radius: 50px 50px 0 0; 
     margin-top: 60px; 
     text-align: center; 
-}
-
-@media (max-width: 1100px) {
-    .navbar-brand { font-size: 1.4rem; }
-    .logo-colegio { height: 60px; }
-    .nav-link { font-size: 0.8rem; }
-    .navbar-nav { width: 100%; }
 }
