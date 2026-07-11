@@ -60,7 +60,7 @@
             padding-left: 40px;
             padding-right: 40px;
         }
-       
+        
         .logo-colegio { height: 50px; margin-right: 15px; }
         
         .navbar-collapse {
@@ -139,29 +139,36 @@
         .footer-colegio { background-color: #193E9A; padding: 30px 0; margin-top: 50px; color: white; }
         .texto-nowrap { white-space: nowrap; font-size: 0.95rem; }
 
-        /* ADAPTACIÓN RESPONSIVA SECCIÓN CRÍTICA */
-        @media (max-width: 768px) {
-            .navbar .container {
-                flex-direction: column !important;
-                align-items: flex-start !important;
-                gap: 12px;
+        /* REESTRUCTURACIÓN RESPONSIVA DEL MENÚ */
+        @media (max-width: 991.98px) {
+            .navbar > .container {
                 padding-left: 15px;
+                padding-right: 15px;
             }
-        
-            .logo-colegio {
-                height: 50px !important;
-                margin-right: 10px;
-            }
+            /* Quitamos el display flex forzado en móvil para dejar actuar a Bootstrap */
             .navbar-collapse {
-                width: 100%;
+                display: none !important;
+                flex-basis: 100%;
+                flex-grow: 1;
+            }
+            /* Cuando Bootstrap añade la clase .show, se despliega de forma vertical */
+            .navbar-collapse.show {
+                display: block !important;
+                padding-top: 15px;
             }
             .navbar-nav {
                 flex-direction: column !important;
                 align-items: flex-start !important;
                 width: 100% !important;
-                gap: 10px;
+                gap: 12px;
             }
-            /* SOLUCIÓN LETRAS CORTADAS */
+            .nav-item {
+                width: 100%;
+            }
+            .btn-whatsapp-nav {
+                display: inline-block;
+                margin-top: 5px;
+            }
             .hero {
                 padding: 45px 0 35px 0 !important;
             }
@@ -185,17 +192,17 @@
     <nav class="navbar navbar-expand-lg sticky-top navbar-light bg-white shadow-sm">
         <div class="container">
             <a class="navbar-brand" href="index.html">
-                <img src="Iconos/logo.png" style="height:40px;"> Colegio Niños Héroes
+                <img src="Iconos/logo.png" class="logo-colegio" alt="Logo"> Colegio Niños Héroes
             </a>
-            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav">
+            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
                 <span class="navbar-toggler-icon"></span>
             </button>
             <div class="collapse navbar-collapse" id="navbarNav">
-                <ul class="navbar-nav ml-auto align-items-center">
-                    <li class="nav-item"><a class="nav-link active" href="index.html">Nosotros</a></li>
+                <ul class="navbar-nav ml-auto">
+                    <li class="nav-item"><a class="nav-link" href="index.html">Nosotros</a></li>
                     <li class="nav-item"><a class="nav-link" href="oferta.html">Oferta Educativa</a></li>
                     <li class="nav-item"><a class="nav-link" href="comunidad.html">Comunidad</a></li>
-                    <li class="nav-item"><a class="nav-link mr-lg-3" href="contacto.html">Contacto</a></li>
+                    <li class="nav-item"><a class="nav-link" href="contacto.html">Contacto</a></li>
                     <li class="nav-item">
                         <a class="btn btn-whatsapp-nav" href="https://wa.me/5634030770" target="_blank">
                             <i class="fab fa-whatsapp"></i> WhatsApp
@@ -282,7 +289,6 @@
         </div>
     </footer>
 
-    <!-- Scripts unificados y ordenados para Bootstrap 4 -->
     <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
