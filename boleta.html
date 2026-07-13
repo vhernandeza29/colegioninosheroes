@@ -22,17 +22,21 @@
             background-color: var(--gris-fondo);
         }
 
-        .btn-volver { 
-            border: 2px solid var(--azul-id); 
-            color: var(--azul-id); 
-            font-weight: 700; 
-            border-radius: 10px; 
-            padding: 5px 20px; 
-            transition: 0.3s; 
-            text-decoration: none !important; 
-            display: inline-block; 
+        .btn-volver {
+            border: 2px solid var(--azul-id);
+            color: var(--azul-id);
+            font-weight: 700;
+            border-radius: 10px;
+            padding: 5px 20px;
+            transition: 0.3s;
+            text-decoration: none !important;
+            display: inline-block;
         }
-        .btn-volver:hover { background: var(--azul-id); color: white !important; }
+
+        .btn-volver:hover {
+            background: var(--azul-id);
+            color: white !important;
+        }
 
         /* EL HERO UNIFICADO */
         .hero {
@@ -42,6 +46,7 @@
             color: white;
             margin-bottom: 20px;
         }
+
         .hero h1 {
             font-weight: 800;
             font-size: 3rem;
@@ -49,33 +54,36 @@
         }
 
         /* BUSCADOR */
-        .search-container { 
-            max-width: 600px; 
-            margin: 0 auto 40px; 
+        .search-container {
+            max-width: 600px;
+            margin: 0 auto 40px;
         }
+
         .search-box-wrapper {
             display: flex;
             gap: 10px;
-            box-shadow: 0 5px 15px rgba(0,0,0,0.08);
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.08);
             background: white;
             padding: 10px;
             border-radius: 20px;
         }
-        #matriculaInput { 
-            border: 1px solid #ced4da; 
+
+        #matriculaInput {
+            border: 1px solid #ced4da;
             border-radius: 12px;
-            padding-left: 15px; 
-            height: 50px; 
-            font-size: 1rem; 
+            padding-left: 15px;
+            height: 50px;
+            font-size: 1rem;
             font-weight: 600;
         }
-        .btn-buscar { 
-            background: var(--verde-id) !important; 
-            color: white !important; 
-            border: none !important; 
+
+        .btn-buscar {
+            background: var(--verde-id) !important;
+            color: white !important;
+            border: none !important;
             border-radius: 12px !important;
-            padding: 0 30px; 
-            font-weight: 700; 
+            padding: 0 30px;
+            font-weight: 700;
             height: 50px;
         }
 
@@ -86,7 +94,7 @@
             font-weight: 600;
             letter-spacing: 0.5px;
         }
-        
+
         .footer-colegio {
             background-color: #193E9A;
             padding: 30px 0;
@@ -116,7 +124,7 @@
             background: var(--blanco);
             padding: 40px;
             border-radius: 25px;
-            box-shadow: 0 15px 50px rgba(0,0,0,0.1);
+            box-shadow: 0 15px 50px rgba(0, 0, 0, 0.1);
             margin: 0 auto 50px;
             max-width: 850px;
             display: none;
@@ -144,8 +152,9 @@
             padding-top: 10px;
             position: relative;
         }
+
         .sello-dorado {
-            width: 130px; 
+            width: 130px;
             height: auto;
             opacity: 0.95;
             mix-blend-mode: multiply;
@@ -160,19 +169,23 @@
             padding: 0 20px;
             text-align: center;
         }
+
         .col-firma {
             width: 45%;
         }
+
         .linea-firma {
             border-top: 1px solid #cbd5e0;
             margin-bottom: 5px;
         }
+
         .nombre-firma {
             font-size: 0.88rem;
             font-weight: 700;
             color: #2d3748;
             margin: 0;
         }
+
         .puesto-firma {
             font-size: 0.78rem;
             font-weight: 600;
@@ -195,20 +208,65 @@
             background-color: #fff;
             border-bottom: 2px solid #edf2f7;
         }
-        
-        .logo-boleta { height: 95px; }
-        .school-info { text-align: right; }
-        .school-name { font-weight: 800; font-size: 1.7rem; color: var(--azul-id); margin: 0; }
-        .school-subtitle { font-weight: 700; font-size: 1.1rem; color: var(--verde-id); margin: 2px 0 0; }
-        .school-address { font-size: 0.75rem; margin: 4px 0 0; color: #718096; line-height: 1.3; }
 
-        .boleta-title-box { text-align: center; margin-bottom: 25px; }
-        
-        .bg-titulo-maternal { background-color: #FFF5B7 !important; color: #5d4037 !important; }
-        .bg-titulo-preescolar { background-color: #FFB7CE !important; color: #4a148c !important; }
-        .bg-titulo-primaria { background-color: #C1E7C4 !important; color: #1b5e20 !important; }
-        .bg-titulo-secundaria { background-color: #B3E5FC !important; color: #0d47a1 !important; }
-        .bg-titulo-prepa { background-color: #E1BEE7 !important; color: #4a148c !important; }
+        .logo-boleta {
+            height: 95px;
+        }
+
+        .school-info {
+            text-align: right;
+        }
+
+        .school-name {
+            font-weight: 800;
+            font-size: 1.7rem;
+            color: var(--azul-id);
+            margin: 0;
+        }
+
+        .school-subtitle {
+            font-weight: 700;
+            font-size: 1.1rem;
+            color: var(--verde-id);
+            margin: 2px 0 0;
+        }
+
+        .school-address {
+            font-size: 0.75rem;
+            margin: 4px 0 0;
+            color: #718096;
+            line-height: 1.3;
+        }
+
+        .boleta-title-box {
+            text-align: center;
+            margin-bottom: 25px;
+        }
+
+        .bg-titulo-maternal {
+            background-color: #FFF5B7 !important;
+            color: #5d4037 !important;
+        }
+
+        .bg-titulo-preescolar {
+            background-color: #FFB7CE !important;
+            color: #4a148c !important;
+        }
+
+        .bg-titulo-primaria {
+            background-color: #C1E7C4 !important;
+            color: #1b5e20 !important;
+        }
+
+        .bg-titulo-secundaria {
+            background-color: #B3E5FC !important;
+            color: #0d47a1 !important;
+        }
+
+        .bg-titulo-prepa {
+            background-color: #E1BEE7 !important;
+            color: #4a148c !important;
+        }
 
         .boleta-title-text {
             font-weight: 800;
@@ -218,7 +276,7 @@
             border-radius: 20px;
             display: inline-block;
             letter-spacing: 1px;
-            box-shadow: 0 4px 10px rgba(0,0,0,0.05);
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.05);
         }
 
         .student-info-grid {
@@ -231,10 +289,30 @@
             margin-bottom: 25px;
             font-size: 0.9rem;
         }
-        .info-item { display: flex; align-items: center; }
-        .info-label { font-weight: 700; color: #4A5568; min-width: 120px; text-transform: uppercase; font-size: 0.75rem; }
-        .info-value { flex-grow: 1; background-color: var(--blanco); padding: 6px 12px; border-radius: 8px; font-weight: 600; color: #2d3748; border: 1px solid #E2E8F0; }
-        
+
+        .info-item {
+            display: flex;
+            align-items: center;
+        }
+
+        .info-label {
+            font-weight: 700;
+            color: #4A5568;
+            min-width: 120px;
+            text-transform: uppercase;
+            font-size: 0.75rem;
+        }
+
+        .info-value {
+            flex-grow: 1;
+            background-color: var(--blanco);
+            padding: 6px 12px;
+            border-radius: 8px;
+            font-weight: 600;
+            color: #2d3748;
+            border: 1px solid #E2E8F0;
+        }
+
         .final-grade-box {
             grid-column: span 2;
             background-color: #EBF8FF;
@@ -246,37 +324,141 @@
             align-items: center;
             margin-top: 5px;
         }
-        .final-grade-label { font-weight: 800; text-transform: uppercase; color: #2C5282; margin-right: 15px; font-size: 0.85rem; }
-        .final-grade-value { font-size: 1.7rem; font-weight: 900; color: #2B6CB0; line-height: 1; }
+
+        .final-grade-label {
+            font-weight: 800;
+            text-transform: uppercase;
+            color: #2C5282;
+            margin-right: 15px;
+            font-size: 0.85rem;
+        }
+
+        .final-grade-value {
+            font-size: 1.7rem;
+            font-weight: 900;
+            color: #2B6CB0;
+            line-height: 1;
+        }
 
         /* TABLAS ACCESIBLES */
-        .grade-table-container { border-radius: 15px; overflow: hidden; border: 1px solid #E2E8F0; margin-bottom: 20px; }
-        .grade-table { width: 100%; border-collapse: separate; border-spacing: 0; margin: 0; }
-        .grade-table thead th { font-weight: 800; text-transform: uppercase; font-size: 0.82rem; padding: 14px 10px; text-align: center; border: none; }
-        .grade-table thead th.subject-col { text-align: left; padding-left: 25px; }
-        .grade-table tbody tr td { padding: 14px 10px; text-align: center; font-weight: 700; font-size: 0.95rem; border: none; border-bottom: 1px solid rgba(0,0,0,0.04) !important; }
-        .grade-table tbody tr td.subject-col { text-align: left; padding-left: 25px; font-weight: 800; }
+        .grade-table-container {
+            border-radius: 15px;
+            overflow: hidden;
+            border: 1px solid #E2E8F0;
+            margin-bottom: 20px;
+        }
+
+        .grade-table {
+            width: 100%;
+            border-collapse: separate;
+            border-spacing: 0;
+            margin: 0;
+        }
+
+        .grade-table thead th {
+            font-weight: 800;
+            text-transform: uppercase;
+            font-size: 0.82rem;
+            padding: 14px 10px;
+            text-align: center;
+            border: none;
+        }
+
+        .grade-table thead th.subject-col {
+            text-align: left;
+            padding-left: 25px;
+        }
+
+        .grade-table tbody tr td {
+            padding: 14px 10px;
+            text-align: center;
+            font-weight: 700;
+            font-size: 0.95rem;
+            border: none;
+            border-bottom: 1px solid rgba(0, 0, 0, 0.04) !important;
+        }
+
+        .grade-table tbody tr td.subject-col {
+            text-align: left;
+            padding-left: 25px;
+            font-weight: 800;
+        }
 
         /* PALETAS DE COLOR */
-        .pastel-amarillo thead th { background-color: #FBC02D !important; color: #5d4037 !important; }
-        .pastel-amarillo tbody tr td { background-color: #FFF9C4 !important; color: #5d4037 !important; }
-        .pastel-amarillo tbody tr td.promedio-col { background-color: #FBC02D !important; font-weight: 900 !important; }
+        .pastel-amarillo thead th {
+            background-color: #FBC02D !important;
+            color: #5d4037 !important;
+        }
 
-        .pastel-preescolar thead th { background-color: #F48FB1 !important; color: #4a148c !important; }
-        .pastel-preescolar tbody tr td { background-color: #FCE4EC !important; color: #4a148c !important; }
-        .pastel-preescolar tbody tr td.promedio-col { background-color: #F48FB1 !important; font-weight: 900 !important; }
+        .pastel-amarillo tbody tr td {
+            background-color: #FFF9C4 !important;
+            color: #5d4037 !important;
+        }
 
-        .pastel-verde thead th { background-color: #81C784 !important; color: #1b5e20 !important; }
-        .pastel-verde tbody tr td { background-color: #E8F5E9 !important; color: #1b5e20 !important; }
-        .pastel-verde tbody tr td.promedio-col { background-color: #81C784 !important; font-weight: 900 !important; }
+        .pastel-amarillo tbody tr td.promedio-col {
+            background-color: #FBC02D !important;
+            font-weight: 900 !important;
+        }
 
-        .pastel-azul thead th { background-color: #4FC3F7 !important; color: #0d47a1 !important; }
-        .pastel-azul tbody tr td { background-color: #E1F5FE !important; color: #0d47a1 !important; }
-        .pastel-azul tbody tr td.promedio-col { background-color: #4FC3F7 !important; font-weight: 900 !important; }
+        .pastel-preescolar thead th {
+            background-color: #F48FB1 !important;
+            color: #4a148c !important;
+        }
 
-        .pastel-lila thead th { background-color: #BA68C8 !important; color: #4a148c !important; }
-        .pastel-lila tbody tr td { background-color: #F3E5F5 !important; color: #4a148c !important; }
-        .pastel-lila tbody tr td.promedio-col { background-color: #BA68C8 !important; font-weight: 900 !important; }
+        .pastel-preescolar tbody tr td {
+            background-color: #FCE4EC !important;
+            color: #4a148c !important;
+        }
+
+        .pastel-preescolar tbody tr td.promedio-col {
+            background-color: #F48FB1 !important;
+            font-weight: 900 !important;
+        }
+
+        .pastel-verde thead th {
+            background-color: #81C784 !important;
+            color: #1b5e20 !important;
+        }
+
+        .pastel-verde tbody tr td {
+            background-color: #E8F5E9 !important;
+            color: #1b5e20 !important;
+        }
+
+        .pastel-verde tbody tr td.promedio-col {
+            background-color: #81C784 !important;
+            font-weight: 900 !important;
+        }
+
+        .pastel-azul thead th {
+            background-color: #4FC3F7 !important;
+            color: #0d47a1 !important;
+        }
+
+        .pastel-azul tbody tr td {
+            background-color: #E1F5FE !important;
+            color: #0d47a1 !important;
+        }
+
+        .pastel-azul tbody tr td.promedio-col {
+            background-color: #4FC3F7 !important;
+            font-weight: 900 !important;
+        }
+
+        .pastel-lila thead th {
+            background-color: #BA68C8 !important;
+            color: #4a148c !important;
+        }
+
+        .pastel-lila tbody tr td {
+            background-color: #F3E5F5 !important;
+            color: #4a148c !important;
+        }
+
+        .pastel-lila tbody tr td.promedio-col {
+            background-color: #BA68C8 !important;
+            font-weight: 900 !important;
+        }
 
         /* RESPONSIVO CORREGIDO: TAMAÑOS, ALINEACIÓN Y TIPOGRAFÍA IDÉNTICOS */
         @media (max-width: 768px) {
@@ -284,13 +466,16 @@
                 flex-direction: column !important;
                 align-items: flex-start !important;
                 gap: 12px;
-                padding-left: 15px; /* Alineación de contenedor nativa */
+                padding-left: 15px;
+                /* Alineación de contenedor nativa */
             }
-    
+
             .navbar-brand img {
-                height: 50px !important; /* Mismo tamaño físico que el archivo de recursos */
+                height: 50px !important;
+                /* Mismo tamaño físico que el archivo de recursos */
                 margin-right: 10px;
             }
+
             .btn-volver {
                 align-self: flex-start !important;
                 padding: 5px 20px;
@@ -300,90 +485,136 @@
 
             /* 1. LE DA MÁS ESPACIO AL CONTENEDOR VERDE ARRIBA PARA QUE NO COMAN LAS LETRAS */
             .hero {
-                padding: 45px 0 35px 0 !important; /* Aumenta el espacio superior en móvil */
+                padding: 45px 0 35px 0 !important;
+                /* Aumenta el espacio superior en móvil */
             }
 
             /* 2. AJUSTA EL TAMAÑO DE LA LETRA PARA QUE JÁMAS CHOQUE CON EL NAV */
             .hero h1 {
-                font-size: 1.85rem !important; /* Un pelín más pequeño en móvil para que quepa perfecto */
-                line-height: 1.2 !important;   /* Controla la altura de la línea */
-                margin-top: 10px !important;   /* Separa el título del borde superior */
+                font-size: 1.85rem !important;
+                /* Un pelín más pequeño en móvil para que quepa perfecto */
+                line-height: 1.2 !important;
+                /* Controla la altura de la línea */
+                margin-top: 10px !important;
+                /* Separa el título del borde superior */
             }
         }
 
         @media print {
-            body { background-color: white !important; }
-            * { -webkit-print-color-adjust: exact !important; print-color-adjust: exact !important; }
-            .no-print, .hero-banner, .search-container, .navbar, .hero, #printBtnContainer, #statusMsg { display: none !important; }
-            .report-card-container { display: block !important; border: none; box-shadow: none; padding: 0; margin: 0; width: 100%; max-width: 100%; border-radius: 0; }
-            .header-boleta { margin: 0 0 30px 0; padding: 20px 0; }
-            .page-break { page-break-before: always; }
-            .sello-agua-fondo { opacity: 0.06 !important; }
-            .sello-dorado { opacity: 1 !important; filter: none !important; }
+            body {
+                background-color: white !important;
+            }
+
+            * {
+                -webkit-print-color-adjust: exact !important;
+                print-color-adjust: exact !important;
+            }
+
+            .no-print,
+            .hero-banner,
+            .search-container,
+            .navbar,
+            .hero,
+            #printBtnContainer,
+            #statusMsg {
+                display: none !important;
+            }
+
+            .report-card-container {
+                display: block !important;
+                border: none;
+                box-shadow: none;
+                padding: 0;
+                margin: 0;
+                width: 100%;
+                max-width: 100%;
+                border-radius: 0;
+            }
+
+            .header-boleta {
+                margin: 0 0 30px 0;
+                padding: 20px 0;
+            }
+
+            .page-break {
+                page-break-before: always;
+            }
+
+            .sello-agua-fondo {
+                opacity: 0.06 !important;
+            }
+
+            .sello-dorado {
+                opacity: 1 !important;
+                filter: none !important;
+            }
         }
     </style>
 </head>
 
 <body>
 
-<!-- NAVBAR -->
-<nav class="navbar navbar-expand-lg sticky-top navbar-light bg-white shadow-sm">
-    <div class="container d-flex justify-content-between align-items-center">
-        <a class="navbar-brand" href="index.html">
-            <img src="Iconos/logo.png" style="height: 50px;"> Colegio Niños Héroes
-        </a>
-        <a href="comunidad.html" class="btn-volver">← Volver</a>
-    </div>
-</nav>
-
-<!-- HERO -->
-<header class="hero">
-    <div class="container">
-        <h1>Portal de Boletas Oficiales</h1>
-        <p class="lead">Introduce la matrícula para generar las boletas a partir de los registros del repositorio.</p>
-    </div>
-</header>
-
-<!-- BUSCADOR -->
-<div class="container mt-5">
-    <div class="search-container" id="searchSection">
-        <div class="search-box-wrapper">
-            <input type="text" id="matriculaInput" class="form-control" placeholder="Cargando repositorio...">
-            <button class="btn btn-buscar" onclick="buscarBoletasExcel()">BUSCAR</button>
+    <!-- NAVBAR -->
+    <nav class="navbar navbar-expand-lg sticky-top navbar-light bg-white shadow-sm">
+        <div class="container d-flex justify-content-between align-items-center">
+            <a class="navbar-brand" href="index.html">
+                <img src="Iconos/logo.png" style="height: 50px;"> Colegio Niños Héroes
+            </a>
+            <a href="comunidad.html" class="btn-volver">← Volver</a>
         </div>
-        <div class="text-center version-tag mt-3" id="statusMsg">
-            <i class="fas fa-spinner fa-spin mr-1"></i> Conectando al repositorio de datos...
+    </nav>
+
+    <!-- HERO -->
+    <header class="hero">
+        <div class="container">
+            <h1>Portal de Boletas Oficiales</h1>
+            <p class="lead">Introduce la matrícula para generar las boletas a partir de los registros del repositorio.
+            </p>
+        </div>
+    </header>
+
+    <!-- BUSCADOR -->
+    <div class="container mt-5">
+        <div class="search-container" id="searchSection">
+            <div class="search-box-wrapper">
+                <input type="text" id="matriculaInput" class="form-control" placeholder="Cargando repositorio...">
+                <button class="btn btn-buscar" onclick="buscarBoletasExcel()">BUSCAR</button>
+            </div>
+            <div class="text-center version-tag mt-3" id="statusMsg">
+                <i class="fas fa-spinner fa-spin mr-1"></i> Conectando al repositorio de datos...
+            </div>
+        </div>
+
+        <div class="text-center mt-3" id="printBtnContainer" style="display:none;">
+            <button class="btn btn-danger btn-lg shadow" onclick="window.print()">
+                <i class="fas fa-file-pdf mr-2"></i> DESCARGAR PDF / IMPRIMIR BOLETAS
+            </button>
         </div>
     </div>
-    
-    <div class="text-center mt-3" id="printBtnContainer" style="display:none;">
-        <button class="btn btn-danger btn-lg shadow" onclick="window.print()">
-            <i class="fas fa-file-pdf mr-2"></i> DESCARGAR PDF / IMPRIMIR BOLETAS
-        </button>
-    </div>
-</div>
 
-<!-- CONTENEDORES DE LAS BOLETAS -->
-<div id="reportCardExtra" class="report-card-container"></div>
-<div id="reportCardIngles" class="report-card-container page-break"></div>
+    <!-- CONTENEDORES DE LAS BOLETAS -->
+    <div id="reportCardExtra" class="report-card-container"></div>
+    <div id="reportCardIngles" class="report-card-container page-break"></div>
 
-<footer class="footer-colegio">
+    <footer class="footer-colegio">
         <div class="container">
             <div class="row align-items-center">
                 <div class="col-md-8 text-center text-md-left mb-3 mb-md-0">
-                    <p class="mb-0 text-white">© 2026 <strong>Colegio Niños Héroes Atizapán</strong>. Todos los derechos reservados.</p>
+                    <p class="mb-0 text-white">© 2026 <strong>Colegio Niños Héroes Atizapán</strong>. Todos los derechos
+                        reservados.</p>
                 </div>
                 <div class="col-md-4 text-center text-md-right">
-                    <a href="bolsa-trabajo.html" class="link-unete"><i class="fas fa-briefcase mr-2"></i>Únete a nuestro equipo</a>
+                    <a href="bolsa-trabajo.html" class="link-unete"><i class="fas fa-briefcase mr-2"></i>Únete a nuestro
+                        equipo</a>
                 </div>
             </div>
         </div>
     </footer>
 
-<script>
+    <script>
         const RUTA_EXCEL_EXTRA = "Datos/BoletaExtracurriculares.xlsx";
         const RUTA_EXCEL_INGLES = "Datos/BoletaInglés.xlsx";
-        
+
         let BASE_EXTRA_MEMORIA = {};
         let BASE_INGLES_MEMORIA = {};
 
@@ -420,7 +651,7 @@
 
                 if (!resExtra.ok) throw new Error("No se pudo leer: " + RUTA_EXCEL_EXTRA);
                 if (!resIngles.ok) throw new Error("No se pudo leer: " + RUTA_EXCEL_INGLES);
-                
+
                 const [bufExtra, bufIngles] = await Promise.all([
                     resExtra.arrayBuffer(),
                     resIngles.arrayBuffer()
@@ -446,7 +677,7 @@
             workbook.SheetNames.forEach(sheetName => {
                 const worksheet = workbook.Sheets[sheetName];
                 const rows = XLSX.utils.sheet_to_json(worksheet, { header: 1 });
-                
+
                 if (rows.length < 3) return;
 
                 const materiasRow = rows[0];
@@ -464,7 +695,7 @@
                         ciclo: studentRow[2],
                         grado: studentRow[3],
                         grupo: studentRow[4],
-                        nivel: sheetName, 
+                        nivel: sheetName,
                         esPrepa: esPrepa,
                         materiasRow: materiasRow,
                         studentRow: studentRow
@@ -547,40 +778,42 @@
         function renderizarFilaExcel(alumno, idS, tituloFormateado, tipoMateria) {
             const studentRow = alumno.studentRow;
             const materiasRow = alumno.materiasRow;
-            
-            const filtroOriginal = MATERIAS_MAP[tipoMateria](alumno.nivel);
-            const filtroNormalizado = filtroOriginal.map(m => normalizarTexto(m));
-            let listaMaterias = [];
 
+            let listaMaterias = [];
             const limiteColumnas = Math.max(studentRow.length, materiasRow.length);
 
-            for (let i = 5; i < limiteColumnas; i++) {
-                if (!materiasRow[i] || materiasRow[i].toString().trim() === "") continue;
+            // Empezamos en la columna 5 (donde empieza la primera materia)
+            for (let i = 5; i < limiteColumnas;) {
+                if (!materiasRow[i] || materiasRow[i].toString().trim() === "") {
+                    i++; // Si la celda está vacía, avanzamos de 1 en 1 buscando una materia
+                    continue;
+                }
 
                 let nombreMateriaCelda = materiasRow[i].toString().trim();
                 let nombreMateriaNorm = normalizarTexto(nombreMateriaCelda);
 
+                // Si topamos con el promedio final general de la boleta, detenemos el ciclo
                 if (nombreMateriaNorm.includes("CICLO") || nombreMateriaNorm === "PROMEDIO" || nombreMateriaNorm === "PROMEDIO FINAL") {
-                    continue;
+                    break;
                 }
 
-                if (filtroNormalizado.length === 0 || filtroNormalizado.includes(nombreMateriaNorm)) {
-                    
-                    let v1 = fmt(studentRow[i]);
-                    let v2 = fmt(studentRow[i+1]);
-                    let v3 = alumno.esPrepa ? null : fmt(studentRow[i+2]);
-                    let vf = alumno.esPrepa ? fmt(studentRow[i+2]) : fmt(studentRow[i+3]);
+                // Extraemos las calificaciones según el nivel educativo
+                let v1 = fmt(studentRow[i]);     // T1 o S1
+                let v2 = fmt(studentRow[i + 1]);   // T2 o S2
+                let v3 = alumno.esPrepa ? null : fmt(studentRow[i + 2]); // T3 (Solo si no es prepa)
+                let vf = alumno.esPrepa ? fmt(studentRow[i + 2]) : fmt(studentRow[i + 3]); // PF de la materia
 
-                    listaMaterias.push({
-                        n: nombreMateriaCelda.toUpperCase(),
-                        v1: v1,             
-                        v2: v2,           
-                        v3: v3, 
-                        vf: vf 
-                    });
-                    
-                    i += (alumno.esPrepa ? 2 : 3);
-                }
+                listaMaterias.push({
+                    n: nombreMateriaCelda.toUpperCase(),
+                    v1: v1,
+                    v2: v2,
+                    v3: v3,
+                    vf: vf
+                });
+
+                // ¡AQUÍ ESTÁ EL CAMBIO IMPORTANTE!
+                // Si es Prepa avanza 3 columnas (S1, S2, PF). Si es Básica avanza 4 (T1, T2, T3, PF).
+                i += (alumno.esPrepa ? 3 : 4);
             }
 
             let pf = "-";
@@ -593,107 +826,107 @@
 
             const div = document.getElementById(`reportCard${idS}`);
             div.style.display = 'block';
-            
+
             const clasePastel = alumno.nivel ? (
                 alumno.nivel.toUpperCase().includes('MATERNAL') ? 'pastel-amarillo' :
-                alumno.nivel.toUpperCase().includes('KINDER') || alumno.nivel.toUpperCase().includes('PREESCOLAR') ? 'pastel-preescolar' :
-                alumno.nivel.toUpperCase().includes('PRIMARIA') ? 'pastel-verde' :
-                alumno.nivel.toUpperCase().includes('SECUNDARIA') ? 'pastel-azul' :
-                alumno.nivel.toUpperCase().includes('PREPARATORIA') ? 'pastel-lila' : ''
+                    alumno.nivel.toUpperCase().includes('KINDER') || alumno.nivel.toUpperCase().includes('PREESCOLAR') ? 'pastel-preescolar' :
+                        alumno.nivel.toUpperCase().includes('PRIMARIA') ? 'pastel-verde' :
+                            alumno.nivel.toUpperCase().includes('SECUNDARIA') ? 'pastel-azul' :
+                                alumno.nivel.toUpperCase().includes('PREPARATORIA') ? 'pastel-lila' : ''
             ) : '';
 
             const claseTituloColor = alumno.nivel ? (
                 alumno.nivel.toUpperCase().includes('MATERNAL') ? 'bg-titulo-maternal' :
-                alumno.nivel.toUpperCase().includes('KINDER') || alumno.nivel.toUpperCase().includes('PREESCOLAR') ? 'bg-titulo-preescolar' :
-                alumno.nivel.toUpperCase().includes('PRIMARIA') ? 'bg-titulo-primaria' :
-                alumno.nivel.toUpperCase().includes('SECUNDARIA') ? 'bg-titulo-secundaria' :
-                alumno.nivel.toUpperCase().includes('PREPARATORIA') ? 'bg-titulo-prepa' : ''
+                    alumno.nivel.toUpperCase().includes('KINDER') || alumno.nivel.toUpperCase().includes('PREESCOLAR') ? 'bg-titulo-preescolar' :
+                        alumno.nivel.toUpperCase().includes('PRIMARIA') ? 'bg-titulo-primaria' :
+                            alumno.nivel.toUpperCase().includes('SECUNDARIA') ? 'bg-titulo-secundaria' :
+                                alumno.nivel.toUpperCase().includes('PREPARATORIA') ? 'bg-titulo-prepa' : ''
             ) : '';
 
             const firmas = obtenerFirmasPorNivel(alumno.nivel);
             const nivelLimpio = obtenerNivelEducativoFormateado(alumno.nivel);
 
             div.innerHTML = `
-                <img src="Iconos/logo.png" class="sello-agua-fondo">
-                <div class="boleta-content-wrapper">
-                    <div class="header-boleta">
-                        <img src="Iconos/logo.png" class="logo-boleta">
-                        <div class="school-info">
-                            <h1 class="school-name">COLEGIO NIÑOS HÉROES</h1>
-                            <h2 class="school-subtitle">Sección Académica</h2>
-                            <p class="school-address">DURANGO S/N AMP. ADOLFO LÓPEZ MATEOS, ATIZAPÁN DE ZARAGOZA.<br>TELS: 58204881 Y 5590557078</p>
-                        </div>
-                    </div>
-
-                    <div class="boleta-title-box">
-                        <div class="boleta-title-text ${claseTituloColor}">${tituloFormateado}</div>
-                    </div>
-
-                    <div class="student-info-grid">
-                        <div class="info-item"><span class="info-label">Ciclo Escolar:</span> <span class="info-value">${alumno.ciclo || '-'}</span></div>
-                        <div class="info-item"><span class="info-label">Nivel Educativo:</span> <span class="info-value" style="text-transform: uppercase;">${nivelLimpio}</span></div>
-                        <div class="info-item"><span class="info-label">Alumno:</span> <span class="info-value">${alumno.nombre || '-'}</span></div>
-                        <div class="info-item"><span class="info-label">Grado y Grupo:</span> <span class="info-value">${alumno.grado || '-'} "${alumno.grupo || '-'}"</span></div>
-                        
-                        <div class="final-grade-box">
-                            <span class="final-grade-label">Calificación Final General:</span>
-                            <span class="final-grade-value">${pf}</span>
-                        </div>
-                    </div>
-
-                    <p style="font-style: italic; font-size: 0.82rem; text-align: center; margin: 20px 0; color: #718096; padding: 0 30px; line-height: 1.4;">
-                        "La educación no solo forma estudiantes, forma seres humanos capaces de soñar en grande, de levantarse ante las dificultades y de construir con esfuerzo y valores el futuro que deseas alcanzar."
-                    </p>
-
-                    <div class="grade-table-container">
-                        <table class="grade-table ${clasePastel}">
-                            <thead>
-                                <tr>
-                                    <th class="subject-col">Materias</th>
-                                    ${alumno.esPrepa ? '<th>1er Sem</th><th>2do Sem</th>' : '<th>1er Trim</th><th>2do Trim</th><th>3er Trim</th>'}
-                                    <th>Promedio Final</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                ${listaMaterias.length === 0 ? `
-                                    <tr>
-                                        <td colspan="${alumno.esPrepa ? 4 : 5}" class="text-center text-muted" style="padding: 20px; background: #fff;">
-                                            No se encontraron materias que coincidan con el filtro de tu código. <br>
-                                            <small class="text-danger">Abre la Consola del Desarrollador (F12) para ver la causa exacta.</small>
-                                        </td>
-                                    </tr>
-                                ` : listaMaterias.map(m => `
-                                    <tr>
-                                        <td class="subject-col">${m.n}</td>
-                                        <td>${m.v1}</td>
-                                        <td>${m.v2}</td>
-                                        ${!alumno.esPrepa ? `<td>${m.v3}</td>` : ''}
-                                        <td class="promedio-col">${m.vf}</td>
-                                    </tr>
-                                `).join('')}
-                            </tbody>
-                        </table>
-                    </div>
-
-                    <div class="contenedor-sello-dorado">
-                        <img src="Iconos/sello.png" class="sello-dorado">
-                    </div>
-
-                    <div class="contenedor-firmas">
-                        <div class="col-firma">
-                            <div class="linea-firma"></div>
-                            <p class="nombre-firma">${firmas.director}</p>
-                            <p class="puesto-firma">Director General</p>
-                        </div>
-                        <div class="col-firma">
-                            <div class="linea-firma"></div>
-                            <p class="nombre-firma">${firmas.controlEscolar}</p>
-                            <p class="puesto-firma">Control Escolar</p>
-                        </div>
-                    </div>
+        <img src="Iconos/logo.png" class="sello-agua-fondo">
+        <div class="boleta-content-wrapper">
+            <div class="header-boleta">
+                <img src="Iconos/logo.png" class="logo-boleta">
+                <div class="school-info">
+                    <h1 class="school-name">COLEGIO NIÑOS HÉROES</h1>
+                    <h2 class="school-subtitle">Sección Académica</h2>
+                    <p class="school-address">DURANGO S/N AMP. ADOLFO LÓPEZ MATEOS, ATIZAPÁN DE ZARAGOZA.<br>TELS: 58204881 Y 5590557078</p>
                 </div>
-            `;
+            </div>
+
+            <div class="boleta-title-box">
+                <div class="boleta-title-text ${claseTituloColor}">${tituloFormateado}</div>
+            </div>
+
+            <div class="student-info-grid">
+                <div class="info-item"><span class="info-label">Ciclo Escolar:</span> <span class="info-value">${alumno.ciclo || '-'}</span></div>
+                <div class="info-item"><span class="info-label">Nivel Educativo:</span> <span class="info-value" style="text-transform: uppercase;">${nivelLimpio}</span></div>
+                <div class="info-item"><span class="info-label">Alumno:</span> <span class="info-value">${alumno.nombre || '-'}</span></div>
+                <div class="info-item"><span class="info-label">Grado y Grupo:</span> <span class="info-value">${alumno.grado || '-'} "${alumno.grupo || '-'}"</span></div>
+                
+                <div class="final-grade-box">
+                    <span class="final-grade-label">Calificación Final General:</span>
+                    <span class="final-grade-value">${pf}</span>
+                </div>
+            </div>
+
+            <p style="font-style: italic; font-size: 0.82rem; text-align: center; margin: 20px 0; color: #718096; padding: 0 30px; line-height: 1.4;">
+                "La educación no solo forma estudiantes, forma seres humanos capaces de soñar en grande, de levantarse ante las dificultades y de construir con esfuerzo y valores el futuro que deseas alcanzar."
+            </p>
+
+            <div class="grade-table-container">
+                <table class="grade-table ${clasePastel}">
+                    <thead>
+                        <tr>
+                            <th class="subject-col">Materias</th>
+                            ${alumno.esPrepa ? '<th>1er Sem</th><th>2do Sem</th>' : '<th>1er Trim</th><th>2do Trim</th><th>3er Trim</th>'}
+                            <th>Promedio Final</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        ${listaMaterias.length === 0 ? `
+                            <tr>
+                                <td colspan="${alumno.esPrepa ? 4 : 5}" class="text-center text-muted" style="padding: 20px; background: #fff;">
+                                    No se encontraron materias en el archivo Excel.
+                                </td>
+                            </tr>
+                        ` : listaMaterias.map(m => `
+                            <tr>
+                                <td class="subject-col">${m.n}</td>
+                                <td>${m.v1}</td>
+                                <td>${m.v2}</td>
+                                ${!alumno.esPrepa ? `<td>${m.v3}</td>` : ''}
+                                <td class="promedio-col">${m.vf}</td>
+                            </tr>
+                        `).join('')}
+                    </tbody>
+                </table>
+            </div>
+
+            <div class="contenedor-sello-dorado">
+                <img src="Iconos/sello.png" class="sello-dorado">
+            </div>
+
+            <div class="contenedor-firmas">
+                <div class="col-firma">
+                    <div class="linea-firma"></div>
+                    <p class="nombre-firma">${firmas.director}</p>
+                    <p class="puesto-firma">Director General</p>
+                </div>
+                <div class="col-firma">
+                    <div class="linea-firma"></div>
+                    <p class="nombre-firma">${firmas.controlEscolar}</p>
+                    <p class="puesto-firma">Control Escolar</p>
+                </div>
+            </div>
+        </div>
+    `;
         }
-</script>
+    </script>
 </body>
+
 </html>
