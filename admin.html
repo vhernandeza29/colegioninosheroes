@@ -1,0 +1,354 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>Panel de Administración - Colegio Niños Héroes</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+    
+    <style>
+        /* --- ESTILOS ORIGINALES DE TU PÁGINA --- */
+        :root {
+            --azul-id: #193E9A;
+            --verde-id: #317F77;
+        }
+        .hero {
+            background: linear-gradient(135deg, #317F77 0%, #317F77 100%);
+            padding: 50px 0;
+            text-align: center;
+            color: white;
+            margin-bottom: 20px;
+        }
+        .hero h1 { font-weight: 800; font-size: 2.5rem; text-shadow: 2px 2px 4px rgba(0,0,0,0.2); }
+        .btn-volver {
+            border: 2px solid var(--azul-id); color: var(--azul-id); font-weight: 700;
+            border-radius: 10px; padding: 5px 20px; transition: 0.3s; text-decoration: none !important; display: inline-block;
+        }
+        .btn-volver:hover { background: var(--azul-id); color: white !important; }
+        .footer-colegio { background-color: #193E9A; padding: 30px 0; margin-top: 50px; color: white; }
+
+        /* --- ESTILOS DEL PANEL ADMIN --- */
+        .admin-card { border-radius: 15px; box-shadow: 0 5px 15px rgba(0,0,0,0.08); border: none; }
+        .folder-btn { 
+            background: white; border: 2px solid var(--azul-id); color: var(--azul-id); 
+            border-radius: 10px; padding: 15px; font-weight: bold; width: 100%; text-align: left; transition: 0.3s; margin-bottom: 10px;
+        }
+        .folder-btn:hover, .folder-btn.active { background: var(--azul-id); color: white; }
+        .file-item { 
+            display: flex; justify-content: space-between; align-items: center; 
+            padding: 12px 15px; border-bottom: 1px solid #eee; transition: 0.2s;
+        }
+        .file-item:hover { background-color: #f8f9fa; }
+        .btn-accion { border-radius: 20px; font-weight: bold; }
+        #loadingOverlay {
+            position: fixed; top: 0; left: 0; width: 100%; height: 100%; 
+            background: rgba(255,255,255,0.8); z-index: 9999; display: none;
+            justify-content: center; align-items: center; flex-direction: column;
+        }
+    </style>
+</head>
+<body>
+
+    <!-- OVERLAY DE CARGA -->
+    <div id="loadingOverlay">
+        <div class="spinner-border text-primary" style="width: 3rem; height: 3rem;" role="status"></div>
+        <h4 class="mt-3" style="color: var(--azul-id);">Procesando...</h4>
+    </div>
+
+    <!-- NAVBAR -->
+    <nav class="navbar navbar-expand-lg sticky-top navbar-light bg-white shadow-sm">
+        <div class="container d-flex justify-content-between align-items-center">
+            <a class="navbar-brand" href="index.html">
+                <img src="Iconos/logo.png" style="height: 50px;" onerror="this.src='https://via.placeholder.com/50'"> Colegio Niños Héroes
+            </a>
+            <a href="index.html" class="btn-volver">← Ir al sitio</a>
+        </div>
+    </nav>
+
+    <!-- CABECERA HERO -->
+    <header class="hero">
+        <div class="container">
+            <h1>Gestor de Archivos</h1>
+            <p class="lead" id="heroSubtitle">Inicia sesión para subir o modificar recursos.</p>
+        </div>
+    </header>
+
+    <div class="container py-4">
+        
+        <!-- SECCIÓN 1: LOGIN -->
+        <div id="loginSection" class="row justify-content-center">
+            <div class="col-md-6">
+                <div class="card admin-card p-4 text-center">
+                    <i class="fas fa-lock fa-3x mb-3" style="color: var(--azul-id);"></i>
+                    <h4 class="mb-3">Acceso Restringido</h4>
+                    <p class="text-muted small">Ingresa el Token de Acceso Personal (PAT) para administrar los archivos.</p>
+                    <input type="password" id="inputToken" class="form-control mb-3 text-center" placeholder="ghp_xxxxxxxxxxxxxxxxxxxx">
+                    <button class="btn btn-primary btn-accion w-100" style="background-color: var(--verde-id); border: none;" onclick="iniciarSesion()">
+                        Iniciar Sesión
+                    </button>
+                    <div id="loginError" class="text-danger mt-2 small font-weight-bold" style="display:none;">Token inválido o sin permisos.</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- SECCIÓN 2: PANEL DE CONTROL (Oculto por defecto) -->
+        <div id="adminSection" class="row" style="display: none;">
+            
+            <!-- Menú Lateral -->
+            <div class="col-md-4 mb-4">
+                <div class="card admin-card p-3">
+                    <h5 class="font-weight-bold mb-3" style="color: var(--azul-id);">Carpetas</h5>
+                    <button class="folder-btn" onclick="cargarCarpeta('Adjuntos', this)">
+                        <i class="fas fa-file-pdf mr-2 text-danger"></i> Adjuntos <small class="d-block font-weight-normal">PDFs y Docs</small>
+                    </button>
+                    <button class="folder-btn" onclick="cargarCarpeta('Datos', this)">
+                        <i class="fas fa-file-excel mr-2 text-success"></i> Datos <small class="d-block font-weight-normal">Excel y CSV</small>
+                    </button>
+                    <button class="folder-btn" onclick="cargarCarpeta('Iconos', this)">
+                        <i class="fas fa-images mr-2 text-info"></i> Iconos <small class="d-block font-weight-normal">Imágenes (.png, .jpg)</small>
+                    </button>
+                    
+                    <hr>
+                    <button class="btn btn-outline-danger w-100 btn-accion" onclick="cerrarSesion()">Cerrar Sesión</button>
+                </div>
+            </div>
+
+            <!-- Área de Archivos -->
+            <div class="col-md-8">
+                <div class="card admin-card p-4">
+                    <div class="d-flex justify-content-between align-items-center mb-4">
+                        <h4 class="font-weight-bold mb-0" id="tituloCarpeta" style="color: var(--azul-id);">Selecciona una carpeta</h4>
+                        
+                        <!-- Input oculto para subir archivo -->
+                        <input type="file" id="fileInput" style="display: none;" onchange="procesarSubida(event)">
+                        <button class="btn btn-primary btn-accion" style="background-color: var(--verde-id); border: none;" id="btnSubir" style="display: none;" onclick="document.getElementById('fileInput').click()">
+                            <i class="fas fa-upload mr-2"></i> Subir Archivo
+                        </button>
+                    </div>
+
+                    <div id="listaArchivos" class="border rounded p-2" style="min-height: 300px; background: #fafafa;">
+                        <div class="text-center text-muted mt-5">
+                            <i class="fas fa-folder-open fa-3x mb-3"></i>
+                            <p>Haz clic en una carpeta a la izquierda para ver su contenido.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+    <!-- FOOTER -->
+    <footer class="footer-colegio">
+        <div class="container text-center">
+            <p class="mb-0 text-white">© 2026 <strong>Colegio Niños Héroes Atizapán</strong>. Todos los derechos reservados.</p>
+        </div>
+    </footer>
+
+    <!-- LÓGICA DE GITHUB API -->
+    <script>
+        const REPO_OWNER = 'colegioninosheroesa'; 
+        const REPO_NAME = 'colegioninosheroes';
+        let currentFolder = '';
+
+        // Comprobar si ya hay sesión al cargar la página
+        window.onload = () => {
+            const token = localStorage.getItem('gh_token');
+            if(token) {
+                document.getElementById('loginSection').style.display = 'none';
+                document.getElementById('adminSection').style.display = 'flex';
+                document.getElementById('heroSubtitle').innerText = 'Panel de Administración Activo';
+            }
+        };
+
+        // Mostrar / Ocultar pantalla de carga
+        function toggleLoader(show) {
+            document.getElementById('loadingOverlay').style.display = show ? 'flex' : 'none';
+        }
+
+        // Función para Iniciar Sesión
+        async function iniciarSesion() {
+            const token = document.getElementById('inputToken').value.trim();
+            if(!token) return;
+
+            toggleLoader(true);
+            try {
+                // Probamos el token intentando leer el repo
+                const res = await fetch(`https://api.github.com/repos/${REPO_OWNER}/${REPO_NAME}`, {
+                    headers: { 'Authorization': `token ${token}` }
+                });
+
+                if(res.ok) {
+                    localStorage.setItem('gh_token', token);
+                    document.getElementById('loginSection').style.display = 'none';
+                    document.getElementById('adminSection').style.display = 'flex';
+                    document.getElementById('heroSubtitle').innerText = 'Panel de Administración Activo';
+                } else {
+                    document.getElementById('loginError').style.display = 'block';
+                }
+            } catch (error) {
+                console.error(error);
+                document.getElementById('loginError').style.display = 'block';
+            }
+            toggleLoader(false);
+        }
+
+        function cerrarSesion() {
+            localStorage.removeItem('gh_token');
+            location.reload();
+        }
+
+        // Obtener icono según extensión
+        function getIcono(fileName) {
+            const ext = fileName.split('.').pop().toLowerCase();
+            if (['pdf'].includes(ext)) return '<i class="fas fa-file-pdf text-danger fa-lg"></i>';
+            if (['doc', 'docx'].includes(ext)) return '<i class="fas fa-file-word text-primary fa-lg"></i>';
+            if (['xls', 'xlsx', 'csv'].includes(ext)) return '<i class="fas fa-file-excel text-success fa-lg"></i>';
+            if (['png', 'jpg', 'jpeg'].includes(ext)) return '<i class="fas fa-image text-info fa-lg"></i>';
+            return '<i class="fas fa-file text-secondary fa-lg"></i>';
+        }
+
+        // Cargar archivos de la carpeta seleccionada
+        async function cargarCarpeta(carpeta, btnElement) {
+            currentFolder = carpeta;
+            document.getElementById('tituloCarpeta').innerText = `Carpeta: ${carpeta}`;
+            document.getElementById('btnSubir').style.display = 'inline-block';
+            
+            // Estilos del menú
+            document.querySelectorAll('.folder-btn').forEach(b => b.classList.remove('active'));
+            if(btnElement) btnElement.classList.add('active');
+
+            const token = localStorage.getItem('gh_token');
+            const lista = document.getElementById('listaArchivos');
+            lista.innerHTML = '<div class="text-center mt-5"><div class="spinner-border text-primary"></div><p>Cargando archivos...</p></div>';
+
+            try {
+                const res = await fetch(`https://api.github.com/repos/${REPO_OWNER}/${REPO_NAME}/contents/${carpeta}`, {
+                    headers: { 'Authorization': `token ${token}` }
+                });
+
+                if(!res.ok) throw new Error('No se pudo cargar la carpeta (tal vez esté vacía).');
+                
+                const archivos = await res.json();
+                lista.innerHTML = ''; // Limpiar
+                
+                if(archivos.length === 0) {
+                    lista.innerHTML = '<p class="text-center text-muted mt-4">La carpeta está vacía.</p>';
+                    return;
+                }
+
+                archivos.forEach(file => {
+                    // Ignorar subcarpetas, solo archivos
+                    if(file.type === 'file') {
+                        lista.innerHTML += `
+                            <div class="file-item">
+                                <div>
+                                    ${getIcono(file.name)} 
+                                    <span class="ml-2 font-weight-bold text-dark">${file.name}</span>
+                                </div>
+                                <div>
+                                    <a href="${file.download_url}" target="_blank" class="btn btn-sm btn-outline-secondary mr-2" title="Ver/Descargar"><i class="fas fa-eye"></i></a>
+                                    <button class="btn btn-sm btn-outline-danger" onclick="borrarArchivo('${file.path}', '${file.sha}')" title="Eliminar"><i class="fas fa-trash"></i></button>
+                                </div>
+                            </div>
+                        `;
+                    }
+                });
+
+            } catch (error) {
+                console.error(error);
+                lista.innerHTML = `<p class="text-center text-muted mt-4">Carpeta vacía o error al leer. Puedes subir archivos nuevos.</p>`;
+            }
+        }
+
+        // Convertir archivo a Base64 y Subir a GitHub
+        function procesarSubida(event) {
+            const file = event.target.files[0];
+            if(!file) return;
+
+            const reader = new FileReader();
+            reader.readAsDataURL(file);
+            reader.onload = async function () {
+                // Eliminar el prefijo (ej: data:image/png;base64,)
+                const base64Content = reader.result.split(',')[1];
+                const token = localStorage.getItem('gh_token');
+                const path = `${currentFolder}/${file.name}`;
+                
+                toggleLoader(true);
+                try {
+                    // 1. Verificar si el archivo ya existe para obtener su SHA (necesario para sobreescribir)
+                    let sha = null;
+                    const checkRes = await fetch(`https://api.github.com/repos/${REPO_OWNER}/${REPO_NAME}/contents/${path}`, {
+                        headers: { 'Authorization': `token ${token}` }
+                    });
+                    if(checkRes.ok) {
+                        const fileData = await checkRes.json();
+                        sha = fileData.sha;
+                    }
+
+                    // 2. Subir / Actualizar
+                    const bodyData = {
+                        message: `Subido ${file.name} desde panel admin`,
+                        content: base64Content,
+                        branch: 'main'
+                    };
+                    if(sha) bodyData.sha = sha; // Si existe, agregamos el sha para sobreescribir
+
+                    const putRes = await fetch(`https://api.github.com/repos/${REPO_OWNER}/${REPO_NAME}/contents/${path}`, {
+                        method: 'PUT',
+                        headers: {
+                            'Authorization': `token ${token}`,
+                            'Content-Type': 'application/json'
+                        },
+                        body: JSON.stringify(bodyData)
+                    });
+
+                    if(putRes.ok) {
+                        alert(`¡Archivo ${file.name} subido con éxito!`);
+                        cargarCarpeta(currentFolder); // Recargar la lista
+                    } else {
+                        alert("Error al subir el archivo.");
+                    }
+                } catch (err) {
+                    console.error(err);
+                    alert("Ocurrió un error al procesar el archivo.");
+                }
+                toggleLoader(false);
+                document.getElementById('fileInput').value = ''; // Resetear input
+            };
+        }
+
+        // Borrar un archivo
+        async function borrarArchivo(path, sha) {
+            if(!confirm(`¿Estás seguro de que deseas eliminar este archivo?\n\nEsta acción no se puede deshacer.`)) return;
+
+            const token = localStorage.getItem('gh_token');
+            toggleLoader(true);
+
+            try {
+                const res = await fetch(`https://api.github.com/repos/${REPO_OWNER}/${REPO_NAME}/contents/${path}`, {
+                    method: 'DELETE',
+                    headers: {
+                        'Authorization': `token ${token}`,
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({
+                        message: `Archivo eliminado desde panel admin`,
+                        sha: sha,
+                        branch: 'main'
+                    })
+                });
+
+                if(res.ok) {
+                    cargarCarpeta(currentFolder); // Recargar la lista
+                } else {
+                    alert("Error al eliminar el archivo.");
+                }
+            } catch(err) {
+                console.error(err);
+            }
+            toggleLoader(false);
+        }
+    </script>
+</body>
+</html>
