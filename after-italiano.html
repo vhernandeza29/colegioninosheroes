@@ -1,8 +1,8 @@
 <!DOCTYPE html>
 <html lang="es">
+
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Italiano - Colegio Niños Héroes</title>
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
@@ -40,13 +40,15 @@
             text-decoration: none !important;
             display: inline-block;
         }
-        
-        .btn-volver:hover { 
-            background: var(--azul-id); 
-            color: white !important; 
+
+        .btn-volver:hover {
+            background: var(--azul-id);
+            color: white !important;
         }
 
-        .materia-content { padding: 60px 0; }
+        .materia-content {
+            padding: 60px 0;
+        }
 
         .info-tag {
             display: inline-block;
@@ -61,7 +63,7 @@
 
         .img-featured {
             border-radius: 20px;
-            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
             width: 100%;
             height: 350px;
             object-fit: cover;
@@ -73,13 +75,17 @@
             border-radius: 15px;
             height: 250px;
         }
+
         .gallery-item img {
             width: 100%;
             height: 100%;
             object-fit: cover;
             transition: 0.5s;
         }
-        .gallery-item img:hover { transform: scale(1.1); }
+
+        .gallery-item img:hover {
+            transform: scale(1.1);
+        }
 
         /* BOTÓN WHATSAPP LIMPIO */
         .btn-inscripcion-clean {
@@ -94,13 +100,15 @@
             display: inline-block;
             text-decoration: none !important;
         }
+
         .btn-inscripcion-clean:hover {
             background-color: #2e963d !important;
             transform: translateY(-2px);
-            box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
         }
     </style>
 </head>
+
 <body>
 
     <nav class="navbar navbar-expand-lg sticky-top navbar-light bg-white shadow-sm">
@@ -126,16 +134,25 @@
                     <span class="info-tag">After School</span>
                     <h2 style="color: var(--azul-id); font-weight: 800; margin-bottom: 20px;">Sobre esta actividad</h2>
                     <p style="text-align: justify; line-height: 1.8; color: #555;">
-                        Los alumnos se sumergen en la belleza del idioma italiano mediante una metodología comunicativa y dinámica. Más allá del vocabulario, exploramos la rica cultura, historia y tradiciones de Italia, desarrollando habilidades auditivas y verbales que expanden sus horizontes globales.
+                        Los alumnos se sumergen en la belleza del idioma italiano mediante una metodología comunicativa
+                        y dinámica. Más allá del vocabulario, exploramos la rica cultura, historia y tradiciones de
+                        Italia, desarrollando habilidades auditivas y verbales que expanden sus horizontes globales.
                     </p>
                     <ul class="list-unstyled mt-4">
-                        <li class="mb-2"><i class="fas fa-check-circle text-success mr-2"></i> Aprendizaje dinámico de vocabulario y gramática.</li>
-                        <li class="mb-2"><i class="fas fa-check-circle text-success mr-2"></i> Inmersión cultural y apreciación artística.</li>
-                        <li class="mb-2"><i class="fas fa-check-circle text-success mr-2"></i> Desarrollo de habilidades de conversación inicial.</li>
+                        <li class="mb-2"><i class="fas fa-check-circle text-success mr-2"></i> Aprendizaje dinámico de
+                            vocabulario y gramática.</li>
+                        <li class="mb-2"><i class="fas fa-check-circle text-success mr-2"></i> Inmersión cultural y
+                            apreciación artística.</li>
+                        <li class="mb-2"><i class="fas fa-check-circle text-success mr-2"></i> Desarrollo de habilidades
+                            de conversación inicial.</li>
                     </ul>
                 </div>
                 <div class="col-md-6">
-                    <img src="Iconos/italiano.jpg" alt="Clase de Italiano" class="img-featured">
+                    <!-- CÓDIGO NUEVO CON VIDEO -->
+                    <video class="img-featured" controls autoplay muted loop poster="">
+                        <source src="Iconos/italiano.mp4" type="video/mp4">
+                        Tu navegador no soporta el reproductor de video.
+                    </video>
                 </div>
             </div>
         </div>
@@ -145,11 +162,17 @@
         <div class="container">
             <h3 class="text-center mb-5" style="color: var(--azul-id); font-weight: 800;">Galería de Actividades</h3>
             <div class="row">
-                <div class="col-md-4 col-sm-6"><div class="gallery-item"><img src="Iconos/italiano1.png"></div></div>
-                <div class="col-md-4 col-sm-6"><div class="gallery-item"><img src="Iconos/italiano2.jpg"></div></div>
-                <div class="col-md-4 col-sm-6"><div class="gallery-item"><img src="Iconos/italiano3.png"></div></div>
+                <div class="col-md-4 col-sm-6">
+                    <div class="gallery-item"><img src="Iconos/italiano1.png"></div>
+                </div>
+                <div class="col-md-4 col-sm-6">
+                    <div class="gallery-item"><img src="Iconos/italiano2.jpg"></div>
+                </div>
+                <div class="col-md-4 col-sm-6">
+                    <div class="gallery-item"><img src="Iconos/italiano3.png"></div>
+                </div>
             </div>
-            
+
             <div class="text-center mt-5">
                 <a href="https://wa.me/5634030770" class="btn-inscripcion-clean">
                     <i class="fab fa-whatsapp mr-2"></i> SOLICITAR INFORMES
@@ -165,4 +188,5 @@
     </footer>
 
 </body>
+
 </html>
