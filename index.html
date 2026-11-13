@@ -79,12 +79,19 @@
             background-color: #fff;
         }
 
-        .carousel-item img {
+       .carousel-item img {
             width: 100%;
-            height: 680px;
+            aspect-ratio: 16 / 7;      /* proporción del carrusel */
+            max-height: 680px;
             object-fit: cover;
-            border-radius: 0px;
+            object-position: center;   /* cambia a "top" si se cortan cabezas */
         }
+
+        @media (max-width: 768px) {
+            .carousel-item img {
+            aspect-ratio: 4 / 3;   /* más alto en celular para que se vea más foto */
+            }
+        }    
 
         .carousel-control-prev-icon,
         .carousel-control-next-icon {
